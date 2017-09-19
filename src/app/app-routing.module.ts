@@ -1,7 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+import { CalculatorsListComponent } from './calculator/calculators-list/calculators-list.component';
+import { BodyMassIndexComponent } from './calculator/body-mass-index/body-mass-index.component';
+
+const routes: Routes = [
+  { path: 'calcs', component: CalculatorsListComponent },
+  { path: 'calcs/bmi', component: BodyMassIndexComponent },
+  { path: '', redirectTo: 'calcs', pathMatch: 'full' },
+  { path: '**', redirectTo: 'calcs', pathMatch: 'full' }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

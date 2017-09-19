@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { CalculatorModule } from './calculator/calculator.module';
 
 @NgModule({
@@ -11,11 +11,8 @@ import { CalculatorModule } from './calculator/calculator.module';
   ],
   imports: [
     BrowserModule,
-    CalculatorModule,
-    RouterModule.forRoot([
-      { path: '', component: CalculatorModule },
-      { path: '**', redirectTo: 'calculator', pathMatch: 'full' }
-    ])
+    AppRoutingModule,
+    CalculatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
