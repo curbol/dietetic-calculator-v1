@@ -1,8 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { MyMaterialsModule } from './my-materials/my-materials.module';
+import { AppComponent } from './app.component';
 import { CalculatorModule } from './calculator/calculator.module';
 
 @NgModule({
@@ -11,6 +13,8 @@ import { CalculatorModule } from './calculator/calculator.module';
   ],
   imports: [
     BrowserModule,
+    MyMaterialsModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     CalculatorModule
   ],
