@@ -1,10 +1,7 @@
 <div>
   <md-card>
-    <md-card-title [routerLink]="['']">
-      {{title}}
-    </md-card-title>
-    <button md-button [routerLink]="['']">Home</button>
-    <button md-button [routerLink]="['/calcs/bmi']">Body Mass Index</button>
+    <button md-button [routerLink]="['']">Dietetic Calculator</button>
+    <button md-button [routerLink]="['/about']">About</button>
   </md-card>
   <div class="router-outlet">
     <router-outlet></router-outlet>
