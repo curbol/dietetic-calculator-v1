@@ -1,47 +1,15 @@
-<md-grid-list cols="3" rowHeight="16:10" gutterSize="3px">
-  <md-grid-tile><button md-button [routerLink]="['/calcs/bmi']">Body Mass Index</button></md-grid-tile>
-  <md-grid-tile><button md-button>Something Else</button></md-grid-tile>
-  <md-grid-tile><button md-button>Something Else</button></md-grid-tile>
-  <md-grid-tile><button md-button>Something Else</button></md-grid-tile>
-  <md-grid-tile><button md-button>Something Else</button></md-grid-tile>
-  <md-grid-tile><button md-button>Something Else</button></md-grid-tile>
-</md-grid-list>
-
 <div class="padding-inner">
-
-  <div fxLayout fxLayoutWrap fxLayoutAlign="start center">
-    <div fxFlex="33%" fxFlex.sm="50%" fxFlex.xs="100%">
+  <div fxLayout fxLayoutGap="1%" fxLayoutWrap fxLayoutAlign="start">
+    <div *ngFor='let calculator of calculators' 
+         [routerLink]="['/calcs', calculator.stub]"
+         class="calc-card"
+         fxFlex.lt-sm="99" fxFlex.sm="49" fxFlex.md="32" fxFlex.lg="24" fxFlex.xl="19" fxFlex.gt-xl="15.6">
       <md-card>
         <img class="md-card-image" alt="">
         <md-card-title layout="row" layout-align="space-between-center" layout-wrap>
-          test1
-        </md-card-title>
-      </md-card>
-    </div>
-    <div fxFlex="33%" fxFlex.sm="50%" fxFlex.xs="100%">
-      <md-card>
-        <img class="md-card-image" alt="">
-        <md-card-title layout="row" layout-align="space-between-center" layout-wrap>
-          test1
-        </md-card-title>
-      </md-card>
-    </div>
-    <div fxFlex="33%" fxFlex.sm="50%" fxFlex.xs="100%">
-      <md-card>
-        <img class="md-card-image" alt="">
-        <md-card-title layout="row" layout-align="space-between-center" layout-wrap>
-          test1
-        </md-card-title>
-      </md-card>
-    </div>
-    <div fxFlex="33%" fxFlex.sm="50%" fxFlex.xs="100%">
-      <md-card>
-        <img class="md-card-image" alt="">
-        <md-card-title layout="row" layout-align="space-between-center" layout-wrap>
-          test1
+          {{calculator.name}}
         </md-card-title>
       </md-card>
     </div>
   </div>
-
 </div>

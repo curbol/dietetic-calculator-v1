@@ -8,10 +8,6 @@ import {
 
 @NgModule({
   imports: [
-    MdButtonModule,
-    MdCardModule,
-    MdToolbarModule,
-    MdGridListModule
   ],
   exports: [
     MdButtonModule,
@@ -20,4 +16,4 @@ import {
     MdGridListModule
   ]
 })
-export class MyMaterialsModule { }
+export class MaterialModule { }

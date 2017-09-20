@@ -1,22 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { BodyMassIndexComponent } from './body-mass-index/body-mass-index.component';
 import { CalculatorsListComponent } from './calculators-list/calculators-list.component';
-import { MyMaterialsModule } from '../my-materials/my-materials.module';
+import { SharedModule } from '../shared/shared.module';
+import { CalculatorService } from './calculator-service/calculator.service';
 
 @NgModule({
   imports: [
-    CommonModule,
-    FlexLayoutModule,
-    MyMaterialsModule,
-    RouterModule
+    SharedModule
   ],
   declarations: [
     CalculatorsListComponent,
     BodyMassIndexComponent
-  ]
+  ],
+  providers: [CalculatorService]
 })
 export class CalculatorModule { }
