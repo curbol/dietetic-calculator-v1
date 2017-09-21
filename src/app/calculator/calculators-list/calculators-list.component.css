@@ -1,17 +1,8 @@
-.page-title-container {
-}
-
-.page-title {
-    text-align: center;
-    margin-top: 0;
-    padding-top: 0;
-}
-
-.padding-inner {
-    padding: 1%;
+.calcs-padding-inner {
+    padding: 1vw 0 1vw 1vw;
 }
 
 .calc-card {
-    margin-bottom: 1%;
+    margin-bottom: 1vw;
     cursor: pointer;
 }

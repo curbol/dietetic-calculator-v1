@@ -1,14 +1,8 @@
-<div class="page-title-container">
-  <md-card class="page-title">
-    <md-card-title>Dietetic Calculator</md-card-title>
-    <md-card-subtitle>Dietitian's Tool for Common Calculations</md-card-subtitle>
-  </md-card>
-</div>
-<div class="padding-inner" fxLayout fxLayoutGap="1%" fxLayoutWrap fxLayoutAlign="start">
+<div class="calcs-padding-inner" fxLayout fxLayoutGap="1%" fxLayoutWrap fxLayoutAlign="start">
   <div *ngFor='let calculator of calculators' 
         [routerLink]="['/calcs', calculator.stub]"
         class="calc-card"
-        fxFlex.lt-sm="99" fxFlex.sm="49" fxFlex.md="32" fxFlex.lg="24" fxFlex.xl="19" fxFlex.gt-xl="15.6">
+        fxFlex.lt-sm="99" fxFlex.sm="49" fxFlex.md="32.3" fxFlex.lg="24" fxFlex.xl="19" fxFlex.gt-xl="15.6">
     <md-card>
       <img class="md-card-image" alt="">
       <md-card-title layout="row" layout-align="space-between-center" layout-wrap>
