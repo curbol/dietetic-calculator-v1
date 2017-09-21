@@ -1,9 +1,8 @@
-<div class="calc-list-container" 
-     fxLayout 
-     fxLayoutWrap 
-     fxLayoutAlign="start start" 
-     fxLayoutAlign.lt-lg="center start">
-  <div *ngFor='let calculator of calculators' 
+<div class="calc-list-container"
+     fxLayout
+     fxLayoutWrap
+     fxLayoutAlign="center start">
+  <div *ngFor='let calculator of calculators'
         [routerLink]="['/calcs', calculator.stub]"
         class="calc-card">
     <md-card>
