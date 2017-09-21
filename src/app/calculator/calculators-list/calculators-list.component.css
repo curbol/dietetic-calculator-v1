@@ -1,9 +1,9 @@
-.calc-list-container {
+#calc-list-container {
     padding: 2em 0 2em 2em;
 }
 
 .calc-card {
-    width: 20em;
+    min-width: 15em;
     margin: 0 2em 2em 0;
     cursor: pointer;
 }
