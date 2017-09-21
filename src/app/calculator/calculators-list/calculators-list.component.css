@@ -1,8 +1,9 @@
-.calcs-padding-inner {
-    padding: 1vw 0 1vw 1vw;
+.calc-list-container {
+    padding: 2em 0 2em 2em;
 }
 
 .calc-card {
-    margin-bottom: 1vw;
+    width: 20em;
+    margin: 0 2em 2em 0;
     cursor: pointer;
 }
