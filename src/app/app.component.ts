@@ -13,9 +13,11 @@ export class AppComponent {
     return this.route === '/' || this.route === '/calcs';
   }
 
-  constructor(private _router: Router){}
+  constructor(private _router: Router) {
+    this.route = _router.url;
+  }
 
   ngOnInit() {
-    this._router.events.subscribe((end:NavigationEnd) => this.route = end.url);
+    this._router.events.subscribe((end: NavigationEnd) => this.route = end.url);
   }
 }
