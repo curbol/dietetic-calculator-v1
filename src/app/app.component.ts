@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'dc-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
   animations: [
     trigger('isHomeChanged', [
       state('true' , style({ height: '*', opacity: 1, transform: 'scale(1.0)' })),
@@ -11,9 +13,7 @@ import { Router } from '@angular/router';
       transition('1 => 0', animate('200ms')),
       transition('0 => 1', animate('100ms'))
     ])
-  ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  ]
 })
 export class AppComponent {
   route: string;

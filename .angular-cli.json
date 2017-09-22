@@ -20,7 +20,6 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "dc",
       "styles": [
-        "styles.css",
         "styles.scss"
       ],
       "scripts": [

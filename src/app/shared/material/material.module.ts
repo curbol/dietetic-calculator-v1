@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import {
   MdButtonModule,
+  MdMenuModule,
   MdCardModule,
   MdToolbarModule,
-  MdGridListModule
+  MdIconModule,
+  MdCommonModule,
+  MdSidenavModule
 } from '@angular/material';
 
 @NgModule({
@@ -11,9 +14,12 @@ import {
   ],
   exports: [
     MdButtonModule,
+    MdMenuModule,
     MdCardModule,
     MdToolbarModule,
-    MdGridListModule
+    MdIconModule,
+    MdCommonModule,
+    MdSidenavModule
   ]
 })
 export class MaterialModule { }

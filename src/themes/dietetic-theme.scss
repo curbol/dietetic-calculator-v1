@@ -1,0 +1,9 @@
+$dietetic-primary: mat-palette($mat-light-green);
+$dietetic-accent:  mat-palette($mat-cyan);
+$dietetic-warn:    mat-palette($mat-deep-orange);
+
+$dietetic-theme: mat-dark-theme(
+  $dietetic-primary,
+  $dietetic-accent,
+  $dietetic-warn
+);
