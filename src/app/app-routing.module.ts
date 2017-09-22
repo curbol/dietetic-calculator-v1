@@ -7,6 +7,7 @@ import { BodyMassIndexComponent } from './calculator/body-mass-index/body-mass-i
 const routes: Routes = [
   { path: 'calcs', component: CalculatorsListComponent },
   { path: 'calcs/bmi', component: BodyMassIndexComponent },
+  { path: 'about', redirectTo: 'calcs', pathMatch: 'full' },
   { path: '', redirectTo: 'calcs', pathMatch: 'full' },
   { path: '**', redirectTo: 'calcs', pathMatch: 'full' }
 ];
@@ -15,4 +16,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

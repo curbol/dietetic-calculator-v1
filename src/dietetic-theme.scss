@@ -1,0 +1,11 @@
+// define 3 theme color
+// mat-palette accepts $palette-name, main, lighter and darker variants
+$dietetic-theme-primary: mat-palette($mat-indigo, 700, 300, 900);
+$dietetic-theme-accent: mat-palette($mat-light-blue);
+$dietetic-theme-warn: mat-palette($mat-deep-orange, A200);
+
+$dietetic-theme: mat-dark-theme(
+    $dietetic-theme-primary,
+    $dietetic-theme-accent,
+    $dietetic-theme-warn
+);

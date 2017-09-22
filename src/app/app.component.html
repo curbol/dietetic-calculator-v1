@@ -2,9 +2,10 @@
   <md-card>
     <button md-button [routerLink]="['']">Dietetic Calculator</button>
     <button md-button [routerLink]="['/about']">About</button>
-    <div class="page-title" *ngIf="isHome">
-        <md-card-title>Dietetic Calculator</md-card-title>
-        <md-card-subtitle>A Dietitian's Tool for Common Calculations</md-card-subtitle>
+    <!-- <div class="page-title" *ngIf="isHome"> -->
+    <div class="page-title" [@isHomeChanged]="isHome">
+      <md-card-title>Dietetic Calculator</md-card-title>
+      <md-card-subtitle>A Dietitian's Tool for Common Calculations</md-card-subtitle>
     </div>
   </md-card>
   <div class="router-outlet">

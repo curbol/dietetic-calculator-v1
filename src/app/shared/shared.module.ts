@@ -15,7 +15,7 @@ import { MaterialModule } from './material/material.module';
     FormsModule,
     MaterialModule,
     FlexLayoutModule,
-    RouterModule,
+    RouterModule
   ]
 })
 export class SharedModule { }

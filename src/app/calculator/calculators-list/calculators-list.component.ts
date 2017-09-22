@@ -6,7 +6,7 @@ import { CalculatorService } from '../calculator-service/calculator.service';
 @Component({
   selector: 'app-calculators-list',
   templateUrl: './calculators-list.component.html',
-  styleUrls: ['./calculators-list.component.css']
+  styleUrls: ['./calculators-list.component.css'],
 })
 export class CalculatorsListComponent implements OnInit {
   calculators: ICalculator[];
