@@ -1,20 +1,24 @@
 <div id="dc-container">
   <md-sidenav-container id="dc-sidenav-container">
-    <!-- <md-sidenav mode="over" #sidenav style="min-width:220px;">
-      <p>Sidenav Content</p>
-    </md-sidenav> -->
-    <md-toolbar id="dc-header" class="bottom-shadow" color="primary">
-      <!-- <span>
-        <button style="background-color:transparent;border-style:none;cursor:pointer;" (click)="sidenav.open()">
-          <i class="material-icons toolbar-link-icon" style="color:white;">menu</i>
+
+    <md-toolbar fxFlexLayout id="dc-header" class="bottom-shadow" color="primary">
+      <div>
+        <button md-button [routerLink]="['']">
+          <md-icon>home</md-icon>
+          <span>Dietetic Calculator</span>
         </button>
-      </span> -->
-      <button md-raised-button color="primary" [routerLink]="['']">Dietetic Calculator</button>
-      <button md-raised-button color="primary" [routerLink]="['/about']">About</button>
-      <span>Fixed Header Example</span>
+      </div>
+      <span fxFlex></span>
+      <div fxFlexLayout fxLayoutAlign="end center">
+        <button md-button class="md-small" [routerLink]="['/about']">
+          <md-icon class="pointer">menu</md-icon>
+        </button>
+      </div>
     </md-toolbar>
+
     <div id="dc-content">
       <router-outlet></router-outlet>
     </div>
+
   </md-sidenav-container>
 </div>

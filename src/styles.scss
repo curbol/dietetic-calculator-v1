@@ -10,3 +10,20 @@ html, body, div {
   margin: 0;
   padding: 0;
 }
+
+.pointer {
+  cursor: pointer;
+}
+
+button.md-small {
+  min-width: 1em;
+  padding-left: .5em;
+  padding-right: .5em;
+}
+
+.bottom-shadow {
+-webkit-box-shadow: 0 2px 8px -2px black;
+  -moz-box-shadow: 0 2px 8px -2px black;
+  box-shadow: 0 2px 8px -2px black;
+  position: relative;
+}
