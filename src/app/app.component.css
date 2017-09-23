@@ -1,34 +1,36 @@
-#app-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+#dc-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
-#fixed-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  width: 100%  !important;
+#dc-sidenav-container {
+    height: 100%;
+    width: 100%;
 }
 
-#page-title {
-  margin: 0;
-  padding: 0;
-  text-align: center;
+#dc-header {
+    height: 4rem;
+    min-height: 4rem;
+    margin: 0;
+    padding: 0;
+    z-index: 999;
 }
 
-#page-title-spacer {
-  height: 1.5rem;
+#dc-content {
+    overflow: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 4rem;
 }
 
-.inner-sidenav-content {
-  overflow: auto;
-  position: absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  top:64px;
+.bottom-shadow {
+	-webkit-box-shadow: 0 2px 8px -2px black;
+    -moz-box-shadow: 0 2px 8px -2px black;
+    box-shadow: 0 2px 8px -2px black;
+    position: relative;
 }

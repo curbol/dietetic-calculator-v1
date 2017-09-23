@@ -1,36 +1,20 @@
-<!-- <div>
-  <md-toolbar color="primary" id="fixed-header">
-    <span>
-      <button md-raised-button color="accent" [routerLink]="['']">Dietetic Calculator</button>
-      <button md-raised-button color="primary" [routerLink]="['/about']">About</button>
-    </span>
-    <md-toolbar-row id="page-title" [@isHomeChanged]="isHome">
-      <div>Dietetic Calculator</div>
-      <div>A Dietitian's Tool For Common Calculations</div>
-    </md-toolbar-row>
-  </md-toolbar>
-  <div>
-    <router-outlet></router-outlet>
-  </div>
-</div> -->
-
-<div id="app-container">
-  <md-sidenav-container #sidenav style="height:100%;width:100%;">
-    <md-sidenav mode="over" #sidenav style="min-width:220px;">
+<div id="dc-container">
+  <md-sidenav-container id="dc-sidenav-container">
+    <!-- <md-sidenav mode="over" #sidenav style="min-width:220px;">
       <p>Sidenav Content</p>
-    </md-sidenav>
-    <md-toolbar color="primary" style="min-height:64px;">
-      <span>
+    </md-sidenav> -->
+    <md-toolbar id="dc-header" class="bottom-shadow" color="primary">
+      <!-- <span>
         <button style="background-color:transparent;border-style:none;cursor:pointer;" (click)="sidenav.open()">
           <i class="material-icons toolbar-link-icon" style="color:white;">menu</i>
         </button>
-      </span>
-    <span>Fixed Header Example</span>
+      </span> -->
+      <button md-raised-button color="primary" [routerLink]="['']">Dietetic Calculator</button>
+      <button md-raised-button color="primary" [routerLink]="['/about']">About</button>
+      <span>Fixed Header Example</span>
     </md-toolbar>
-    <div class="inner-sidenav-content">
-      <div style="padding-top:2em;padding-bottom:2em;">
-        <router-outlet></router-outlet>
-      </div>
+    <div id="dc-content">
+      <router-outlet></router-outlet>
     </div>
   </md-sidenav-container>
 </div>
