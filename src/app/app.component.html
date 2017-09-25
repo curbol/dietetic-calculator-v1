@@ -28,9 +28,11 @@
 
     <div id="dc-content" fxLayout="column">
       <dc-header></dc-header>
-      <router-outlet></router-outlet>
+      <div [@moveOnLoad]="getState(o)">
+        <router-outlet #o="outlet"></router-outlet>
+      </div>
       <span fxFlex></span>
-      <dc-footer></dc-footer>
+      <md-toolbar color="primary"></md-toolbar>
     </div>
 
   </md-sidenav-container>

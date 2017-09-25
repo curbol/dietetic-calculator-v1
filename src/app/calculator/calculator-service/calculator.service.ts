@@ -11,7 +11,7 @@ import { ICalculator } from '../calculator';
 
 @Injectable()
 export class CalculatorService {
-  private _calculatorsUrl = './api/calculators/calculators.json';
+  private _calculatorsUrl = './api/calculator/calculators.json';
 
   constructor(private _http: HttpClient) { }
 

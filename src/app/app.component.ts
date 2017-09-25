@@ -1,22 +1,24 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { trigger, transition, style, animate } from '@angular/core';
 
 @Component({
   selector: 'dc-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [
+    trigger('moveOnLoad', [
+      transition('* <=> *', [
+        style({transform: 'translateX(-20%)'}),
+        animate('400ms ease-in-out')
+      ])
+    ])
+  ],
+  host: {'[@moveOnLoad]': ''}
 })
 export class AppComponent {
-  route: string;
+  constructor() {}
 
-  get isHome(): boolean {
-    return this.route === '/' || this.route === '/calcs';
-  }
-
-  constructor(private router: Router, private location: Location) {
-    router.events.subscribe((val) => {
-      this.route = location.path();
-    });
+  getState(outlet) {
+    return outlet.activatedRouteData.state;
   }
 }

@@ -1,3 +1,4 @@
-<md-toolbar color="primary">
-  This is the page title
+{{title}}
+<md-toolbar color="primary" *ngIf='title && !isHome'>
+  {{title}}
 </md-toolbar>
