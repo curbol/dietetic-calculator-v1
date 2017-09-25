@@ -8,11 +8,15 @@ import { AppComponent } from './app.component';
 import { CalculatorModule } from './calculator/calculator.module';
 import { SharedModule } from './shared/shared.module';
 import { HeaderComponent } from './header/header.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    ToolbarComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,

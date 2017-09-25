@@ -6,9 +6,28 @@
   @include angular-material-theme($dietetic-theme);
 }
 
-html, body, div {
+* {
+  a:hover, a:active, a:focus {
+    text-decoration: none;
+  }
+
+  &:active, :focus {
+    outline: none !important;
+  }
+}
+
+html, body, div, p, span, h1, h2, h3 {
   margin: 0;
   padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: "Roboto", "Helvetica Neue Light", "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", "sans-serif";
+}
+
+label {
+  margin: 0;
 }
 
 .pointer {

@@ -1,39 +1,13 @@
 <div id="dc-container">
   <md-sidenav-container id="dc-sidenav-container">
-
-    <md-toolbar fxFlexLayout id="dc-header" class="bottom-shadow" color="primary">
-      <div>
-        <button md-button [routerLink]="['']">
-          <md-icon>home</md-icon>
-          <span>Dietetic Calculator</span>
-        </button>
-      </div>
-      <span fxFlex></span>
-      <div fxLayout fxLayoutAlign="end center">
-        <button md-button [mdMenuTriggerFor]="dcmenu" class="md-small">
-          <md-icon>menu</md-icon>
-        </button>
-        <md-menu #dcmenu="mdMenu">
-          <button md-menu-item>
-            <md-icon>info</md-icon>
-            <span>About</span>
-          </button>
-          <button md-menu-item>
-            <md-icon>message</md-icon>
-            <span>Contact</span>
-          </button>
-        </md-menu>
-      </div>
-    </md-toolbar>
-
+    <dc-toolbar></dc-toolbar>
     <div id="dc-content" fxLayout="column">
       <dc-header></dc-header>
-      <div [@moveOnLoad]="getState(o)">
+      <div id="outlet-container" [@moveOnLoad]="getState(o)">
         <router-outlet #o="outlet"></router-outlet>
       </div>
       <span fxFlex></span>
       <md-toolbar color="primary"></md-toolbar>
     </div>
-
   </md-sidenav-container>
 </div>

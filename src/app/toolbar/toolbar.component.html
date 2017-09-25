@@ -1,0 +1,20 @@
+<md-toolbar fxFlexLayout id="dc-header" class="bottom-shadow" color="primary">
+  <div>
+    <button md-button [routerLink]="['']">
+      <md-icon>home</md-icon>
+      <span class="title">Dietetic Calculator</span>
+    </button>
+  </div>
+  <span fxFlex></span>
+  <div fxLayout fxLayoutAlign="end center">
+    <button md-button [mdMenuTriggerFor]="dcmenu" class="md-small">
+      <md-icon>menu</md-icon>
+    </button>
+    <md-menu #dcmenu="mdMenu">
+      <button md-menu-item [routerLink]="['about']">
+        <md-icon>info</md-icon>
+        <span>About</span>
+      </button>
+    </md-menu>
+  </div>
+</md-toolbar>

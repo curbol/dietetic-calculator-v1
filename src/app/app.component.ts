@@ -12,8 +12,7 @@ import { trigger, transition, style, animate } from '@angular/core';
         animate('400ms ease-in-out')
       ])
     ])
-  ],
-  host: {'[@moveOnLoad]': ''}
+  ]
 })
 export class AppComponent {
   constructor() {}

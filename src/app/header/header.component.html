@@ -1,4 +1,8 @@
-{{title}}
+<div *ngIf='isHome' id="pageHeader" fxLayout="column" fxLayoutAlign="center center">
+  <h1 id="pageTitle">Dietetic Calculator</h1>
+  <h2 id="pageSubtitle">Dietitian Tool For Common Calculations</h2>
+</div>
+
 <md-toolbar color="primary" *ngIf='title && !isHome'>
-  {{title}}
+  <h3>{{title}}</h3>
 </md-toolbar>
