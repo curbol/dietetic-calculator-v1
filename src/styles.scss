@@ -1,9 +1,16 @@
 @import '~@angular/material/theming';
 @include mat-core();
+
 @import './themes/dietetic-theme.scss';
+@import './app/header/header.component.theme.scss';
+
+@mixin custom-components-theme($theme) {
+  @include dc-toolbar-component-theme($theme);
+}
 
 .dietetic-theme {
   @include angular-material-theme($dietetic-theme);
+  @include custom-components-theme($dietetic-theme);
 }
 
 * {
@@ -24,6 +31,10 @@ html, body, div, p, span, h1, h2, h3 {
 html, body {
   height: 100%;
   font-family: "Roboto", "Helvetica Neue Light", "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", "sans-serif";
+}
+
+button {
+  text-transform: uppercase;
 }
 
 label {

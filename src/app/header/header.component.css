@@ -2,15 +2,21 @@
   padding: 2em 1em;
 }
 
+#pageTitle, #pageSubtitle {
+  text-align: center;
+  overflow-wrap: normal;
+  font-weight: bold;
+}
+
 #pageTitle {
   font-size: 2.2em;
   margin-bottom: .3em;
-  text-align: center;
-  overflow-wrap: normal;
 }
 
 #pageSubtitle {
   font-size: .8em;
-  text-align: center;
-  overflow-wrap: normal;
+}
+
+md-toolbar h3 {
+  font-weight: normal;
 }
