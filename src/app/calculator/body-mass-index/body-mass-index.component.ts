@@ -6,9 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./body-mass-index.component.css']
 })
 export class BodyMassIndexComponent implements OnInit {
-  decimalRegex: RegExp = /^\d+(\.\d{1,2})?$/i;
+  weightUnit: { value: string, viewValue: string };
+  heightUnit: { value: string, viewValue: string };
 
-  selectedUnit: string;
   units = [
     { value: 'lbs', viewValue: 'lbs' },
     { value: 'kg', viewValue: 'kg' }
@@ -17,6 +17,17 @@ export class BodyMassIndexComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.selectedUnit = this.units[0].value;
+    this.weightUnit = this.units[0];
+    this.heightUnit = this.units[0];
+  }
+
+  setGlobalUnits(value: string){
+    if (value === 'lbs') {
+      this.weightUnit = this.units[0];
+      this.heightUnit = this.units[0];
+    } else {
+      this.weightUnit = this.units[1];
+      this.heightUnit = this.units[1];
+    }
   }
 }

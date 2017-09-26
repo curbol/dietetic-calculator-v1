@@ -1,20 +1,29 @@
-<form>
+<form fxLayout="column">
   <md-radio-group name="globalUnits">
-    <md-radio-button value="1">lbs</md-radio-button>
-    <md-radio-button value="2">kg</md-radio-button>
+    <md-radio-button value="lbs" checked="true" (ngModelChange)='setGlobalUnits("lbs")'>Pounds (lbs)</md-radio-button>
+    <md-radio-button value="kg" ng-change='setGlobalUnits("kg")'>Kilograms (kg)</md-radio-button>
   </md-radio-group>
 
-  <md-form-field color="accent">
-    <input mdInput type="number" placeholder="Weight"/>
-  </md-form-field>
+  <div>
+    <md-form-field color="accent">
+      <input mdInput type="number" placeholder="Weight"/>
+    </md-form-field>
+    <md-select name="weightUnits" color="accent" placeholder="Units" [(ngModel)]="weightUnit">
+      <md-option *ngFor="let unit of units" [value]="unit">
+        {{ unit.viewValue }}
+      </md-option>
+    </md-select>
+  </div>
 
-  <md-select name="weightUnits" color="accent" placeholder="Units" [(ngModel)]="selectedUnit">
-    <md-option *ngFor="let unit of units" [value]="unit.value">
-      {{ unit.viewValue }}
-    </md-option>
-  </md-select>
+  <div>
+    <md-form-field color="accent">
+      <input mdInput type="number" placeholder="Height">
+    </md-form-field>
+    <md-select name="heightUnits" color="accent" placeholder="Units" [(ngModel)]="heightUnit">
+      <md-option *ngFor="let unit of units" [value]="unit">
+        {{ unit.viewValue }}
+      </md-option>
+    </md-select>
+  </div>
 
-  <md-form-field color="accent">
-    <input mdInput placeholder="Height">
-  </md-form-field>
 </form>

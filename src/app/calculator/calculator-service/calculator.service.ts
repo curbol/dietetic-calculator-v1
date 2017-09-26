@@ -13,7 +13,7 @@ export class CalculatorService {
 
   getCalculators(): Observable<ICalculator[]> {
     return this._http.get<ICalculator[]>(this._calculatorsUrl)
-      .do(data => console.log('All: ' + JSON.stringify(data)))
+      // .do(data => console.log('All: ' + JSON.stringify(data)))
       .catch(this.handleError);
   }
 
