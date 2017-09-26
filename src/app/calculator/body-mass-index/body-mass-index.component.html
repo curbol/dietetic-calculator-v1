@@ -1,21 +1,20 @@
-<md-radio-group name="weightUnit">
-  <md-radio-button value="1">lbs</md-radio-button>
-  <md-radio-button value="2">kg</md-radio-button>
-</md-radio-group>
-<form class="example-form">
+<form>
+  <md-radio-group name="globalUnits">
+    <md-radio-button value="1">lbs</md-radio-button>
+    <md-radio-button value="2">kg</md-radio-button>
+  </md-radio-group>
 
   <md-form-field color="accent">
-    <input mdInput placeholder="Weight">
+    <input mdInput type="number" placeholder="Weight"/>
   </md-form-field>
+
+  <md-select name="weightUnits" color="accent" placeholder="Units" [(ngModel)]="selectedUnit">
+    <md-option *ngFor="let unit of units" [value]="unit.value">
+      {{ unit.viewValue }}
+    </md-option>
+  </md-select>
 
   <md-form-field color="accent">
     <input mdInput placeholder="Height">
   </md-form-field>
-
 </form>
-
-<md-select placeholder="Units" [(ngModel)]="selectedUnit">
-  <md-option *ngFor="let unit of units" [value]="unit.value">
-    {{ unit.viewValue }}
-  </md-option>
-</md-select>

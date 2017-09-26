@@ -2,10 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
+import { slideInOnRouteChange } from '../animation/animations';
+
 @Component({
   selector: 'dc-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  animations: [
+    slideInOnRouteChange()
+  ]
 })
 export class HeaderComponent implements OnInit {
   isHome: boolean;

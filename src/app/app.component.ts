@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { slideInOnLoad, dropDownOnLoad } from './animation/animations';
+import { slideInOnRouteChange } from './animation/animations';
 
 @Component({
   selector: 'dc-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   animations: [
-    slideInOnLoad(),
-    dropDownOnLoad()
+    slideInOnRouteChange()
   ]
 })
 export class AppComponent {

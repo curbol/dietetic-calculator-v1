@@ -5,7 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './body-mass-index.component.html',
   styleUrls: ['./body-mass-index.component.css']
 })
-export class BodyMassIndexComponent implements OnInit { 
+export class BodyMassIndexComponent implements OnInit {
+  decimalRegex: RegExp = /^\d+(\.\d{1,2})?$/i;
+
   selectedUnit: string;
   units = [
     { value: 'lbs', viewValue: 'lbs' },
