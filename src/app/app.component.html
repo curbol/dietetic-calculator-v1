@@ -2,8 +2,10 @@
   <md-sidenav-container id="dc-sidenav-container">
     <dc-toolbar></dc-toolbar>
     <div id="dc-content" fxLayout="column">
-      <dc-header></dc-header>
-      <div id="outlet-container" [@moveOnLoad]="getState(o)">
+      <div [@dropDownOnLoad]="getState(o)">
+        <dc-header></dc-header>
+      </div>
+      <div id="outlet-container" [@slideInOnLoad]="getState(o)">
         <router-outlet #o="outlet"></router-outlet>
       </div>
       <span fxFlex></span>

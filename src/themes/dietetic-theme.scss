@@ -1,6 +1,6 @@
-$dietetic-primary: mat-palette($mat-light-green);
-$dietetic-accent:  mat-palette($mat-cyan);
-$dietetic-warn:    mat-palette($mat-deep-orange);
+$dietetic-primary: mat-palette($mat-cyan, 700);
+$dietetic-accent:  mat-palette($mat-amber, 700);
+$dietetic-warn:    mat-palette($mat-deep-orange, A400);
 
 $dietetic-theme: mat-dark-theme(
   $dietetic-primary,

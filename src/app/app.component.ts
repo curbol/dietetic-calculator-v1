@@ -1,17 +1,13 @@
 import { Component } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/core';
+import { slideInOnLoad, dropDownOnLoad } from './animation/animations';
 
 @Component({
   selector: 'dc-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   animations: [
-    trigger('moveOnLoad', [
-      transition('* <=> *', [
-        style({transform: 'translateX(-20%)'}),
-        animate('400ms ease-in-out')
-      ])
-    ])
+    slideInOnLoad(),
+    dropDownOnLoad()
   ]
 })
 export class AppComponent {

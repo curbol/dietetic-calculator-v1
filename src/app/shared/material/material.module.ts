@@ -6,7 +6,10 @@ import {
   MdToolbarModule,
   MdIconModule,
   MdCommonModule,
-  MdSidenavModule
+  MdSidenavModule,
+  MdInputModule,
+  MdFormFieldModule,
+  MdRadioModule
 } from '@angular/material';
 
 @NgModule({
@@ -19,7 +22,10 @@ import {
     MdToolbarModule,
     MdIconModule,
     MdCommonModule,
-    MdSidenavModule
+    MdSidenavModule,
+    MdInputModule,
+    MdFormFieldModule,
+    MdRadioModule
   ]
 })
 export class MaterialModule { }
