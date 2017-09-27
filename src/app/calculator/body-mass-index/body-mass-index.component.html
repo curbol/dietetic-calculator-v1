@@ -1,29 +1,33 @@
-<form fxLayout="column">
-  <md-radio-group name="globalUnits">
-    <md-radio-button value="lbs" checked="true" (ngModelChange)='setGlobalUnits("lbs")'>Pounds (lbs)</md-radio-button>
-    <md-radio-button value="kg" ng-change='setGlobalUnits("kg")'>Kilograms (kg)</md-radio-button>
+<form fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="2rem">
+  <md-radio-group name="unitSystem">
+    <md-radio-button value="imperial" checked="true">Imperial</md-radio-button>
+    <md-radio-button value="metric">Metric</md-radio-button>
   </md-radio-group>
 
-  <div>
-    <md-form-field color="accent">
-      <input mdInput type="number" placeholder="Weight"/>
+  <div fxLayout fxLayoutGap=".2rem">
+    <md-form-field color="accent" class="full-width">
+      <input mdInput name="weightValue" type="number" placeholder="Weight" [(ngModel)]="weightValue" />
     </md-form-field>
-    <md-select name="weightUnits" color="accent" placeholder="Units" [(ngModel)]="weightUnit">
-      <md-option *ngFor="let unit of units" [value]="unit">
-        {{ unit.viewValue }}
+    <md-select name="weightUnits" color="accent" class="full-width" placeholder="Units" [(ngModel)]="weightUnit">
+      <md-option *ngFor="let unit of weightUnits" [value]="unit">
+        {{ unit.unit }}
       </md-option>
     </md-select>
   </div>
 
-  <div>
-    <md-form-field color="accent">
-      <input mdInput type="number" placeholder="Height">
+  <div fxLayout fxLayoutGap=".2rem">
+    <md-form-field color="accent" class="full-width">
+      <input mdInput name="heightValue" type="number" placeholder="Height" [(ngModel)]="heightValue">
     </md-form-field>
-    <md-select name="heightUnits" color="accent" placeholder="Units" [(ngModel)]="heightUnit">
-      <md-option *ngFor="let unit of units" [value]="unit">
-        {{ unit.viewValue }}
+    <md-select name="heightUnits" color="accent" class="full-width" placeholder="Units" [(ngModel)]="heightUnit">
+      <md-option *ngFor="let unit of heightUnits" [value]="unit">
+        {{ unit.unit }}
       </md-option>
     </md-select>
   </div>
 
+  <md-form-field color="accent">
+    <input mdInput name="bmiResult" id="bmiResult" type="number" placeholder="BMI" disabled [value]="result | number : '1.2-2'">
+    <md-hint align="start">Normal: &lt; 25</md-hint>
+  </md-form-field>
 </form>

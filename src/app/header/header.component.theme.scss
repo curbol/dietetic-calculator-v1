@@ -7,9 +7,13 @@
   $foreground: map-get($theme, foreground);
   $background: map-get($theme, background);
 
-  #pageHeader {
-    color: mat-color($primary, default-contrast);
+  .header-toolbar {
+    color: mat-contrast($primary, 500);
     background-color: mat-color($primary);
+  }
+
+  #main-subtitle, #header-subtitle {
+    color: mat-contrast($primary, 900);
   }
 }
 

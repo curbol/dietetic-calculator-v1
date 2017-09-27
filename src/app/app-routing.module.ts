@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'calcs', component: CalculatorsListComponent,
     data: { state: 'calcs', title: 'Calculators', isHome: true } },
   { path: 'calcs/bmi', component: BodyMassIndexComponent,
-    data: { state: 'bmi', title: 'Body Mass Index' } },
+    data: { state: 'bmi', title: 'Body Mass Index (BMI)', subtitle: "A measure of body fat in adults" } },
   { path: 'about', component: AboutComponent,
     data: { state: 'about', title: 'About' } },
   { path: '', redirectTo: 'calcs', pathMatch: 'full' },

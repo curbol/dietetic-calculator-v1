@@ -1,22 +1,38 @@
-#pageHeader {
+.header-toolbar {
+  padding: 1em;
+}
+
+#dc-header {
   padding: 2em 1em;
 }
 
-#pageTitle, #pageSubtitle {
+#main-title, #main-subtitle {
   text-align: center;
   overflow-wrap: normal;
+}
+
+#main-title {
   font-weight: bold;
+  font-size: 2.5rem;
+  margin-bottom: .2rem;
 }
 
-#pageTitle {
-  font-size: 2.2em;
-  margin-bottom: .3em;
-}
-
-#pageSubtitle {
-  font-size: .8em;
-}
-
-md-toolbar h3 {
+#main-subtitle {
   font-weight: normal;
+  font-size: 1rem;
+}
+
+#header-text {
+  margin-left: 1rem;
+}
+
+#header-title {
+  font-weight: normal;
+  font-size: 1.5rem;
+}
+
+#header-subtitle {
+  margin-top: .1rem;
+  font-weight: normal;
+  font-size: 1rem;
 }

@@ -25,3 +25,10 @@
 #outlet-container {
   margin: 1.5rem;
 }
+
+#footer-copywrite {
+    width: 100%;
+    text-align: center;
+    font-weight: normal;
+    font-size: .8rem;
+}
