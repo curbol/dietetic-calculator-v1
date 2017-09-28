@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { IUnit, UnitSymbol } from '../unit';
+import { Unit } from '../unit';
 
 @Component({
   selector: 'dc-body-mass-index',
@@ -8,8 +8,10 @@ import { IUnit, UnitSymbol } from '../unit';
   styleUrls: ['./body-mass-index.component.css']
 })
 export class BodyMassIndexComponent implements OnInit {
-  weightUnit: IUnit;
-  heightUnit: IUnit;
+  weightUnits: Unit.IUnit[];
+  heightUnits: Unit.IUnit[];
+  weightUnit: Unit.IUnit;
+  heightUnit: Unit.IUnit;
   weightValue: number;
   heightValue: number;
 
@@ -21,27 +23,17 @@ export class BodyMassIndexComponent implements OnInit {
     return this.calculateBMI(this.weightValue, this.heightValue);
   }
 
-  weightUnits: IUnit[] = [
-    { symbol: UnitSymbol.lbs, name: 'pounds' },
-    { symbol: UnitSymbol.kg, name: 'kilograms' }
-  ];
-
-  heightUnits: IUnit[] = [
-    { symbol: UnitSymbol.in, name: 'inches' },
-    { symbol: UnitSymbol.ft, name: 'feet' },
-    { symbol: UnitSymbol.cm, name: 'centimeters' },
-    { symbol: UnitSymbol.m, name: 'meters' }
-  ];
-
   constructor() { }
 
   ngOnInit() {
+    this.weightUnits = Unit.getWeightUnits();
+    this.heightUnits = Unit.getLengthUnits();
     this.weightUnit = this.weightUnits[0];
     this.heightUnit = this.heightUnits[0];
   }
 
-  unitString(unit: UnitSymbol) {
-    return UnitSymbol.toString(unit);
+  unitString(symbol: Unit.Symbol) {
+    return Unit.Symbol[symbol];
   }
 
   calculateBMI(weight_kg: number, height_m: number): number {
