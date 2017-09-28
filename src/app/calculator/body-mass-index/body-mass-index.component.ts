@@ -26,8 +26,8 @@ export class BodyMassIndexComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.weightUnits = Unit.getWeightUnits();
-    this.heightUnits = Unit.getLengthUnits();
+    this.weightUnits = Unit.weightUnits;
+    this.heightUnits = Unit.lengthUnits;
     this.weightUnit = this.weightUnits[0];
     this.heightUnit = this.heightUnits[0];
   }

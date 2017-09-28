@@ -3,8 +3,13 @@ export module Unit {
     name: string;
     symbol: Symbol;
     baseSymbol: Symbol;
+    system: System;
     convertToBase(value: number): number;
     convertFromBase(value: number): number;
+  }
+
+  export enum System {
+    metric, imperial
   }
 
   export enum Symbol {
@@ -12,29 +17,77 @@ export module Unit {
     in, ft, cm, m, // distance
   }
 
-  export const units: IUnit[] = [
+  export const weightUnits: IUnit[] = [
     {
-      name: "pound",
+      name: "kilograms",
+      symbol: Symbol.kg,
+      baseSymbol: Symbol.g,
+      system: System.metric,
+      convertToBase: (value: number) => value / 0.001,
+      convertFromBase: (value: number) => value * 0.001,
+    },
+    {
+      name: "grams",
+      symbol: Symbol.g,
+      baseSymbol: Symbol.g,
+      system: System.metric,
+      convertToBase: (value: number) => value,
+      convertFromBase: (value: number) => value,
+    },
+    {
+      name: "pounds",
       symbol: Symbol.lb,
       baseSymbol: Symbol.g,
+      system: System.imperial,
       convertToBase: (value: number) => value / 0.0022046,
       convertFromBase: (value: number) => value * 0.0022046,
     },
     {
-      name: "inch",
-      symbol: Symbol.in,
-      baseSymbol: Symbol.m,
-      convertToBase: (value: number) => value / 39.370,
-      convertFromBase: (value: number) => value * 39.370,
-    }
+      name: "stone",
+      symbol: Symbol.st,
+      baseSymbol: Symbol.g,
+      system: System.imperial,
+      convertToBase: (value: number) => value / 0.00015747,
+      convertFromBase: (value: number) => value * 0.00015747,
+    },
   ];
 
-  export const getWeightUnits = () => Unit.units.filter(u => u.baseSymbol === Symbol.g);
-  export const getLengthUnits = () => Unit.units.filter(u => u.baseSymbol === Symbol.m);
+  export const lengthUnits: IUnit[] = [
+    {
+      name: "centimeters",
+      symbol: Symbol.cm,
+      baseSymbol: Symbol.m,
+      system: System.metric,
+      convertToBase: (value: number) => value / 100,
+      convertFromBase: (value: number) => value * 100,
+    },
+    {
+      name: "meters",
+      symbol: Symbol.m,
+      baseSymbol: Symbol.m,
+      system: System.metric,
+      convertToBase: (value: number) => value,
+      convertFromBase: (value: number) => value,
+    },
+    {
+      name: "inches",
+      symbol: Symbol.in,
+      baseSymbol: Symbol.m,
+      system: System.imperial,
+      convertToBase: (value: number) => value / 39.37,
+      convertFromBase: (value: number) => value * 39.37,
+    },
+    {
+      name: "feet",
+      symbol: Symbol.ft,
+      baseSymbol: Symbol.m,
+      system: System.imperial,
+      convertToBase: (value: number) => value / 3.2808,
+      convertFromBase: (value: number) => value * 3.2808,
+    },
+  ];
 
-  export const convertUnits = (sourceSymbol: Symbol) => (targetSymbol: Symbol) => (sourceValue: number) => {
-    const sourceUnit: IUnit = units[sourceSymbol];
-    const targetUnit: IUnit = units[targetSymbol];
+  export const convertUnits = (sourceUnit: IUnit) => (targetUnit: IUnit) => (sourceValue: number) => {
     if (!sourceUnit || !targetUnit) {
       throw Error(`Source or target unit does not exist. 
         Source: {${Symbol[sourceUnit.baseSymbol]}: ${sourceUnit}}, 
