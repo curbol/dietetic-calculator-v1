@@ -1,3 +1,7 @@
 .full-width {
     width: 100%;
 }
+
+#bmiResult {
+  font-size: 2rem;
+}

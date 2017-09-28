@@ -8,6 +8,12 @@ export module Unit {
     convertFromBase(value: number): number;
   }
 
+  export interface IUnitSelection {
+    unitGroup: IUnit[];
+    selectedUnit: IUnit;
+    value: number;
+  }
+
   export enum System {
     metric, imperial
   }
@@ -19,7 +25,7 @@ export module Unit {
 
   export const weightUnits: IUnit[] = [
     {
-      name: "kilograms",
+      name: 'kilograms',
       symbol: Symbol.kg,
       baseSymbol: Symbol.g,
       system: System.metric,
@@ -27,7 +33,7 @@ export module Unit {
       convertFromBase: (value: number) => value * 0.001,
     },
     {
-      name: "grams",
+      name: 'grams',
       symbol: Symbol.g,
       baseSymbol: Symbol.g,
       system: System.metric,
@@ -35,7 +41,7 @@ export module Unit {
       convertFromBase: (value: number) => value,
     },
     {
-      name: "pounds",
+      name: 'pounds',
       symbol: Symbol.lb,
       baseSymbol: Symbol.g,
       system: System.imperial,
@@ -43,7 +49,7 @@ export module Unit {
       convertFromBase: (value: number) => value * 0.0022046,
     },
     {
-      name: "stone",
+      name: 'stone',
       symbol: Symbol.st,
       baseSymbol: Symbol.g,
       system: System.imperial,
@@ -54,7 +60,7 @@ export module Unit {
 
   export const lengthUnits: IUnit[] = [
     {
-      name: "centimeters",
+      name: 'centimeters',
       symbol: Symbol.cm,
       baseSymbol: Symbol.m,
       system: System.metric,
@@ -62,7 +68,7 @@ export module Unit {
       convertFromBase: (value: number) => value * 100,
     },
     {
-      name: "meters",
+      name: 'meters',
       symbol: Symbol.m,
       baseSymbol: Symbol.m,
       system: System.metric,
@@ -70,7 +76,7 @@ export module Unit {
       convertFromBase: (value: number) => value,
     },
     {
-      name: "inches",
+      name: 'inches',
       symbol: Symbol.in,
       baseSymbol: Symbol.m,
       system: System.imperial,
@@ -78,7 +84,7 @@ export module Unit {
       convertFromBase: (value: number) => value * 39.37,
     },
     {
-      name: "feet",
+      name: 'feet',
       symbol: Symbol.ft,
       baseSymbol: Symbol.m,
       system: System.imperial,
@@ -87,10 +93,15 @@ export module Unit {
     },
   ];
 
-  export const convertUnits = (sourceUnit: IUnit) => (targetUnit: IUnit) => (sourceValue: number) => {
+  export const selectionConversion = (selection: IUnitSelection) => (targetSymbol: Symbol) => {
+    const targetUnit = selection.unitGroup.find(u => u.symbol === targetSymbol);
+    return conversion(selection.selectedUnit)(targetUnit)(selection.value);
+  };
+
+  export const conversion = (sourceUnit: IUnit) => (targetUnit: IUnit) => (sourceValue: number) => {
     if (!sourceUnit || !targetUnit) {
-      throw Error(`Source or target unit does not exist. 
-        Source: {${Symbol[sourceUnit.baseSymbol]}: ${sourceUnit}}, 
+      throw Error(`Source or target unit does not exist.
+        Source: {${Symbol[sourceUnit.baseSymbol]}: ${sourceUnit}},
         Target: {${Symbol[targetUnit.baseSymbol]}: ${targetUnit}}`);
     }
     if (sourceUnit.baseSymbol !== targetUnit.baseSymbol) {
@@ -100,5 +111,5 @@ export module Unit {
     const baseValue: number = sourceUnit.convertToBase(sourceValue);
     const targetValue: number = targetUnit.convertFromBase(baseValue);
     return targetValue;
-  }
+  };
 }

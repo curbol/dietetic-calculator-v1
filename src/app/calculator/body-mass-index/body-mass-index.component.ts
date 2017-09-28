@@ -8,28 +8,34 @@ import { Unit } from '../unit';
   styleUrls: ['./body-mass-index.component.css']
 })
 export class BodyMassIndexComponent implements OnInit {
-  weightUnits: Unit.IUnit[];
-  heightUnits: Unit.IUnit[];
-  weightUnit: Unit.IUnit;
-  heightUnit: Unit.IUnit;
-  weightValue: number;
-  heightValue: number;
+  weightSelection: Unit.IUnitSelection;
+  heightSelection: Unit.IUnitSelection;
 
   get result(): number {
-    if (!this.weightValue || !this.heightValue) {
+    if (!this.weightSelection.value || !this.heightSelection.value) {
       return;
     }
 
-    return this.calculateBMI(this.weightValue, this.heightValue);
+    const weight_kg: number = Unit.selectionConversion(this.weightSelection)(Unit.Symbol.kg);
+    const height_m: number = Unit.selectionConversion(this.heightSelection)(Unit.Symbol.m);
+
+    return this.calculateBMI(weight_kg, height_m);
   }
 
   constructor() { }
 
   ngOnInit() {
-    this.weightUnits = Unit.weightUnits;
-    this.heightUnits = Unit.lengthUnits;
-    this.weightUnit = this.weightUnits[0];
-    this.heightUnit = this.heightUnits[0];
+    this.weightSelection = {
+      unitGroup: Unit.weightUnits,
+      selectedUnit: Unit.weightUnits[0],
+      value: null,
+    };
+
+    this.heightSelection = {
+      unitGroup: Unit.lengthUnits,
+      selectedUnit: Unit.lengthUnits[0],
+      value: null,
+    };
   }
 
   unitString(symbol: Unit.Symbol) {

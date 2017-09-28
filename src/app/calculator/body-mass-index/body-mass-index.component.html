@@ -1,16 +1,16 @@
 <form fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="2rem">
-  <md-radio-group name="unitSystem">
+  <md-radio-group name="unitSystem" fxLayout fxLayoutGap="2rem">
     <md-radio-button value="metric" checked="true">Metric</md-radio-button>
     <md-radio-button value="imperial">Imperial</md-radio-button>
   </md-radio-group>
 
   <div fxLayout fxLayoutGap=".2rem">
     <md-form-field color="accent" class="full-width">
-      <input mdInput name="weightValue" type="number" placeholder="Weight" [(ngModel)]="weightValue" />
-      <md-hint align="end">{{ weightUnit.name }}</md-hint>
+      <input mdInput name="weightValue" type="number" placeholder="Weight" [(ngModel)]="weightSelection.value" />
+      <md-hint align="end">{{ weightSelection.selectedUnit.name }}</md-hint>
     </md-form-field>
-    <md-select name="weightUnits" color="accent" class="full-width" placeholder="Units" [(ngModel)]="weightUnit">
-      <md-option *ngFor="let unit of weightUnits" [value]="unit">
+    <md-select name="weightUnits" color="accent" class="full-width" placeholder="Units" [(ngModel)]="weightSelection.selectedUnit">
+      <md-option *ngFor="let unit of weightSelection.unitGroup" [value]="unit">
         {{ unitString(unit.symbol) }}
       </md-option>
     </md-select>
@@ -18,18 +18,18 @@
 
   <div fxLayout fxLayoutGap=".2rem">
     <md-form-field color="accent" class="full-width">
-      <input mdInput name="heightValue" type="number" placeholder="Height" [(ngModel)]="heightValue">
-      <md-hint align="end">{{ heightUnit.name }}</md-hint>
+      <input mdInput name="heightValue" type="number" placeholder="Height" [(ngModel)]="heightSelection.value">
+      <md-hint align="end">{{ heightSelection.selectedUnit.name }}</md-hint>
     </md-form-field>
-    <md-select name="heightUnits" color="accent" class="full-width" placeholder="Units" [(ngModel)]="heightUnit">
-      <md-option *ngFor="let unit of heightUnits" [value]="unit">
+    <md-select name="heightUnits" color="accent" class="full-width" placeholder="Units" [(ngModel)]="heightSelection.selectedUnit">
+      <md-option *ngFor="let unit of heightSelection.unitGroup" [value]="unit">
         {{ unitString(unit.symbol) }}
       </md-option>
     </md-select>
   </div>
 
   <md-form-field color="accent">
-    <input mdInput name="bmiResult" id="bmiResult" type="number" placeholder="BMI" disabled [value]="result | number : '1.2-2'">
+    <input mdInput name="bmiResult" id="bmiResult" type="number" placeholder="Body Mass Index (BMI)" disabled [value]="(result || 0) | number : '1.2-2'">
     <md-hint align="start">Normal: &lt; 25</md-hint>
   </md-form-field>
 </form>
