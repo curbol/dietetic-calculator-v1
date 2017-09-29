@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ICalculator } from '../calculator';
-import { CalculatorService } from '../calculator-service/calculator.service';
+import { CalculatorListService } from '../calculator-list-service/calculator-list.service';
+import { ICalculatorListItem } from '../calculator-list-service/calculator-list-item';
 
 @Component({
   selector: 'dc-calculators-list',
@@ -9,15 +9,15 @@ import { CalculatorService } from '../calculator-service/calculator.service';
   styleUrls: ['./calculators-list.component.css']
 })
 export class CalculatorsListComponent implements OnInit {
-  calculators: ICalculator[];
+  calculatorList: ICalculatorListItem[];
   errorMessage: string;
 
-  constructor(private _calculatorService: CalculatorService) { }
+  constructor(private calculatorListService: CalculatorListService) { }
 
   ngOnInit() {
-    this._calculatorService.getCalculators().subscribe(
+    this.calculatorListService.getCalculators().subscribe(
       calculators => {
-        this.calculators = calculators;
+        this.calculatorList = calculators;
       },
       error => this.errorMessage = <any>error
     );

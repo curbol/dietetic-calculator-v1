@@ -3,23 +3,23 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 
-import { ICalculator } from '../calculator';
+import { ICalculatorListItem } from './calculator-list-item';
 
 @Injectable()
-export class CalculatorService {
+export class CalculatorListService {
   private _calculatorsUrl = './api/calculator/calculators.json';
 
   constructor(private _http: HttpClient) { }
 
-  getCalculators(): Observable<ICalculator[]> {
-    return this._http.get<ICalculator[]>(this._calculatorsUrl)
+  getCalculators(): Observable<ICalculatorListItem[]> {
+    return this._http.get<ICalculatorListItem[]>(this._calculatorsUrl)
       // .do(data => console.log('All: ' + JSON.stringify(data)))
       .catch(this.handleError);
   }
 
-  getCalculator(stub: string): Observable<ICalculator> {
+  getCalculator(stub: string): Observable<ICalculatorListItem> {
     return this.getCalculators()
-      .map((calculators: ICalculator[]) => calculators.find(c => c.stub === stub));
+      .map((calculators: ICalculatorListItem[]) => calculators.find(c => c.stub === stub));
   }
 
   private handleError(err: HttpErrorResponse) {

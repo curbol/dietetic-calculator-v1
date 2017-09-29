@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 
-import { BodyMassIndexComponent } from './body-mass-index/body-mass-index.component';
-import { CalculatorsListComponent } from './calculators-list/calculators-list.component';
 import { SharedModule } from '../shared/shared.module';
-import { CalculatorService } from './calculator-service/calculator.service';
+import { BodyMassIndexComponent } from './body-mass-index/body-mass-index.component';
+import { CalculatorsListComponent } from './calculator-list/calculators-list.component';
+import { CalculatorListService } from './calculator-list-service/calculator-list.service';
+import { EquationService } from './equation/equation.service';
+import { UnitService } from './unit/unit.service';
 
 @NgModule({
   imports: [
@@ -13,6 +15,6 @@ import { CalculatorService } from './calculator-service/calculator.service';
     CalculatorsListComponent,
     BodyMassIndexComponent
   ],
-  providers: [CalculatorService]
+  providers: [CalculatorListService, EquationService, UnitService]
 })
 export class CalculatorModule { }

@@ -19,7 +19,7 @@
   <div fxLayout fxLayoutGap=".2rem">
     <md-form-field color="accent" class="full-width">
       <input mdInput name="heightValue" type="number" placeholder="Height" [(ngModel)]="heightSelection.value">
-      <md-hint align="end">{{ heightSelection.unit.name }}</md-hint>
+      <md-hint align="end">{{ heightSelection?.unit?.name }}</md-hint>
     </md-form-field>
     <md-select name="heightUnits" color="accent" class="full-width" placeholder="Units" (change)="updateSystem()" [(ngModel)]="heightSelection.unit">
       <md-option *ngFor="let unit of heightSelection.group" [value]="unit">

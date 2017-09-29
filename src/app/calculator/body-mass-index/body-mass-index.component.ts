@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Unit } from '../unit';
+import { UnitService } from '../unit/unit.service';
+import { EquationService } from '../equation/equation.service';
+import { Unit } from '../unit/unit';
+import { CanActivate, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'dc-body-mass-index',
@@ -13,30 +16,25 @@ export class BodyMassIndexComponent implements OnInit {
   heightSelection: Unit.IUnitSelection;
 
   get result(): number {
-    if (!this.weightSelection.value || !this.heightSelection.value) {
+    if (!this.weightSelection || !this.weightSelection.value || !this.heightSelection || !this.heightSelection.value) {
       return;
     }
 
-    const weight_kg: number = Unit.selectionConversion(this.weightSelection)(Unit.Symbol.kg);
-    const height_m: number = Unit.selectionConversion(this.heightSelection)(Unit.Symbol.m);
+    const weight_kg: number = this.unitService.selectionConversion(this.weightSelection)(Unit.Symbol.kg);
+    const height_m: number = this.unitService.selectionConversion(this.heightSelection)(Unit.Symbol.m);
 
-    return this.calculateBMI(weight_kg, height_m);
+    return this.equationService.bodyMassIndex(weight_kg)(height_m);
   }
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private unitService: UnitService, private equationService: EquationService) {
+  }
 
   ngOnInit() {
-    this.weightSelection = {
-      group: Unit.weightUnits,
-      unit: Unit.weightUnits[0],
-      value: null,
-    };
+    const weightUnits: Unit.IUnit[] = this.route.snapshot.data['weightUnits'];
+    this.weightSelection = { group: weightUnits, unit: null, value: null };
 
-    this.heightSelection = {
-      group: Unit.lengthUnits,
-      unit: Unit.lengthUnits[0],
-      value: null,
-    };
+    const heightUnits: Unit.IUnit[] = this.route.snapshot.data['heightUnits'];
+    this.heightSelection = { group: heightUnits, unit: null, value: null };
 
     this.system = Unit.System[Unit.System.metric];
     this.setDefaultUnitSystem(this.system);
@@ -45,21 +43,19 @@ export class BodyMassIndexComponent implements OnInit {
   setDefaultUnitSystem(systemString: string): void {
     const system: Unit.System = Unit.System[systemString] || Unit.System.metric;
 
-    this.weightSelection.unit = Unit.defaultUnit(this.weightSelection.group)(system);
-    this.heightSelection.unit = Unit.defaultUnit(this.heightSelection.group)(system);
+    this.weightSelection.unit = this.unitService.defaultUnit(this.weightSelection.group)(system);
+    this.heightSelection.unit = this.unitService.defaultUnit(this.heightSelection.group)(system);
   }
 
   updateSystem() {
     if (this.weightSelection.unit.system === this.heightSelection.unit.system) {
       this.system = Unit.System[this.weightSelection.unit.system];
+    } else {
+      this.system = null;
     }
   }
 
   unitString(symbol: Unit.Symbol): string {
     return Unit.Symbol[symbol];
-  }
-
-  calculateBMI(weight_kg: number, height_m: number): number {
-    return weight_kg / (height_m * height_m);
   }
 }
