@@ -3,5 +3,9 @@
 }
 
 #bmiResult {
-  font-size: 2rem;
+    font-size: 2rem;
+}
+
+#bmiUnits {
+    font-size: 1.2rem;
 }

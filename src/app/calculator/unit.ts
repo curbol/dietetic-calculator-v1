@@ -9,8 +9,8 @@ export module Unit {
   }
 
   export interface IUnitSelection {
-    unitGroup: IUnit[];
-    selectedUnit: IUnit;
+    group: IUnit[];
+    unit: IUnit;
     value: number;
   }
 
@@ -93,9 +93,13 @@ export module Unit {
     },
   ];
 
+  export const defaultUnit = (group: IUnit[]) => (system: System) => {
+    return group.find(u => u.system === system);
+  }
+
   export const selectionConversion = (selection: IUnitSelection) => (targetSymbol: Symbol) => {
-    const targetUnit = selection.unitGroup.find(u => u.symbol === targetSymbol);
-    return conversion(selection.selectedUnit)(targetUnit)(selection.value);
+    const targetUnit = selection.group.find(u => u.symbol === targetSymbol);
+    return conversion(selection.unit)(targetUnit)(selection.value);
   };
 
   export const conversion = (sourceUnit: IUnit) => (targetUnit: IUnit) => (sourceValue: number) => {

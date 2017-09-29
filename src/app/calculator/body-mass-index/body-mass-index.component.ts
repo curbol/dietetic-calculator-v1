@@ -8,6 +8,7 @@ import { Unit } from '../unit';
   styleUrls: ['./body-mass-index.component.css']
 })
 export class BodyMassIndexComponent implements OnInit {
+  system: string;
   weightSelection: Unit.IUnitSelection;
   heightSelection: Unit.IUnitSelection;
 
@@ -26,19 +27,35 @@ export class BodyMassIndexComponent implements OnInit {
 
   ngOnInit() {
     this.weightSelection = {
-      unitGroup: Unit.weightUnits,
-      selectedUnit: Unit.weightUnits[0],
+      group: Unit.weightUnits,
+      unit: Unit.weightUnits[0],
       value: null,
     };
 
     this.heightSelection = {
-      unitGroup: Unit.lengthUnits,
-      selectedUnit: Unit.lengthUnits[0],
+      group: Unit.lengthUnits,
+      unit: Unit.lengthUnits[0],
       value: null,
     };
+
+    this.system = Unit.System[Unit.System.metric];
+    this.setDefaultUnitSystem(this.system);
   }
 
-  unitString(symbol: Unit.Symbol) {
+  setDefaultUnitSystem(systemString: string): void {
+    const system: Unit.System = Unit.System[systemString] || Unit.System.metric;
+
+    this.weightSelection.unit = Unit.defaultUnit(this.weightSelection.group)(system);
+    this.heightSelection.unit = Unit.defaultUnit(this.heightSelection.group)(system);
+  }
+
+  updateSystem() {
+    if (this.weightSelection.unit.system === this.heightSelection.unit.system) {
+      this.system = Unit.System[this.weightSelection.unit.system];
+    }
+  }
+
+  unitString(symbol: Unit.Symbol): string {
     return Unit.Symbol[symbol];
   }
 
