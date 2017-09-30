@@ -7,8 +7,8 @@ import { Unit } from './unit';
 @Injectable()
 export class WeightUnitsResolver implements Resolve<Unit.IUnit[]> {
   constructor(private unitService: UnitService) {}
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Unit.IUnit[]>|Promise<Unit.IUnit[]>|Unit.IUnit[] {
+  
+  resolve(route: ActivatedRouteSnapshot): Observable<Unit.IUnit[]>|Promise<Unit.IUnit[]>|Unit.IUnit[] {
     return this.unitService.getWeightUnits();
   }
 }
@@ -17,7 +17,7 @@ export class WeightUnitsResolver implements Resolve<Unit.IUnit[]> {
 export class LengthUnitsResolver implements Resolve<Unit.IUnit[]> {
   constructor(private unitService: UnitService) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Unit.IUnit[]>|Promise<Unit.IUnit[]>|Unit.IUnit[] {
+  resolve(route: ActivatedRouteSnapshot): Observable<Unit.IUnit[]>|Promise<Unit.IUnit[]>|Unit.IUnit[] {
     return this.unitService.getLengthUnits();
   }
 }

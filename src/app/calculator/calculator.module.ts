@@ -15,6 +15,6 @@ import { UnitService } from './unit/unit.service';
     CalculatorsListComponent,
     BodyMassIndexComponent
   ],
-  providers: [CalculatorListService, EquationService, UnitService]
+  providers: [CalculatorListService]
 })
 export class CalculatorModule { }

@@ -26,8 +26,7 @@ export class BodyMassIndexComponent implements OnInit {
     return this.equationService.bodyMassIndex(weight_kg)(height_m);
   }
 
-  constructor(private route: ActivatedRoute, private unitService: UnitService, private equationService: EquationService) {
-  }
+  constructor(private route: ActivatedRoute, private unitService: UnitService, private equationService: EquationService) {}
 
   ngOnInit() {
     const weightUnits: Unit.IUnit[] = this.route.snapshot.data['weightUnits'];

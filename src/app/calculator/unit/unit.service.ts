@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UnitService {
+  constructor() { }
+
   weightUnits: Unit.IUnit[] = [
     {
       name: 'kilograms',
@@ -40,7 +42,7 @@ export class UnitService {
       convertFromBase: (value: number) => value * 0.00015747,
     },
   ];
-
+  
   lengthUnits: Unit.IUnit[] = [
     {
       name: 'centimeters',
@@ -76,20 +78,16 @@ export class UnitService {
     },
   ];
 
-  constructor() { }
-
-  getWeightUnits() {
-    return Observable.create(observer => {
-      observer.next(this.weightUnits);
+  getWeightUnits(): Promise<Unit.IUnit[]> {
+    return new Promise<Unit.IUnit[]>((resolve, reject) => {
+      resolve(this.weightUnits);
     });
-    // return new Promise<Unit.IUnit[]>(() => this.weightUnits);
   }
 
-  getLengthUnits() {
-    return Observable.create(observer => {
-      observer.next(this.lengthUnits);
+  getLengthUnits(): Promise<Unit.IUnit[]> {
+    return new Promise<Unit.IUnit[]>((resolve, reject) => {
+      resolve(this.lengthUnits);
     });
-    // return new Promise<Unit.IUnit[]>(() => this.lengthUnits);
   }
 
   defaultUnit = (group: Unit.IUnit[]) => (system: Unit.System) => {

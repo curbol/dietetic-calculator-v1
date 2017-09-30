@@ -10,6 +10,9 @@ import { SharedModule } from './shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { AboutComponent } from './about/about.component';
+import { WeightUnitsResolver, LengthUnitsResolver } from './calculator/unit/unit-resolvers';
+import { EquationService } from './calculator/equation/equation.service';
+import { UnitService } from './calculator/unit/unit.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,12 @@ import { AboutComponent } from './about/about.component';
     CalculatorModule,
     SharedModule
   ],
-  providers: [],
+  providers: [
+    EquationService,
+    UnitService,
+    WeightUnitsResolver,
+    LengthUnitsResolver
+  ],
   bootstrap: [
     AppComponent
   ]

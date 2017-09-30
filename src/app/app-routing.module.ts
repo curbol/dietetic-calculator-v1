@@ -7,19 +7,35 @@ import { AboutComponent } from './about/about.component';
 import { WeightUnitsResolver, LengthUnitsResolver } from './calculator/unit/unit-resolvers';
 
 const routes: Routes = [
-  { path: 'calcs', component: CalculatorsListComponent,
-    data: { state: 'calcs', title: 'Calculators', isHome: true } },
-  { path: 'calcs/bmi', component: BodyMassIndexComponent, resolve: { weightUnits: WeightUnitsResolver, heightUnits: LengthUnitsResolver },
-    data: { state: 'bmi', title: 'Body Mass Index (BMI)', subtitle: 'A measure of body fat in adults' } },
-  { path: 'about', component: AboutComponent,
-    data: { state: 'about', title: 'About' } },
-  { path: '', redirectTo: 'calcs', pathMatch: 'full' },
-  { path: '**', redirectTo: 'calcs', pathMatch: 'full' }
+  { 
+    path: 'calcs', 
+    component: CalculatorsListComponent,
+    data: { state: 'calcs', title: 'Calculators', isHome: true } 
+  },
+  { 
+    path: 'calcs/bmi', 
+    component: BodyMassIndexComponent,
+    data: { state: 'bmi', title: 'Body Mass Index (BMI)', subtitle: 'A measure of body fat in adults' },
+    resolve: { weightUnits: WeightUnitsResolver, heightUnits: LengthUnitsResolver }
+  },
+  { path: 'about', 
+    component: AboutComponent,
+    data: { state: 'about', title: 'About' } 
+  },
+  { 
+    path: '', 
+    redirectTo: 'calcs', 
+    pathMatch: 'full' 
+  },
+  { 
+    path: '**', 
+    redirectTo: 'calcs', 
+    pathMatch: 'full' 
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  providers: [WeightUnitsResolver, LengthUnitsResolver]
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
