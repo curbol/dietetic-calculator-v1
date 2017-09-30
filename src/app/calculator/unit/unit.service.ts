@@ -42,7 +42,7 @@ export class UnitService {
       convertFromBase: (value: number) => value * 0.00015747,
     },
   ];
-  
+
   lengthUnits: Unit.IUnit[] = [
     {
       name: 'centimeters',

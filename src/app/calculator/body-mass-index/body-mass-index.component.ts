@@ -16,8 +16,8 @@ export class BodyMassIndexComponent implements OnInit {
   heightSelection: Unit.IUnitSelection;
 
   get result(): number {
-    if (!this.weightSelection || !this.weightSelection.value || !this.heightSelection || !this.heightSelection.value) {
-      return;
+    if (!this.weightSelection.value || !this.heightSelection.value) {
+      return null;
     }
 
     const weight_kg: number = this.unitService.selectionConversion(this.weightSelection)(Unit.Symbol.kg);
