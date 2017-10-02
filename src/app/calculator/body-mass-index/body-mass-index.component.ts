@@ -15,13 +15,18 @@ export class BodyMassIndexComponent implements OnInit {
   weightSelection: Unit.IUnitSelection;
   heightSelection: Unit.IUnitSelection;
 
-  bmiClassifications: { range: string, description: string }[] = [
-    { range: '< 18.5', description: 'Underweight' },
-    { range: '18.5 - 25', description: 'Normal' },
-    { range: '25 - 30', description: 'Overweight' },
-    { range: '30 - 35', description: 'Obesity (Class I)' },
-    { range: '35 - 40', description: 'Obesity (Class II)' },
-    { range: '> 40', description: 'Obesity (Class III)' },
+  bmiClassifications:
+  {
+    range: string,
+    description: string,
+    inRange: (bmi: number) => boolean
+  }[] = [
+    { range: '< 18.5', description: 'Underweight', inRange: (bmi: number) => bmi < 18.5 },
+    { range: '18.5 - 24.9', description: 'Normal', inRange: (bmi: number) => bmi >= 18.5 && bmi < 25 },
+    { range: '25 - 29.9', description: 'Overweight', inRange: (bmi: number) => bmi >= 25 && bmi < 30 },
+    { range: '30 - 34.9', description: 'Obesity (Class I)', inRange: (bmi: number) => bmi >= 30 && bmi < 35 },
+    { range: '35 - 39.9', description: 'Obesity (Class II)', inRange: (bmi: number) => bmi >= 35 && bmi < 40 },
+    { range: '40+', description: 'Obesity (Class III)', inRange: (bmi: number) => bmi >= 40 },
   ];
 
   get result(): number {
@@ -31,8 +36,10 @@ export class BodyMassIndexComponent implements OnInit {
 
     const weight_kg: number = this.unitService.selectionConversion(this.weightSelection)(Unit.Symbol.kg);
     const height_m: number = this.unitService.selectionConversion(this.heightSelection)(Unit.Symbol.m);
+    const bmi: number = this.equationService.bodyMassIndex(weight_kg)(height_m);
+    const roundedBmi: number = Math.round(bmi * 10) / 10;
 
-    return this.equationService.bodyMassIndex(weight_kg)(height_m);
+    return roundedBmi;
   }
 
   constructor(private route: ActivatedRoute, private unitService: UnitService, private equationService: EquationService) {}

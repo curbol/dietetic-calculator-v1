@@ -5,10 +5,12 @@
 @import './base-styles.theme.scss';
 @import './themes/dietetic-theme.scss';
 @import './app/header/header.component.theme.scss';
+@import './app/calculator/body-mass-index/body-mass-index.component.theme.scss';
 
 @mixin custom-components-theme($theme) {
   @include dc-toolbar-component-theme($theme);
   @include dc-base-styles-theme($theme);
+  @include dc-body-mass-index-component-theme($theme);
 }
 
 .dietetic-theme {

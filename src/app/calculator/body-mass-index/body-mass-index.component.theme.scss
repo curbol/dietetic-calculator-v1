@@ -1,0 +1,10 @@
+@import '~@angular/material/theming';
+
+@mixin dc-body-mass-index-component-theme($theme) {
+  $primary: map-get($theme, primary);
+
+  .current-range {
+    color: mat-contrast($primary, 700);
+    background-color: mat-color($primary, 700, 0.8);
+  }
+}
