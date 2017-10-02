@@ -1,0 +1,31 @@
+@import '~@angular/material/theming';
+
+@mixin dc-base-styles-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  // color: mat-color($primary, default-contrast);
+  // background-color: mat-color($primary, lighter);
+
+  // color: mat-color($primary, lighter);
+  // background-color: mat-color($primary, darker);
+
+  // color: mat-color($accent, default-contrast);
+  // background-color: mat-color($accent);
+
+  table {
+    color: mat-color($foreground, text);
+    background-color: mat-color($background, card, 0.1);
+
+    thead {
+      background-color: mat-color($background, app-bar, 0.9);
+    }
+
+    th, td {
+      border: 1px solid mat-color($foreground, text, 0.03);
+    }
+  }
+}

@@ -8,12 +8,21 @@ import { CanActivate, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'dc-body-mass-index',
   templateUrl: './body-mass-index.component.html',
-  styleUrls: ['./body-mass-index.component.css']
+  styleUrls: ['./body-mass-index.component.scss']
 })
 export class BodyMassIndexComponent implements OnInit {
   system: string;
   weightSelection: Unit.IUnitSelection;
   heightSelection: Unit.IUnitSelection;
+
+  bmiClassifications: { range: string, description: string }[] = [
+    { range: '< 18.5', description: 'Underweight' },
+    { range: '18.5 - 25', description: 'Normal' },
+    { range: '25 - 30', description: 'Overweight' },
+    { range: '30 - 35', description: 'Obesity (Class I)' },
+    { range: '35 - 40', description: 'Obesity (Class II)' },
+    { range: '> 40', description: 'Obesity (Class III)' },
+  ];
 
   get result(): number {
     if (!this.weightSelection.value || !this.heightSelection.value) {
