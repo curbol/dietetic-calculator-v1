@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { UnitService } from '../unit/unit.service';
 import { EquationService } from '../equation/equation.service';
 import { Unit } from '../unit/unit';
-import { CanActivate, ActivatedRoute } from '@angular/router';
+import { IBmiClassification } from './bmi-classification';
 
 @Component({
   selector: 'dc-body-mass-index',
@@ -15,12 +16,7 @@ export class BodyMassIndexComponent implements OnInit {
   weightSelection: Unit.IUnitSelection;
   heightSelection: Unit.IUnitSelection;
 
-  bmiClassifications:
-  {
-    range: string,
-    description: string,
-    inRange: (bmi: number) => boolean
-  }[] = [
+  bmiClassifications: IBmiClassification[] = [
     { range: '< 18.5', description: 'Underweight', inRange: (bmi: number) => bmi < 18.5 },
     { range: '18.5 - 24.9', description: 'Normal', inRange: (bmi: number) => bmi >= 18.5 && bmi < 25 },
     { range: '25 - 29.9', description: 'Overweight', inRange: (bmi: number) => bmi >= 25 && bmi < 30 },
