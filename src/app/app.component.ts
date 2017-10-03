@@ -13,6 +13,6 @@ export class AppComponent {
   constructor() {}
 
   getState(outlet) {
-    return outlet.activatedRouteData.state;
+    return outlet.activatedRouteData.title;
   }
 }
