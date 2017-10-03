@@ -10,17 +10,17 @@ const routes: Routes = [
   {
     path: 'calcs',
     component: CalculatorsListComponent,
-    data: { state: 'calcs', title: 'Calculators', isHome: true }
+    data: { title: 'Calculators', isHome: true }
   },
   {
     path: 'calcs/bmi',
     component: BodyMassIndexComponent,
-    data: { state: 'bmi', title: 'Body Mass Index (BMI)', subtitle: 'A measure of body fat in adults' },
+    data: { calc: true, title: 'Body Mass Index (BMI)', subtitle: 'A measure of body fat in adults' },
     resolve: { weightUnits: WeightUnitsResolver, heightUnits: LengthUnitsResolver }
   },
   { path: 'about',
     component: AboutComponent,
-    data: { state: 'about', title: 'About' }
+    data: { title: 'About' }
   },
   {
     path: '',

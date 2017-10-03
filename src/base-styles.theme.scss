@@ -9,14 +9,14 @@
 
   table {
     color: mat-color($foreground, text);
-    background-color: mat-color($background, card, 0.1);
+    background-color: mat-color($background, card, 0.2);
 
     thead {
       background-color: mat-color($background, app-bar, 0.9);
     }
 
     th, td {
-      border: 1px solid mat-color($foreground, text, 0.03);
+      border: 1px solid mat-color($foreground, text, 0.05);
     }
   }
 }

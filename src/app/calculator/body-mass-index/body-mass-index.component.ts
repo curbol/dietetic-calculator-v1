@@ -22,7 +22,7 @@ export class BodyMassIndexComponent implements OnInit {
     { range: '25 - 29.9', description: 'Overweight', inRange: (bmi: number) => bmi >= 25 && bmi < 30 },
     { range: '30 - 34.9', description: 'Obesity (Class I)', inRange: (bmi: number) => bmi >= 30 && bmi < 35 },
     { range: '35 - 39.9', description: 'Obesity (Class II)', inRange: (bmi: number) => bmi >= 35 && bmi < 40 },
-    { range: '40+', description: 'Obesity (Class III)', inRange: (bmi: number) => bmi >= 40 },
+    { range: '> 40', description: 'Obesity (Class III)', inRange: (bmi: number) => bmi >= 40 },
   ];
 
   get result(): number {
