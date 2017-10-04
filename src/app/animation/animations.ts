@@ -1,4 +1,4 @@
-import { animate, style, group, animateChild, query, stagger, transition, trigger, AnimationTriggerMetadata } from '@angular/animations';
+import { animate, style, transition, trigger, AnimationTriggerMetadata } from '@angular/animations';
 
 export function slideInOnRouteChange(): AnimationTriggerMetadata {
   return trigger('slideInOnRouteChange', [
