@@ -36,11 +36,15 @@
   </form>
 
   <table id="bmi-scale">
-    <thead><tr><th>BMI</th><th>Classification</th></tr></thead>
+    <thead>
+      <tr>
+      <th>BMI
+      <th>Classification
+    </thead>
     <tbody>
       <tr *ngFor="let class of bmiClassifications" [ngClass]="{'current-range': result && class.inRange(result)}">
-        <td>{{class?.range}}</td><td>{{class?.description}}</td>
-      </tr>
+      <td>{{class?.range}}
+      <td>{{class?.description}}
     </tbody>
   </table>
 </div>
