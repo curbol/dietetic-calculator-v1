@@ -19,4 +19,8 @@
       border: 1px solid mat-color($foreground, text, 0.05);
     }
   }
+
+  .dc-light-text {
+    color: mat-color($foreground, text) !important;
+  }
 }
