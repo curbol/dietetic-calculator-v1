@@ -20,7 +20,7 @@
     }
   }
 
-  .dc-light-text {
-    color: mat-color($foreground, text) !important;
+  .dc-default-text, .dc-default-text:disabled {
+    color: mat-color($foreground, text, 1) !important;
   }
 }

@@ -18,6 +18,11 @@ html, body {
   font-family: "Roboto", "Helvetica Neue Light", "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", "sans-serif";
 }
 
+img {
+  display:block;
+  max-width: 100%;
+}
+
 p {
   line-height: 1.75em;
 }
@@ -40,11 +45,15 @@ button.md-small {
   padding-right: .5em;
 }
 
-.bottom-shadow {
+.dc-bottom-shadow {
   -webkit-box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
   -moz-box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
   box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
   position: relative;
+}
+
+.dc-full-shadow {
+  box-shadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
 }
 
 table {
