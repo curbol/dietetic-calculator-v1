@@ -3,11 +3,6 @@
 @mixin dc-toolbar-component-theme($theme) {
   $primary: map-get($theme, primary);
 
-  .header-toolbar {
-    color: mat-contrast($primary, 500);
-    background-color: mat-color($primary);
-  }
-
   #main-subtitle, #header-subtitle {
     color: mat-contrast($primary, 900);
   }

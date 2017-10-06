@@ -1,13 +1,16 @@
-<div class="header-toolbar" *ngIf='isHome' id="dc-header" fxLayout="column" fxLayoutAlign="center center">
-  <div id="main-text" [@slideInOnRouteChange]="title">
-    <h1 id="main-title">Dietetic Calculator</h1>
-    <h2 id="main-subtitle">Tool For Common Dietitian Calculations</h2>
+<div class="dc-primary-background header-toolbar">
+  <div *ngIf='isHome' id="dc-header" fxLayout="column" fxLayoutAlign="center center">
+    <div id="main-text" [@slideInOnRouteChange]="title">
+      <h1 id="main-title">Dietetic Calculator</h1>
+      <h2 id="main-subtitle">Tool For Common Dietitian Calculations</h2>
+    </div>
+  </div>
+
+  <div *ngIf='title && !isHome'>
+    <div id="header-text" [@slideInOnRouteChange]="title" >
+      <h3 id="header-title">{{title}}</h3>
+      <h4 id="header-subtitle" *ngIf='subtitle'>{{subtitle}}</h4>
+    </div>
   </div>
 </div>
 
-<div class="header-toolbar" color="primary" *ngIf='title && !isHome'>
-  <div id="header-text" [@slideInOnRouteChange]="title" >
-    <h3 id="header-title">{{title}}</h3>
-    <h4 id="header-subtitle" *ngIf='subtitle'>{{subtitle}}</h4>
-  </div>
-</div>

@@ -23,4 +23,9 @@
   .dc-default-text, .dc-default-text:disabled {
     color: mat-color($foreground, text, 1) !important;
   }
+
+  .dc-primary-background {
+    color: mat-contrast($primary, 500);
+    background-color: mat-color($primary);
+  }
 }
