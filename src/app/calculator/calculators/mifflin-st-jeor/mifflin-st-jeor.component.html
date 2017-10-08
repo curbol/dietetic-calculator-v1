@@ -1,0 +1,38 @@
+<div fxLayout="column" fxLayoutAlign="start center">
+  <form fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="2rem">
+    <md-radio-group name="unitSystem" fxLayout fxLayoutGap="2rem" [(ngModel)]="system" (change)="setDefaultUnitSystem($event.value)">
+      <md-radio-button value="metric">Metric</md-radio-button>
+      <md-radio-button value="imperial">Imperial</md-radio-button>
+    </md-radio-group>
+
+    <div fxLayout fxLayoutGap=".2rem">
+      <md-form-field fxFlex color="accent">
+        <input mdInput name="weightValue" type="number" placeholder="Weight" [(ngModel)]="weightSelection.value" />
+        <md-hint align="end">{{unitString(weightSelection?.unit?.symbol)}}</md-hint>
+      </md-form-field>
+      <md-select fxFlex="none" name="weightUnits" color="accent" placeholder="Units" (change)="updateSystem()" [(ngModel)]="weightSelection.unit">
+        <md-option *ngFor="let unit of weightSelection.group" [value]="unit">
+          {{unit?.name}} ({{unitString(unit?.symbol)}})
+        </md-option>
+      </md-select>
+    </div>
+
+    <div fxLayout fxLayoutGap=".2rem">
+      <md-form-field fxFlex color="accent">
+        <input mdInput name="heightValue" type="number" placeholder="Height" [(ngModel)]="heightSelection.value">
+        <md-hint align="end">{{unitString(heightSelection?.unit?.symbol)}}</md-hint>
+      </md-form-field>
+      <md-select fxFlex="none" name="heightUnits" color="accent" placeholder="Units" (change)="updateSystem()" [(ngModel)]="heightSelection.unit">
+        <md-option *ngFor="let unit of heightSelection.group" [value]="unit">
+          {{unit?.name}} ({{unitString(unit?.symbol)}})
+        </md-option>
+      </md-select>
+    </div>
+
+    <dc-result class="dc-full-width"
+      [title]="'Body Mass Index (BMI)'"
+      [value]="(result || 0) | number:'1.1-1'"
+      [units]="'kg/m&#178;'">
+    </dc-result>
+  </form>
+</div>

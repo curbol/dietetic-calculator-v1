@@ -8,10 +8,11 @@ import { Observable } from 'rxjs/Observable';
 export class UnitService {
   constructor() { }
 
-  weightUnits: Unit.IUnit[] = [
+  units: Unit.IUnit[] = [
     {
       name: 'kilograms',
       symbol: Unit.Symbol.kg,
+      type: Unit.Type.weight,
       baseSymbol: Unit.Symbol.g,
       system: Unit.System.metric,
       convertToBase: (value: number) => value / 0.001,
@@ -20,6 +21,7 @@ export class UnitService {
     {
       name: 'grams',
       symbol: Unit.Symbol.g,
+      type: Unit.Type.weight,
       baseSymbol: Unit.Symbol.g,
       system: Unit.System.metric,
       convertToBase: (value: number) => value,
@@ -28,6 +30,7 @@ export class UnitService {
     {
       name: 'pounds',
       symbol: Unit.Symbol.lb,
+      type: Unit.Type.weight,
       baseSymbol: Unit.Symbol.g,
       system: Unit.System.imperial,
       convertToBase: (value: number) => value / 0.0022046,
@@ -36,17 +39,16 @@ export class UnitService {
     {
       name: 'stone',
       symbol: Unit.Symbol.st,
+      type: Unit.Type.weight,
       baseSymbol: Unit.Symbol.g,
       system: Unit.System.imperial,
       convertToBase: (value: number) => value / 0.00015747,
       convertFromBase: (value: number) => value * 0.00015747,
     },
-  ];
-
-  lengthUnits: Unit.IUnit[] = [
     {
       name: 'centimeters',
       symbol: Unit.Symbol.cm,
+      type: Unit.Type.distance,
       baseSymbol: Unit.Symbol.m,
       system: Unit.System.metric,
       convertToBase: (value: number) => value / 100,
@@ -55,6 +57,7 @@ export class UnitService {
     {
       name: 'meters',
       symbol: Unit.Symbol.m,
+      type: Unit.Type.distance,
       baseSymbol: Unit.Symbol.m,
       system: Unit.System.metric,
       convertToBase: (value: number) => value,
@@ -63,6 +66,7 @@ export class UnitService {
     {
       name: 'inches',
       symbol: Unit.Symbol.in,
+      type: Unit.Type.distance,
       baseSymbol: Unit.Symbol.m,
       system: Unit.System.imperial,
       convertToBase: (value: number) => value / 39.37,
@@ -71,6 +75,7 @@ export class UnitService {
     {
       name: 'feet',
       symbol: Unit.Symbol.ft,
+      type: Unit.Type.distance,
       baseSymbol: Unit.Symbol.m,
       system: Unit.System.imperial,
       convertToBase: (value: number) => value / 3.2808,
@@ -78,23 +83,43 @@ export class UnitService {
     },
   ];
 
-  getWeightUnits(): Promise<Unit.IUnit[]> {
+  getUnits(type: Unit.Type): Promise<Unit.IUnit[]> {
     return new Promise<Unit.IUnit[]>((resolve, reject) => {
-      resolve(this.weightUnits);
+      resolve(this.units.filter(u => u.type === type));
     });
   }
 
-  getLengthUnits(): Promise<Unit.IUnit[]> {
-    return new Promise<Unit.IUnit[]>((resolve, reject) => {
-      resolve(this.lengthUnits);
+  getSelection = (type: Unit.Type) => {
+    return this.getUnits(type).then<Unit.ISelection>((units: Unit.IUnit[]) => {
+      const selection = { group: units, unit: null, value: null };
+      return selection;
     });
+  }
+
+  getSelections = (types: Map<string, Unit.Type>) => {
+    const selectionsPromises: Promise<{key: string, value: Unit.ISelection}>[] = [];
+    types.forEach((value: Unit.Type, key: string) => {
+      const selectionPromise: Promise<{key: string, value: Unit.ISelection}> = this.getSelection(value)
+        .then<{key: string, value: Unit.ISelection}>((selection: Unit.ISelection) => {
+          return { key: key, value: selection };
+        });
+
+      selectionsPromises.push(selectionPromise);
+    });
+
+    return Promise.all<{key: string, value: Unit.ISelection}>(selectionsPromises)
+      .then<Map<string, Unit.ISelection>>((selectionsArray: {key: string, value: Unit.ISelection}[]) => {
+        const selections: Map<string, Unit.ISelection> = new Map<string, Unit.ISelection>();
+        selectionsArray.forEach(s => selections[s.key] = s.value);
+        return selections;
+      });
   }
 
   defaultUnit = (group: Unit.IUnit[]) => (system: Unit.System) => {
     return group.find(u => u.system === system);
   }
 
-  selectionConversion = (selection: Unit.IUnitSelection) => (targetSymbol: Unit.Symbol) => {
+  selectionConversion = (selection: Unit.ISelection) => (targetSymbol: Unit.Symbol) => {
     const targetUnit = selection.group.find(u => u.symbol === targetSymbol);
     return this.conversion(selection.unit)(targetUnit)(selection.value);
   }

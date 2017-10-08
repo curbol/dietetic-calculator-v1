@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
-import { BodyMassIndexComponent } from './body-mass-index/body-mass-index.component';
 import { CalculatorsListComponent } from './calculator-list/calculators-list.component';
 import { EquationService } from './equation/equation.service';
 import { UnitService } from './unit/unit.service';
 import { ResultComponent } from './result/result.component';
+
+import { BodyMassIndexComponent } from './calculators/body-mass-index/body-mass-index.component';
+import { MifflinStJeorComponent } from './calculators/mifflin-st-jeor/mifflin-st-jeor.component';
 
 @NgModule({
   imports: [
@@ -14,7 +16,8 @@ import { ResultComponent } from './result/result.component';
   declarations: [
     CalculatorsListComponent,
     BodyMassIndexComponent,
-    ResultComponent
+    ResultComponent,
+    MifflinStJeorComponent
   ],
   providers: []
 })

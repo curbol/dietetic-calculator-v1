@@ -5,8 +5,8 @@
 @import './base-styles.theme.scss';
 @import './themes/dietetic-theme.scss';
 @import './app/header/header.component.theme.scss';
-@import './app/calculator/body-mass-index/body-mass-index.component.theme.scss';
 @import './app/calculator/result/result.component.theme.scss';
+@import './app/calculator/calculators/body-mass-index/body-mass-index.component.theme.scss';
 
 @mixin custom-components-theme($theme) {
   @include dc-toolbar-component-theme($theme);

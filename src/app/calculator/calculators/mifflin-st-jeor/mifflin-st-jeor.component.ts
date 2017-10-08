@@ -1,29 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { Unit } from '../../unit/unit';
 import { ActivatedRoute } from '@angular/router';
-
-import { UnitService } from '../unit/unit.service';
-import { EquationService } from '../equation/equation.service';
-import { Unit } from '../unit/unit';
-import { IBmiClassification } from './bmi-classification';
+import { UnitService } from '../../unit/unit.service';
+import { EquationService } from '../../equation/equation.service';
 
 @Component({
-  selector: 'dc-body-mass-index',
-  templateUrl: './body-mass-index.component.html',
-  styleUrls: ['./body-mass-index.component.scss']
+  selector: 'dc-mifflin-st-jeor',
+  templateUrl: './mifflin-st-jeor.component.html',
+  styleUrls: ['./mifflin-st-jeor.component.css']
 })
-export class BodyMassIndexComponent implements OnInit {
+export class MifflinStJeorComponent implements OnInit {
   system: string;
-  weightSelection: Unit.IUnitSelection;
-  heightSelection: Unit.IUnitSelection;
-
-  bmiClassifications: IBmiClassification[] = [
-    { range: '< 18.5', description: 'Underweight', inRange: (bmi: number) => bmi < 18.5 },
-    { range: '18.5 - 24.9', description: 'Normal', inRange: (bmi: number) => bmi >= 18.5 && bmi < 25 },
-    { range: '25 - 29.9', description: 'Overweight', inRange: (bmi: number) => bmi >= 25 && bmi < 30 },
-    { range: '30 - 34.9', description: 'Obesity (Class I)', inRange: (bmi: number) => bmi >= 30 && bmi < 35 },
-    { range: '35 - 39.9', description: 'Obesity (Class II)', inRange: (bmi: number) => bmi >= 35 && bmi < 40 },
-    { range: '> 40', description: 'Obesity (Class III)', inRange: (bmi: number) => bmi >= 40 },
-  ];
+  weightSelection: Unit.ISelection;
+  heightSelection: Unit.ISelection;
 
   get result(): number {
     if (!this.weightSelection.value || !this.heightSelection.value) {
@@ -38,7 +27,7 @@ export class BodyMassIndexComponent implements OnInit {
     return roundedBmi;
   }
 
-  constructor(private route: ActivatedRoute, private unitService: UnitService, private equationService: EquationService) {}
+  constructor(private route: ActivatedRoute, private unitService: UnitService, private equationService: EquationService) { }
 
   ngOnInit() {
     const weightUnits: Unit.IUnit[] = this.route.snapshot.data['weightUnits'];

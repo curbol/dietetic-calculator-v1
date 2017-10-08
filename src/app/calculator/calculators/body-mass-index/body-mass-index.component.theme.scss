@@ -2,7 +2,6 @@
 
 @mixin dc-body-mass-index-component-theme($theme) {
   $primary: map-get($theme, primary);
-  $foreground: map-get($theme, foreground);
 
   .current-range {
     color: mat-contrast($primary, 700);
