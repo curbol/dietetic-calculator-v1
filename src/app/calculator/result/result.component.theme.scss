@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+
+@mixin dc-result-component-theme($theme) {
+  $foreground: map-get($theme, foreground);
+
+  #dc-result-title {
+    color: mat-color($foreground, secondary-text);
+  }
+
+  #dc-result-value {
+    color: mat-color($foreground, secondary-text);
+  }
+
+  #dc-result-underline {
+    background-image: linear-gradient(to right, mat-color($foreground, secondary-text) 0%, mat-color($foreground, secondary-text) 33%, transparent 0%);
+  }
+
+  #dc-result-units {
+    color: mat-color($foreground, secondary-text);
+  }
+}

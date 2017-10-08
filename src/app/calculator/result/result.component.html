@@ -1,0 +1,11 @@
+<div fxLayout="row" fxLayoutAlign="center start">
+  <div id="dc-result">
+    <div id="dc-result-title" *ngIf="title">{{title}}</div>
+    <div id="dc-result-value" [ngClass]="{'dc-default-text': value != 0.0}">{{value}}</div>
+    <div id="dc-result-underline"></div>
+    <div id="dc-result-units" *ngIf="units">{{units}}</div>
+  </div>
+</div>
+
+
+

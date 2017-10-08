@@ -6,11 +6,11 @@
     </md-radio-group>
 
     <div fxLayout fxLayoutGap=".2rem">
-      <md-form-field color="accent" class="full-width">
+      <md-form-field fxFlex color="accent">
         <input mdInput name="weightValue" type="number" placeholder="Weight" [(ngModel)]="weightSelection.value" />
         <md-hint align="end">{{unitString(weightSelection?.unit?.symbol)}}</md-hint>
       </md-form-field>
-      <md-select name="weightUnits" color="accent" class="full-width" placeholder="Units" (change)="updateSystem()" [(ngModel)]="weightSelection.unit">
+      <md-select fxFlex="none" name="weightUnits" color="accent" placeholder="Units" (change)="updateSystem()" [(ngModel)]="weightSelection.unit">
         <md-option *ngFor="let unit of weightSelection.group" [value]="unit">
           {{unit?.name}} ({{unitString(unit?.symbol)}})
         </md-option>
@@ -18,24 +18,22 @@
     </div>
 
     <div fxLayout fxLayoutGap=".2rem">
-      <md-form-field color="accent" class="full-width">
+      <md-form-field fxFlex color="accent">
         <input mdInput name="heightValue" type="number" placeholder="Height" [(ngModel)]="heightSelection.value">
         <md-hint align="end">{{unitString(heightSelection?.unit?.symbol)}}</md-hint>
       </md-form-field>
-      <md-select name="heightUnits" color="accent" class="full-width" placeholder="Units" (change)="updateSystem()" [(ngModel)]="heightSelection.unit">
+      <md-select fxFlex="none" name="heightUnits" color="accent" placeholder="Units" (change)="updateSystem()" [(ngModel)]="heightSelection.unit">
         <md-option *ngFor="let unit of heightSelection.group" [value]="unit">
           {{unit?.name}} ({{unitString(unit?.symbol)}})
         </md-option>
       </md-select>
     </div>
 
-    <md-form-field color="accent">
-      <input mdInput disabled name="bmi-result" id="bmi-result"
-        placeholder="Body Mass Index (BMI)"
-        [ngClass]="{'dc-default-text': result}"
-        [value]="(result || 0) | number:'1.1-1'">
-      <md-hint align="end">kg/m&#178;</md-hint>
-    </md-form-field>
+    <dc-result class="dc-full-width"
+      [title]="'Body Mass Index (BMI)'"
+      [value]="(result || 0) | number:'1.1-1'"
+      [units]="'kg/m&#178;'">
+    </dc-result>
   </form>
 
   <table id="bmi-scale">

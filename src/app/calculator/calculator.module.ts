@@ -5,6 +5,7 @@ import { BodyMassIndexComponent } from './body-mass-index/body-mass-index.compon
 import { CalculatorsListComponent } from './calculator-list/calculators-list.component';
 import { EquationService } from './equation/equation.service';
 import { UnitService } from './unit/unit.service';
+import { ResultComponent } from './result/result.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { UnitService } from './unit/unit.service';
   ],
   declarations: [
     CalculatorsListComponent,
-    BodyMassIndexComponent
+    BodyMassIndexComponent,
+    ResultComponent
   ],
   providers: []
 })
