@@ -1,18 +1,10 @@
 #img-curtsey {
   width: 100%;
-  max-width: 35rem;
+  max-width: 40rem;
 }
 
 #curtsey-names {
   margin-top: .5rem;
   font-size: .8em;
   text-align: center;
-}
-
-.dc-curtsey-name {
-
-}
-
-.dc-curtsey-title {
-
 }

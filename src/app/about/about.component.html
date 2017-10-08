@@ -1,39 +1,28 @@
 <div fxLayout="row" fxLayoutAlign="center start">
-  <div class="text-content" fxLayout="column" fxLayoutGap="1rem"
-       fxFlex fxFlex.sm="80%" fxFlex.md="70%" fxFlex.lg="60%" fxFlex.gt-lg="50%">
-    <p>Dietetic Caclculator is a tool created for dietitians. This tool is intended to make common dietetics calculations quick and easy.</p>
+  <div class="text-content" fxLayout="column" fxLayoutGap="1rem">
 
-    <div fxLayout="column" fxLayoutAlign="center center">
-      <div>
-        <img id="img-curtsey" class="dc-full-shadow" src="../../assets/images/Curtis-Chelsey.jpg" alt="Curtis and Chelsey Bollinger" />
-        <div id="curtsey-names" fxLayout="row" fxLayoutGap=".5rem">
-          <div fxFlex fxLayout="row" fxLayoutAlign="center center" fxLayoutGap=".3rem">
-            <div fxFlex="none">
-              <a href="http://www.linkedin.com/in/curtis-bollinger" target="_blank">
-                <img src="../../assets/images/svg/linkedin.svg" alt="LinkedIn profile of Curtis Bollinger" />
-              </a>
-            </div>
-            <div>
-              <span class="dc-curtsey-name">Curtis Bollinger: </span>
-              <span class="dc-curtsey-title">Software Engineer</span>
-            </div>
+    <p>{{aboutText[0]}}</p>
+
+    <div fxLayout="column">
+      <img id="img-curtsey" class="dc-full-shadow" src="../../assets/images/Curtis-Chelsey.jpg" alt="Curtis and Chelsey Bollinger" />
+      <div id="curtsey-names" fxLayout="row" fxLayoutGap=".5rem">
+        <div *ngFor='let profile of profiles' fxFlex fxLayout="row" fxLayoutAlign="center center" fxLayoutGap=".3rem">
+          <div fxFlex="none">
+            <a href="{{profile?.linkedInUrl}}" target="_blank">
+              <img src="../../assets/images/svg/linkedin.svg" alt="LinkedIn profile of {{profile?.name}}" />
+            </a>
           </div>
-          <div fxFlex fxLayout="row" fxLayoutAlign="center center" fxLayoutGap=".3rem">
-            <div fxFlex="none">
-              <a href="https://www.linkedin.com/in/chelsey-bollinger-rd-a2879bb7" target="_blank">
-                <img src="../../assets/images/svg/linkedin.svg" alt="LinkedIn profile of Chelsey Bollinger" />
-              </a>
-            </div>
-            <div>
-              <span class="dc-curtsey-name">Chelsey Bollinger: </span>
-              <span class="dc-curtsey-title">Registered Dietitian</span>
-            </div>
+          <div>
+            <span>{{profile?.name}}</span>
+            <span> - </span>
+            <span>{{profile?.title}}</span>
           </div>
         </div>
       </div>
     </div>
 
-    <p>Please contact me if you have any questions. I am also interested in any suggestions or feedback you may have to improve this tool.</p>
+    <p>{{aboutText[1]}}</p>
+    <p>{{aboutText[2]}}</p>
 
   </div>
 </div>
