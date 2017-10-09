@@ -48,7 +48,7 @@ export class UnitService {
     {
       name: 'centimeters',
       symbol: Unit.Symbol.cm,
-      type: Unit.Type.distance,
+      type: Unit.Type.length,
       baseSymbol: Unit.Symbol.m,
       system: Unit.System.metric,
       convertToBase: (value: number) => value / 100,
@@ -57,7 +57,7 @@ export class UnitService {
     {
       name: 'meters',
       symbol: Unit.Symbol.m,
-      type: Unit.Type.distance,
+      type: Unit.Type.length,
       baseSymbol: Unit.Symbol.m,
       system: Unit.System.metric,
       convertToBase: (value: number) => value,
@@ -66,7 +66,7 @@ export class UnitService {
     {
       name: 'inches',
       symbol: Unit.Symbol.in,
-      type: Unit.Type.distance,
+      type: Unit.Type.length,
       baseSymbol: Unit.Symbol.m,
       system: Unit.System.imperial,
       convertToBase: (value: number) => value / 39.37,
@@ -75,7 +75,7 @@ export class UnitService {
     {
       name: 'feet',
       symbol: Unit.Symbol.ft,
-      type: Unit.Type.distance,
+      type: Unit.Type.length,
       baseSymbol: Unit.Symbol.m,
       system: Unit.System.imperial,
       convertToBase: (value: number) => value / 3.2808,
@@ -96,23 +96,15 @@ export class UnitService {
     });
   }
 
-  getSelections = (types: Map<string, Unit.Type>) => {
-    const selectionsPromises: Promise<{key: string, value: Unit.ISelection}>[] = [];
-    types.forEach((value: Unit.Type, key: string) => {
-      const selectionPromise: Promise<{key: string, value: Unit.ISelection}> = this.getSelection(value)
-        .then<{key: string, value: Unit.ISelection}>((selection: Unit.ISelection) => {
-          return { key: key, value: selection };
-        });
+  getCommonSystem = (selections: Unit.ISelection[]) => {
+    if (!selections || selections.length <= 0) {
+      return null;
+    }
 
-      selectionsPromises.push(selectionPromise);
-    });
+    const firstSystem: Unit.System = selections[0].unit.system;
+    const allSame: boolean = selections.every(v => v.unit.system === firstSystem);
 
-    return Promise.all<{key: string, value: Unit.ISelection}>(selectionsPromises)
-      .then<Map<string, Unit.ISelection>>((selectionsArray: {key: string, value: Unit.ISelection}[]) => {
-        const selections: Map<string, Unit.ISelection> = new Map<string, Unit.ISelection>();
-        selectionsArray.forEach(s => selections[s.key] = s.value);
-        return selections;
-      });
+    return allSame ? firstSystem : null;
   }
 
   defaultUnit = (group: Unit.IUnit[]) => (system: Unit.System) => {

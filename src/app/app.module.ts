@@ -10,9 +10,14 @@ import { SharedModule } from './shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { AboutComponent } from './about/about.component';
-import { WeightUnitsResolver, LengthUnitsResolver } from './calculator/unit/unit-resolvers';
 import { EquationService } from './calculator/equation/equation.service';
 import { UnitService } from './calculator/unit/unit.service';
+import {
+  WeightUnitsResolver,
+  LengthUnitsResolver,
+  WeightSelectionResolver,
+  LengthSelectionResolver
+} from './calculator/unit/unit-resolvers';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,9 @@ import { UnitService } from './calculator/unit/unit.service';
     EquationService,
     UnitService,
     WeightUnitsResolver,
-    LengthUnitsResolver
+    LengthUnitsResolver,
+    WeightSelectionResolver,
+    LengthSelectionResolver
   ],
   bootstrap: [
     AppComponent

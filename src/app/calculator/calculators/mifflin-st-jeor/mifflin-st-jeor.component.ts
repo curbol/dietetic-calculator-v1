@@ -11,16 +11,15 @@ import { EquationService } from '../../equation/equation.service';
 })
 export class MifflinStJeorComponent implements OnInit {
   system: string;
-  weightSelection: Unit.ISelection;
-  heightSelection: Unit.ISelection;
+  unitSelections: Map<string, Unit.ISelection> = new Map<string, Unit.ISelection>();
 
   get result(): number {
-    if (!this.weightSelection.value || !this.heightSelection.value) {
+    if (this.unitSelections.size <= 0 && Array.from(this.unitSelections.values()).every(s => s != null)) {
       return null;
     }
 
-    const weight_kg: number = this.unitService.selectionConversion(this.weightSelection)(Unit.Symbol.kg);
-    const height_m: number = this.unitService.selectionConversion(this.heightSelection)(Unit.Symbol.m);
+    const weight_kg: number = this.unitService.selectionConversion(this.unitSelections['weightSelector'])(Unit.Symbol.kg);
+    const height_m: number = this.unitService.selectionConversion(this.unitSelections['heightSelector'])(Unit.Symbol.m);
     const bmi: number = this.equationService.bodyMassIndex(weight_kg)(height_m);
     const roundedBmi: number = Math.round(bmi * 10) / 10;
 
@@ -30,11 +29,8 @@ export class MifflinStJeorComponent implements OnInit {
   constructor(private route: ActivatedRoute, private unitService: UnitService, private equationService: EquationService) { }
 
   ngOnInit() {
-    const weightUnits: Unit.IUnit[] = this.route.snapshot.data['weightUnits'];
-    this.weightSelection = { group: weightUnits, unit: null, value: null };
-
-    const heightUnits: Unit.IUnit[] = this.route.snapshot.data['heightUnits'];
-    this.heightSelection = { group: heightUnits, unit: null, value: null };
+    this.unitSelections['weightSelector'] = this.route.snapshot.data['weightSelector'];
+    this.unitSelections['heightSelector'] = this.route.snapshot.data['heightSelector'];
 
     this.system = Unit.System[Unit.System.metric];
     this.setDefaultUnitSystem(this.system);
@@ -42,17 +38,12 @@ export class MifflinStJeorComponent implements OnInit {
 
   setDefaultUnitSystem(systemString: string): void {
     const system: Unit.System = Unit.System[systemString] || Unit.System.metric;
-
-    this.weightSelection.unit = this.unitService.defaultUnit(this.weightSelection.group)(system);
-    this.heightSelection.unit = this.unitService.defaultUnit(this.heightSelection.group)(system);
+    Array.from(this.unitSelections.values()).forEach(s => s.unit = this.unitService.defaultUnit(s.group)(system));
   }
 
-  updateSystem() {
-    if (this.weightSelection.unit.system === this.heightSelection.unit.system) {
-      this.system = Unit.System[this.weightSelection.unit.system];
-    } else {
-      this.system = null;
-    }
+  updateSystem(): void {
+    const commonSystem: Unit.System = this.unitService.getCommonSystem(Array.from(this.unitSelections.values()));
+    this.system = commonSystem ? Unit.System[commonSystem] : null;
   }
 
   unitString(symbol: Unit.Symbol): string {

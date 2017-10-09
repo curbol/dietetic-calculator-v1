@@ -21,10 +21,10 @@ export module Unit {
 
   export enum Symbol {
     st, lb, kg, g, // weight
-    in, ft, cm, m, // distance
+    in, ft, cm, m, // length
   }
 
   export enum Type {
-    weight, distance
+    weight, length
   }
 }
