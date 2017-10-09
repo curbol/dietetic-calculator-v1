@@ -10,6 +10,7 @@ export module Unit {
   }
 
   export interface ISelection {
+    name: string;
     group: IUnit[];
     unit: IUnit;
     value: number;

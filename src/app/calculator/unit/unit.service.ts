@@ -89,13 +89,6 @@ export class UnitService {
     });
   }
 
-  getSelection = (type: Unit.Type) => {
-    return this.getUnits(type).then<Unit.ISelection>((units: Unit.IUnit[]) => {
-      const selection = { group: units, unit: null, value: null };
-      return selection;
-    });
-  }
-
   getCommonSystem = (selections: Unit.ISelection[]) => {
     if (!selections || selections.length <= 0) {
       return null;

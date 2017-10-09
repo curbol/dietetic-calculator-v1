@@ -14,9 +14,7 @@ import { EquationService } from './calculator/equation/equation.service';
 import { UnitService } from './calculator/unit/unit.service';
 import {
   WeightUnitsResolver,
-  LengthUnitsResolver,
-  WeightSelectionResolver,
-  LengthSelectionResolver
+  LengthUnitsResolver
 } from './calculator/unit/unit-resolvers';
 
 @NgModule({
@@ -38,9 +36,7 @@ import {
     EquationService,
     UnitService,
     WeightUnitsResolver,
-    LengthUnitsResolver,
-    WeightSelectionResolver,
-    LengthSelectionResolver
+    LengthUnitsResolver
   ],
   bootstrap: [
     AppComponent

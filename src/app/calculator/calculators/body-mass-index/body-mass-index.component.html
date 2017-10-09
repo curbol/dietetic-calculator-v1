@@ -1,5 +1,3 @@
-
-
 <div fxLayout="column" fxLayoutAlign="start center">
   <form fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="2rem">
     <md-radio-group name="unitSystem" fxLayout fxLayoutGap="2rem" [(ngModel)]="system" (change)="setDefaultUnitSystem($event.value)">
@@ -9,11 +7,11 @@
 
     <div fxLayout fxLayoutGap=".2rem">
       <md-form-field fxFlex color="accent">
-        <input mdInput name="weightValue" type="number" placeholder="Weight" [(ngModel)]="unitSelections['weightSelector'].value" />
-        <md-hint align="end">{{unitString(unitSelections['weightSelector']?.unit?.symbol)}}</md-hint>
+        <input mdInput name="weightValue" type="number" [placeholder]="weightSelector.name" [(ngModel)]="weightSelector.value" />
+        <md-hint align="end">{{unitString(weightSelector?.unit?.symbol)}}</md-hint>
       </md-form-field>
-      <md-select fxFlex="none" name="weightUnits" color="accent" placeholder="Units" (change)="updateSystem()" [(ngModel)]="unitSelections['weightSelector'].unit">
-        <md-option *ngFor="let unit of unitSelections['weightSelector'].group" [value]="unit">
+      <md-select fxFlex="none" name="weightUnits" color="accent" placeholder="Units" (change)="updateSystem()" [(ngModel)]="weightSelector.unit">
+        <md-option *ngFor="let unit of weightSelector.group" [value]="unit">
           {{unit?.name}} ({{unitString(unit?.symbol)}})
         </md-option>
       </md-select>
@@ -21,11 +19,11 @@
 
     <div fxLayout fxLayoutGap=".2rem">
       <md-form-field fxFlex color="accent">
-        <input mdInput name="heightValue" type="number" placeholder="Height" [(ngModel)]="unitSelections['heightSelector'].value">
-        <md-hint align="end">{{unitString(unitSelections['heightSelector']?.unit?.symbol)}}</md-hint>
+        <input mdInput name="heightValue" type="number" [placeholder]="heightSelector.name" [(ngModel)]="heightSelector.value">
+        <md-hint align="end">{{unitString(heightSelector?.unit?.symbol)}}</md-hint>
       </md-form-field>
-      <md-select fxFlex="none" name="heightUnits" color="accent" placeholder="Units" (change)="updateSystem()" [(ngModel)]="unitSelections['heightSelector'].unit">
-        <md-option *ngFor="let unit of unitSelections['heightSelector'].group" [value]="unit">
+      <md-select fxFlex="none" name="heightUnits" color="accent" placeholder="Units" (change)="updateSystem()" [(ngModel)]="heightSelector.unit">
+        <md-option *ngFor="let unit of heightSelector.group" [value]="unit">
           {{unit?.name}} ({{unitString(unit?.symbol)}})
         </md-option>
       </md-select>

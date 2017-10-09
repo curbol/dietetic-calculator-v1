@@ -7,9 +7,7 @@ import { BodyMassIndexComponent } from './calculator/calculators/body-mass-index
 import { MifflinStJeorComponent } from './calculator/calculators/mifflin-st-jeor/mifflin-st-jeor.component';
 import {
   WeightUnitsResolver,
-  LengthUnitsResolver,
-  WeightSelectionResolver,
-  LengthSelectionResolver
+  LengthUnitsResolver
 } from './calculator/unit/unit-resolvers';
 
 const routes: Routes = [
@@ -22,13 +20,13 @@ const routes: Routes = [
     path: 'calcs/bmi',
     component: BodyMassIndexComponent,
     data: { calc: true, title: 'Body Mass Index (BMI)', subtitle: 'A measure of body fat in adults' },
-    resolve: { weightSelector: WeightSelectionResolver, heightSelector: LengthSelectionResolver }
+    resolve: { weightUnits: WeightUnitsResolver, heightUnits: LengthUnitsResolver }
   },
   {
     path: 'calcs/msj',
     component: MifflinStJeorComponent,
     data: { calc: true, title: 'Mifflin St. Jeor', subtitle: 'Daily calorie needs for adults' },
-    resolve: { weightSelector: WeightSelectionResolver, heightSelector: LengthSelectionResolver }
+    resolve: { weightUnits: WeightUnitsResolver, heightUnits: LengthUnitsResolver }
   },
   { path: 'about',
     component: AboutComponent,
