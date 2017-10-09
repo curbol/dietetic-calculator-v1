@@ -25,7 +25,7 @@ export class BodyMassIndexComponent implements OnInit {
   ];
 
   get result(): number {
-    if (this.unitSelections.size <= 0) {
+    if (this.unitSelections.size <= 0 && Array.from(this.unitSelections.values()).every(s => s != null)) {
       return null;
     }
 
