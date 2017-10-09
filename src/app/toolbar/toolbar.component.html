@@ -1,20 +1,20 @@
-<md-toolbar fxFlexLayout id="dc-header" class="dc-bottom-shadow" color="primary">
+<mat-toolbar fxFlexLayout id="dc-header" class="dc-bottom-shadow" color="primary">
   <div>
-    <button md-button [routerLink]="['']">
-      <md-icon>home</md-icon>
+    <button mat-button [routerLink]="['']">
+      <mat-icon>home</mat-icon>
       <span id="homeText">Dietetic Calculator</span>
     </button>
   </div>
   <span fxFlex></span>
   <div fxLayout fxLayoutAlign="end center">
-    <button md-button [mdMenuTriggerFor]="dcmenu" class="md-small">
-      <md-icon>menu</md-icon>
+    <button mat-button [matMenuTriggerFor]="dcmenu" class="dc-small">
+      <mat-icon>menu</mat-icon>
     </button>
-    <md-menu #dcmenu="mdMenu">
-      <button md-menu-item [routerLink]="['about']">
-        <md-icon>info</md-icon>
+    <mat-menu #dcmenu="matMenu">
+      <button mat-menu-item [routerLink]="['about']">
+        <mat-icon>info</mat-icon>
         <span>About</span>
       </button>
-    </md-menu>
+    </mat-menu>
   </div>
-</md-toolbar>
+</mat-toolbar>

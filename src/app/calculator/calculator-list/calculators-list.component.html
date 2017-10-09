@@ -5,9 +5,57 @@
   <div *ngFor='let calculator of calculatorList'
         [routerLink]="'/' + calculator.stub"
         class="calc-card">
-    <md-card>
-      <md-card-title>{{calculator.title}}</md-card-title>
-      <md-card-subtitle>{{calculator.subTitle}}</md-card-subtitle>
-    </md-card>
+    <mat-card>
+      <mat-card-title>{{calculator.title}}</mat-card-title>
+      <mat-card-subtitle>{{calculator.subTitle}}</mat-card-subtitle>
+    </mat-card>
+  </div>
+</div>
+<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="1rem">
+  <div>
+    <mat-checkbox>Check me!</mat-checkbox>
+    <mat-checkbox>Check me!</mat-checkbox>
+    <mat-checkbox>Check me!</mat-checkbox>
+    <mat-checkbox>Check me!</mat-checkbox>
+    <mat-checkbox>Check me!</mat-checkbox>
+    <mat-checkbox>Check me!</mat-checkbox>
+    <mat-checkbox>Check me!</mat-checkbox>
+    <mat-checkbox>Check me!</mat-checkbox>
+    <mat-checkbox>Check me!</mat-checkbox>
+  </div>
+  <div>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Favorite food" value="Sushi">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Favorite food" value="Sushi">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Favorite food" value="Sushi">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Favorite food" value="Sushi">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Favorite food" value="Sushi">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Favorite food" value="Sushi">
+      </mat-form-field>
+    </form>
+  </div>
+  <div>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Favorite food" value="Sushi">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Favorite food" value="Sushi">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Favorite food" value="Sushi">
+      </mat-form-field>
+    </form>
   </div>
 </div>

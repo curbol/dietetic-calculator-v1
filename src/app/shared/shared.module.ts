@@ -22,7 +22,7 @@ import 'rxjs/add/operator/take';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports: [
     CommonModule,
@@ -30,7 +30,7 @@ import 'rxjs/add/operator/take';
     ReactiveFormsModule,
     MaterialModule,
     FlexLayoutModule,
-    RouterModule
+    RouterModule,
   ]
 })
 export class SharedModule { }
