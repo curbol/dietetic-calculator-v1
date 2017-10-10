@@ -8,6 +8,7 @@ import { ResultComponent } from './result/result.component';
 
 import { BodyMassIndexComponent } from './calculators/body-mass-index/body-mass-index.component';
 import { MifflinStJeorComponent } from './calculators/mifflin-st-jeor/mifflin-st-jeor.component';
+import { CalculationToolComponent } from './calculation-tool/calculation-tool.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { MifflinStJeorComponent } from './calculators/mifflin-st-jeor/mifflin-st
     CalculatorsListComponent,
     BodyMassIndexComponent,
     ResultComponent,
-    MifflinStJeorComponent
+    MifflinStJeorComponent,
+    CalculationToolComponent
   ],
   providers: []
 })

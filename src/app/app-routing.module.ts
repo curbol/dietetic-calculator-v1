@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AboutComponent } from './about/about.component';
-import { CalculatorsListComponent } from './calculator/calculator-list/calculators-list.component';
+import { CalculationToolComponent } from './calculator/calculation-tool/calculation-tool.component';
 import { BodyMassIndexComponent } from './calculator/calculators/body-mass-index/body-mass-index.component';
 import { MifflinStJeorComponent } from './calculator/calculators/mifflin-st-jeor/mifflin-st-jeor.component';
 import {
@@ -12,9 +12,10 @@ import {
 
 const routes: Routes = [
   {
-    path: 'calcs',
-    component: CalculatorsListComponent,
-    data: { title: 'Calculators', isHome: true }
+    path: 'calc',
+    component: CalculationToolComponent,
+    data: { title: 'Calculators', isHome: true },
+    resolve: { weightUnits: WeightUnitsResolver, heightUnits: LengthUnitsResolver }
   },
   {
     path: 'calcs/bmi',
@@ -34,12 +35,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'calcs',
+    redirectTo: 'calc',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: 'calcs',
+    redirectTo: 'calc',
     pathMatch: 'full'
   }
 ];

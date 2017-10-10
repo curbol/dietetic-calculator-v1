@@ -12,18 +12,23 @@
   </div>
 </div>
 <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="1rem">
-  <div>
-    <mat-checkbox>Check me!</mat-checkbox>
-    <mat-checkbox>Check me!</mat-checkbox>
-    <mat-checkbox>Check me!</mat-checkbox>
-    <mat-checkbox>Check me!</mat-checkbox>
-    <mat-checkbox>Check me!</mat-checkbox>
-    <mat-checkbox>Check me!</mat-checkbox>
-    <mat-checkbox>Check me!</mat-checkbox>
-    <mat-checkbox>Check me!</mat-checkbox>
-    <mat-checkbox>Check me!</mat-checkbox>
+  <div fxFlex>
+    <mat-selection-list #calcOptions>
+      <h3 mdSubheader>Folders</h3>
+      <mat-divider></mat-divider>
+      <mat-list-option>
+        <h3 mdLine>Body Mass Index (BMI)</h3>
+        <h6 mdLine>A measure of body fat in adults</h6>
+      </mat-list-option>
+      <mat-divider></mat-divider>
+      <mat-list-option>
+        <h3 mdLine>Mifflin St. Jeor</h3>
+        <h6 mdLine>Daily calorie needs for adults</h6>
+      </mat-list-option>
+      <mat-divider></mat-divider>
+    </mat-selection-list>
   </div>
-  <div>
+  <div fxFlex>
     <form class="example-form">
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Favorite food" value="Sushi">
@@ -45,7 +50,7 @@
       </mat-form-field>
     </form>
   </div>
-  <div>
+  <div fxFlex>
     <form class="example-form">
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Favorite food" value="Sushi">
