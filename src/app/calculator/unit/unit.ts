@@ -25,7 +25,7 @@ export module Unit {
 }
 
 export module Calc {
-  export enum OptionId {
+  export enum Id {
     bmi, mifflin
   }
 
@@ -34,13 +34,13 @@ export module Calc {
   }
 
   export interface Option {
-    id: OptionId;
+    id: Id;
     title: string;
     subTitle: string;
   }
 
   export interface IdToInput {
-    optionId: OptionId;
+    optionId: Id;
     inputId: InputId[];
   }
 
@@ -55,12 +55,12 @@ export module Calc {
 
 export const options: Calc.Option[] = [
   {
-    id: Calc.OptionId.bmi,
+    id: Calc.Id.bmi,
     title: 'Body Mass Index (BMI)',
     subTitle: 'A measure of body fat in adults',
   },
   {
-    id: Calc.OptionId.mifflin,
+    id: Calc.Id.mifflin,
     title: 'Mifflin St. Jeor',
     subTitle: 'Daily calorie needs for adults',
   }
@@ -68,11 +68,11 @@ export const options: Calc.Option[] = [
 
 export const optionsToInputs: Calc.IdToInput[] = [
   {
-    optionId: Calc.OptionId.bmi,
+    optionId: Calc.Id.bmi,
     inputId: [Calc.InputId.height, Calc.InputId.weight]
   },
   {
-    optionId: Calc.OptionId.mifflin,
+    optionId: Calc.Id.mifflin,
     inputId: [Calc.InputId.height, Calc.InputId.weight, Calc.InputId.age]
   }
 ];
