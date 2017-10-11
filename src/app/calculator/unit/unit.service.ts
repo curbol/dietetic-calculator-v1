@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { Unit } from './unit';
+import { Unit, Calc } from './unit';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UnitService {
   constructor() { }
 
-  units: Unit.IUnit[] = [
+  units: Unit.Unit[] = [
     {
       name: 'kilograms',
       symbol: Unit.Symbol.kg,
@@ -83,13 +83,13 @@ export class UnitService {
     },
   ];
 
-  getUnits(type: Unit.Type): Promise<Unit.IUnit[]> {
-    return new Promise<Unit.IUnit[]>((resolve, reject) => {
+  getUnits(type: Unit.Type): Promise<Unit.Unit[]> {
+    return new Promise<Unit.Unit[]>((resolve, reject) => {
       resolve(this.units.filter(u => u.type === type));
     });
   }
 
-  getCommonSystem = (selections: Unit.ISelection[]) => {
+  getCommonSystem = (selections: Calc.Input[]) => {
     if (!selections || selections.length <= 0) {
       return null;
     }
@@ -100,16 +100,16 @@ export class UnitService {
     return allSame ? firstSystem : null;
   }
 
-  defaultUnit = (group: Unit.IUnit[]) => (system: Unit.System) => {
+  defaultUnit = (group: Unit.Unit[]) => (system: Unit.System) => {
     return group.find(u => u.system === system);
   }
 
-  selectionConversion = (selection: Unit.ISelection) => (targetSymbol: Unit.Symbol) => {
+  selectionConversion = (selection: Calc.Input) => (targetSymbol: Unit.Symbol) => {
     const targetUnit = selection.group.find(u => u.symbol === targetSymbol);
     return this.conversion(selection.unit)(targetUnit)(selection.value);
   }
 
-  conversion = (sourceUnit: Unit.IUnit) => (targetUnit: Unit.IUnit) => (sourceValue: number) => {
+  conversion = (sourceUnit: Unit.Unit) => (targetUnit: Unit.Unit) => (sourceValue: number) => {
     if (!sourceUnit || !targetUnit) {
       throw Error(`Source or target unit does not exist.
         Source: {${Unit.Symbol[sourceUnit.baseSymbol]}: ${sourceUnit}},

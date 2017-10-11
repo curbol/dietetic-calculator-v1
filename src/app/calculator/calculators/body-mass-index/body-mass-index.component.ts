@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { UnitService } from '../../unit/unit.service';
 import { EquationService } from '../../equation/equation.service';
-import { Unit } from '../../unit/unit';
+import { Unit, Calc } from '../../unit/unit';
 import { IBmiClassification } from './bmi-classification';
 
 @Component({
@@ -13,8 +13,8 @@ import { IBmiClassification } from './bmi-classification';
 })
 export class BodyMassIndexComponent implements OnInit {
   system: string;
-  weightSelector: Unit.ISelection;
-  heightSelector: Unit.ISelection;
+  weightSelector: Calc.Input;
+  heightSelector: Calc.Input;
 
   bmiClassifications: IBmiClassification[] = [
     { range: '< 18.5', description: 'Underweight', inRange: (bmi: number) => bmi < 18.5 },
@@ -41,8 +41,8 @@ export class BodyMassIndexComponent implements OnInit {
   constructor(private route: ActivatedRoute, private unitService: UnitService, private equationService: EquationService) {}
 
   ngOnInit() {
-    const weightUnits: Unit.IUnit[] = this.route.snapshot.data['weightUnits'];
-    const heightUnits: Unit.IUnit[] = this.route.snapshot.data['heightUnits'];
+    const weightUnits: Unit.Unit[] = this.route.snapshot.data['weightUnits'];
+    const heightUnits: Unit.Unit[] = this.route.snapshot.data['heightUnits'];
 
     this.weightSelector = {
       name: 'Weight',
