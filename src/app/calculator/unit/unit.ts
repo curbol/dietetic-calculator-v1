@@ -24,61 +24,45 @@ export module Unit {
   }
 }
 
+export interface Calc {
+  id: Calc.Id;
+  title: string;
+  subTitle: string;
+  inputIds: Input.Id[];
+}
+
 export module Calc {
   export enum Id {
     bmi, mifflin
   }
+}
 
-  export enum InputId {
+export interface Input {
+  name: string;
+  id: Input.Id;
+  type: Unit.Type;
+  group: Unit.Unit[];
+  unit: Unit.Unit;
+  value: number;
+}
+
+export module Input {
+  export enum Id {
     weight, height, age
-  }
-
-  export interface Option {
-    id: Id;
-    title: string;
-    subTitle: string;
-  }
-
-  export interface IdToInput {
-    optionId: Id;
-    inputId: InputId[];
-  }
-
-  export interface Input {
-    name: string;
-    inputId: InputId;
-    group: Unit.Unit[];
-    unit: Unit.Unit;
-    value: number;
   }
 }
 
-export const options: Calc.Option[] = [
+export const calcs: Calc[] = [
   {
     id: Calc.Id.bmi,
     title: 'Body Mass Index (BMI)',
     subTitle: 'A measure of body fat in adults',
+    inputIds: [Input.Id.height, Input.Id.weight]
   },
   {
     id: Calc.Id.mifflin,
     title: 'Mifflin St. Jeor',
     subTitle: 'Daily calorie needs for adults',
+    inputIds: [Input.Id.height, Input.Id.weight, Input.Id.age]
   }
 ];
-
-export const optionsToInputs: Calc.IdToInput[] = [
-  {
-    optionId: Calc.Id.bmi,
-    inputId: [Calc.InputId.height, Calc.InputId.weight]
-  },
-  {
-    optionId: Calc.Id.mifflin,
-    inputId: [Calc.InputId.height, Calc.InputId.weight, Calc.InputId.age]
-  }
-];
-
-export const inputs: Calc.Input[] {
-
-}
-
-
