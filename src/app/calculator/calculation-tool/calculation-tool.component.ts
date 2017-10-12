@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Route, Router, ActivatedRoute } from '@angular/router';
 
 import { ICalculatorListItem } from '../calculator-list/calculator-list-item';
-import { Unit } from '../unit/unit';
 import { UnitService } from '../unit/unit.service';
+import { CalculatorService } from '../calculator-service/calculator.service';
 import { EquationService } from '../equation/equation.service';
+import { Unit } from '../unit/unit';
+import { Calc } from '../calculator-service/calc';
 
 @Component({
   selector: 'dc-calculation-tool',
@@ -15,16 +17,16 @@ export class CalculationToolComponent implements OnInit {
   calculatorOptions: ICalculatorListItem[];
 
   system: string;
-  weightSelector: Unit.ISelection;
-  heightSelector: Unit.ISelection;
+  weightSelector: Calc.Input;
+  heightSelector: Calc.Input;
 
   get result(): number {
     if (this.weightSelector === null || this.heightSelector === null) {
       return null;
     }
 
-    const weight_kg: number = this.unitService.selectionConversion(this.weightSelector)(Unit.Symbol.kg);
-    const height_m: number = this.unitService.selectionConversion(this.heightSelector)(Unit.Symbol.m);
+    const weight_kg: number = this.calculatorService.inputConversion(this.weightSelector)(Unit.Symbol.kg);
+    const height_m: number = this.calculatorService.inputConversion(this.heightSelector)(Unit.Symbol.m);
     const bmi: number = this.equationService.bodyMassIndex(weight_kg)(height_m);
     const roundedBmi: number = Math.round(bmi * 10) / 10;
 
@@ -35,6 +37,7 @@ export class CalculationToolComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private unitService: UnitService,
+    private calculatorService: CalculatorService,
     private equationService: EquationService
   ) { }
 
@@ -49,8 +52,8 @@ export class CalculationToolComponent implements OnInit {
         };
       });
 
-    const weightUnits: Unit.IUnit[] = this.activatedRoute.snapshot.data['weightUnits'];
-    const heightUnits: Unit.IUnit[] = this.activatedRoute.snapshot.data['heightUnits'];
+    const weightUnits: Calc.Input[] = this.activatedRoute.snapshot.data['weightUnits'];
+    const heightUnits: Calc.Input[] = this.activatedRoute.snapshot.data['heightUnits'];
 
     this.weightSelector = {
       name: 'Weight',

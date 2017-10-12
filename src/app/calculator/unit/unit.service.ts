@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { Unit, Calc } from './unit';
+import { Unit } from './unit';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UnitService {
-  constructor() { }
-
-  units: Unit.Unit[] = [
+  private units: Unit.Unit[] = [
     {
       name: 'kilograms',
       symbol: Unit.Symbol.kg,
@@ -83,30 +81,26 @@ export class UnitService {
     },
   ];
 
-  getUnits(type: Unit.Type): Promise<Unit.Unit[]> {
+  constructor() { }
+
+  getUnits(): Promise<Unit.Unit[]> {
     return new Promise<Unit.Unit[]>((resolve, reject) => {
-      resolve(this.units.filter(u => u.type === type));
+      resolve(this.units);
     });
   }
 
-  getCommonSystem = (selections: Calc.Input[]) => {
-    if (!selections || selections.length <= 0) {
-      return null;
-    }
+  getGroupedUnits(): Promise<Unit.Unit[]> {
 
-    const firstSystem: Unit.System = selections[0].unit.system;
-    const allSame: boolean = selections.every(v => v.unit.system === firstSystem);
+  }
 
-    return allSame ? firstSystem : null;
+  getUnitsOfType(type: Unit.Type): Promise<Unit.Unit[]> {
+    return new Promise<Unit.Unit[]>((resolve, reject) => {
+      return this.getUnits().then((units: Unit.Unit[]) => units.filter(u => u.type === type));
+    });
   }
 
   defaultUnit = (group: Unit.Unit[]) => (system: Unit.System) => {
     return group.find(u => u.system === system);
-  }
-
-  selectionConversion = (selection: Calc.Input) => (targetSymbol: Unit.Symbol) => {
-    const targetUnit = selection.group.find(u => u.symbol === targetSymbol);
-    return this.conversion(selection.unit)(targetUnit)(selection.value);
   }
 
   conversion = (sourceUnit: Unit.Unit) => (targetUnit: Unit.Unit) => (sourceValue: number) => {
