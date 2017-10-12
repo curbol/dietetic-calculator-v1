@@ -1,45 +1,31 @@
 <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="1rem">
-  <div fxFlex>
+  <div>
     <mat-selection-list #calcOptions>
-      <div *ngFor="let calcOption of calculatorOptions">
+      <div *ngFor="let calc of calculators">
         <mat-divider></mat-divider>
         <mat-list-option>
-          <h3 mdLine>{{calcOption.title}}</h3>
-          <h6 mdLine>{{calcOption.subTitle}}</h6>
+          <h3 mdLine>{{calc.title}}</h3>
+          <h6 mdLine>{{calc.subTitle}}</h6>
         </mat-list-option>
       </div>
       <mat-divider></mat-divider>
     </mat-selection-list>
   </div>
-  <div fxFlex>
+  <div>
     <form fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="2rem">
       <mat-radio-group name="unitSystem" fxLayout fxLayoutGap="2rem" [(ngModel)]="system" (change)="setDefaultUnitSystem($event.value)">
         <mat-radio-button value="metric">Metric</mat-radio-button>
         <mat-radio-button value="imperial">Imperial</mat-radio-button>
       </mat-radio-group>
 
-      <div fxLayout fxLayoutGap=".2rem">
+      <div fxLayout fxLayoutGap=".2rem" *ngFor="let input of inputs">
         <mat-form-field color="accent">
-          <input matInput required name="weightValue" type="number" [placeholder]="weightSelector.name" [(ngModel)]="weightSelector.value" />
-          <mat-hint align="end">{{unitString(weightSelector?.unit?.symbol)}}</mat-hint>
+          <input matInput required name="{{input.settings.name}}Value" type="number" [placeholder]="input.settings.name" [(ngModel)]="input.value" />
+          <mat-hint align="end">{{unitString(input?.unit?.symbol)}}</mat-hint>
         </mat-form-field>
         <mat-form-field color="accent">
-          <mat-select name="weightUnits" placeholder="Units" (change)="updateSystem()" [(ngModel)]="weightSelector.unit">
-            <mat-option *ngFor="let unit of weightSelector.group" [value]="unit">
-              {{unit?.name}} ({{unitString(unit?.symbol)}})
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div fxLayout fxLayoutGap=".2rem">
-        <mat-form-field color="accent">
-          <input matInput required name="heightValue" type="number" [placeholder]="heightSelector.name" [(ngModel)]="heightSelector.value">
-          <mat-hint align="end">{{unitString(heightSelector?.unit?.symbol)}}</mat-hint>
-        </mat-form-field>
-        <mat-form-field color="accent">
-          <mat-select name="heightUnits" placeholder="Units" (change)="updateSystem()" [(ngModel)]="heightSelector.unit">
-            <mat-option *ngFor="let unit of heightSelector.group" [value]="unit">
+          <mat-select name="{{input.settings.name}}Units" placeholder="Units" (change)="updateSystem()" [(ngModel)]="input.unit">
+            <mat-option *ngFor="let unit of input.group" [value]="unit">
               {{unit?.name}} ({{unitString(unit?.symbol)}})
             </mat-option>
           </mat-select>
@@ -47,7 +33,7 @@
       </div>
     </form>
   </div>
-  <div fxFlex>
+  <div>
     <dc-result class="dc-full-width"
       [title]="'Body Mass Index (BMI)'"
       [value]="(result || 0) | number:'1.1-1'"

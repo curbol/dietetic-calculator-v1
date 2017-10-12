@@ -1,25 +1,36 @@
 export module Unit {
   export interface Unit {
-    name: string;
-    symbol: Symbol;
-    type: Type;
-    baseSymbol: Symbol;
-    system: System;
+    readonly symbol: Weight.Symbol|Length.Symbol|Time.Symbol;
+    readonly baseSymbol: Weight.Symbol|Length.Symbol|Time.Symbol;
+    readonly system: System;
     convertToBase(value: number): number;
     convertFromBase(value: number): number;
   }
 
-  export enum System {
-    metric, imperial
+  export interface Weight extends Unit {
+    readonly symbol: Weight.Symbol;
+    readonly baseSymbol: Weight.Symbol.g;
   }
 
-  export enum Symbol {
-    st, lb, kg, g, // weight
-    in, ft, cm, m, // length
-    y, // age
+  export const enum System {
+    metric = 'Metric', imperial = 'Imperial'
   }
 
-  export enum Type {
-    weight, length, age
+  export module Weight {
+    export enum Symbol {
+      st = 'Stone', lb = 'Pounds', kg = 'Kilograms', g = 'Grams',
+    }
+  }
+
+  export module Length {
+    export enum Symbol {
+      in = 'Inches', ft = 'Feet', yd = 'Yards', cm = 'Centimeters', m = 'Meters',
+    }
+  }
+
+  export module Time {
+    export enum Symbol {
+      s = 'Seconds', min = 'Minutes', hr = 'Hours', d = 'Days', mo = 'Months', y = 'Years',
+    }
   }
 }

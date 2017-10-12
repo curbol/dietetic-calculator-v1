@@ -79,29 +79,90 @@ export class UnitService {
       convertToBase: (value: number) => value / 3.2808,
       convertFromBase: (value: number) => value * 3.2808,
     },
+    {
+      name: 'yards',
+      symbol: Unit.Symbol.yd,
+      type: Unit.Type.length,
+      baseSymbol: Unit.Symbol.m,
+      system: Unit.System.imperial,
+      convertToBase: (value: number) => value / 1.0936,
+      convertFromBase: (value: number) => value * 1.0936,
+    },
+    {
+      name: 'seconds',
+      symbol: Unit.Symbol.s,
+      type: Unit.Type.time,
+      baseSymbol: Unit.Symbol.s,
+      system: null,
+      convertToBase: (value: number) => value,
+      convertFromBase: (value: number) => value,
+    },
+    {
+      name: 'minutes',
+      symbol: Unit.Symbol.min,
+      type: Unit.Type.time,
+      baseSymbol: Unit.Symbol.s,
+      system: null,
+      convertToBase: (value: number) => value * 60,
+      convertFromBase: (value: number) => value / 60,
+    },
+    {
+      name: 'hours',
+      symbol: Unit.Symbol.hr,
+      type: Unit.Type.time,
+      baseSymbol: Unit.Symbol.s,
+      system: null,
+      convertToBase: (value: number) => value * 3600,
+      convertFromBase: (value: number) => value / 3600,
+    },
+    {
+      name: 'days',
+      symbol: Unit.Symbol.d,
+      type: Unit.Type.time,
+      baseSymbol: Unit.Symbol.s,
+      system: null,
+      convertToBase: (value: number) => value * 86400,
+      convertFromBase: (value: number) => value / 86400,
+    },
+    {
+      name: 'months',
+      symbol: Unit.Symbol.mo,
+      type: Unit.Type.time,
+      baseSymbol: Unit.Symbol.s,
+      system: null,
+      convertToBase: (value: number) => value * 2630016,
+      convertFromBase: (value: number) => value / 2630016,
+    },
+    {
+      name: 'years',
+      symbol: Unit.Symbol.y,
+      type: Unit.Type.time,
+      baseSymbol: Unit.Symbol.s,
+      system: null,
+      convertToBase: (value: number) => value * 31556952,
+      convertFromBase: (value: number) => value / 31556952,
+    },
   ];
 
   constructor() { }
 
-  getUnits(): Promise<Unit.Unit[]> {
-    return new Promise<Unit.Unit[]>((resolve, reject) => {
-      resolve(this.units);
-    });
+  getAllUnits(): Promise<Unit.Unit[]> {
+    return new Promise<Unit.Unit[]>((resolve, reject) => resolve(this.units));
   }
 
-  getGroupedUnits(): Promise<Unit.Unit[]> {
-
+  getUnits(symbols: Unit.Symbol[]) {
+    return new Promise<Unit.Unit[]>((resolve, reject) =>
+      this.getAllUnits().then((units: Unit.Unit[]) => symbols.map(s => units.find(u => u.symbol === s)))
+    );
   }
 
   getUnitsOfType(type: Unit.Type): Promise<Unit.Unit[]> {
-    return new Promise<Unit.Unit[]>((resolve, reject) => {
-      return this.getUnits().then((units: Unit.Unit[]) => units.filter(u => u.type === type));
-    });
+    return new Promise<Unit.Unit[]>((resolve, reject) =>
+      this.getAllUnits().then((units: Unit.Unit[]) => units.filter(u => u.type === type))
+    );
   }
 
-  defaultUnit = (group: Unit.Unit[]) => (system: Unit.System) => {
-    return group.find(u => u.system === system);
-  }
+  defaultUnit = (group: Unit.Unit[]) => (system: Unit.System) => group.find(u => u.system === system);
 
   conversion = (sourceUnit: Unit.Unit) => (targetUnit: Unit.Unit) => (sourceValue: number) => {
     if (!sourceUnit || !targetUnit) {

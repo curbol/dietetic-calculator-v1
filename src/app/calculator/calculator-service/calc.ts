@@ -12,23 +12,24 @@ export module Calc {
     bmi, mifflin
   }
 
-  export interface InputSettings {
-    name: string;
-    id: Input.Id;
-    type: Unit.Type;
-  }
-
   export interface Input {
-    name: string;
-    id: Input.Id;
+    settings: Input.Settings;
     group: Unit.Unit[];
     unit: Unit.Unit;
+    active: boolean;
     value: number;
   }
 
   export module Input {
     export enum Id {
       weight, height, age
+    }
+
+    export interface Settings {
+      name: string;
+      id: Id;
+      symbols: Unit.Symbol[];
+      defaultSymbol: Unit.Symbol;
     }
   }
 

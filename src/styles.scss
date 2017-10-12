@@ -6,12 +6,10 @@
 @import './base-styles.theme.scss';
 @import './app/header/header.component.theme.scss';
 @import './app/calculator/result/result.component.theme.scss';
-@import './app/calculator/calculators/body-mass-index/body-mass-index.component.theme.scss';
 
 @mixin custom-components-theme($theme) {
   @include dc-toolbar-component-theme($theme);
   @include dc-base-styles-theme($theme);
-  @include dc-body-mass-index-component-theme($theme);
   @include dc-result-component-theme($theme);
 }
 
