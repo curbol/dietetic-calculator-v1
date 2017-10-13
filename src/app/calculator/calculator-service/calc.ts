@@ -13,7 +13,8 @@ export module Calc {
   }
 
   export interface Input {
-    settings: Input.Settings;
+    name: string;
+    id: Input.Id;
     group: Unit.Unit[];
     unit: Unit.Unit;
     active: boolean;
@@ -28,8 +29,8 @@ export module Calc {
     export interface Settings {
       name: string;
       id: Id;
-      type: Unit.Type;
-      symbols: Unit.Symbol[];
+      typeId: Unit.Type.Id;
+      symbolsFilter: Unit.Symbol[];
       defaultSymbol: Unit.Symbol;
     }
   }

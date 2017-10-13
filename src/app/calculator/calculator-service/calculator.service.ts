@@ -10,13 +10,13 @@ export class CalculatorService {
       id: Calc.Id.bmi,
       title: 'Body Mass Index (BMI)',
       subTitle: 'A measure of body fat in adults',
-      inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight]
+      inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight],
     },
     {
       id: Calc.Id.mifflin,
       title: 'Mifflin St. Jeor',
       subTitle: 'Daily calorie needs for adults',
-      inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight, Calc.Input.Id.age]
+      inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight, Calc.Input.Id.age],
     }
   ];
 
@@ -24,22 +24,22 @@ export class CalculatorService {
     {
       name: 'Weight',
       id: Calc.Input.Id.weight,
-      type: Unit.Type.weight,
-      symbols: [Unit.Symbol.kg, Unit.Symbol.g, Unit.Symbol.lb, Unit.Symbol.st],
+      typeId: Unit.Type.weight.id,
+      symbolsFilter: null,
       defaultSymbol: Unit.Symbol.kg,
     },
     {
       name: 'Height',
       id: Calc.Input.Id.height,
-      type: Unit.Type.length,
-      symbols: [Unit.Symbol.cm, Unit.Symbol.m, Unit.Symbol.in, Unit.Symbol.ft, Unit.Symbol.yd],
+      typeId: Unit.Type.length.id,
+      symbolsFilter: null,
       defaultSymbol: Unit.Symbol.cm,
     },
     {
       name: 'Age',
       id: Calc.Input.Id.age,
-      type: Unit.Type.time,
-      symbols: [Unit.Symbol.y],
+      typeId: Unit.Type.time.id,
+      symbolsFilter: [Unit.Symbol.y],
       defaultSymbol: Unit.Symbol.y,
     },
   ];
@@ -55,11 +55,12 @@ export class CalculatorService {
       const inputSettings: Calc.Input.Settings[] = value[0];
       const units: {[type: number]: Unit.Unit[]} = value[1];
 
-      return inputSettings.map<Calc.Input>(s => {
-        const group = this.unitService.filterUnits(units[s.type])(s.symbols);
-        const unit = group.find(u => u.symbol === s.defaultSymbol);
-        return {
-          settings: s,
+      return inputSettings.map<Calc.Input>(p => {
+        const group = this.unitService.filterUnits(units[p.typeId])(p.symbolsFilter);
+        const unit = group.find(u => u.symbol === p.defaultSymbol);
+        return <Calc.Input>{
+          name: p.name,
+          id: p.id,
           group: group,
           unit: unit,
           active: false,
@@ -70,7 +71,7 @@ export class CalculatorService {
   }
 
   getInputs = (inputIds: Calc.Input.Id[]) => this.getAllInputs().then(
-    (inputs: Calc.Input[]) => inputs.filter(input => inputIds.find(id => id === input.settings.id))
+    (inputs: Calc.Input[]) => inputs.filter(input => inputIds.find(id => id === input.id))
   )
 
   commonUnitSystem = (inputs: Calc.Input[]) => {
@@ -79,7 +80,7 @@ export class CalculatorService {
     }
 
     const firstSystem: Unit.System = inputs[0].unit.system;
-    const allSame: boolean = inputs.every(v => v.unit.system === firstSystem);
+    const allSame: boolean = inputs.every(i => !i.unit.system || i.unit.system === firstSystem);
 
     return allSame ? firstSystem : null;
   }

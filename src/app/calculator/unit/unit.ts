@@ -3,28 +3,8 @@ export module Unit {
     readonly name: string;
     readonly type: Type;
     readonly symbol: Symbol;
-    readonly baseSymbol: Symbol;
     readonly system: System;
     readonly factor: number;
-  }
-
-  export interface Weight extends Unit {
-    readonly type: Type.weight;
-    readonly baseSymbol: Symbol.g;
-  }
-
-  export interface Length extends Unit {
-    readonly type: Type.length;
-    readonly baseSymbol: Symbol.m;
-  }
-
-  export interface Time extends Unit {
-    readonly type: Type.time;
-    readonly baseSymbol: Symbol.s;
-  }
-
-  export enum Type {
-    weight, length, time,
   }
 
   export enum Symbol {
@@ -34,6 +14,32 @@ export module Unit {
     in, ft, yd, cm, m,
     /* Time */
     s, min, hr, d, mo, y,
+  }
+
+  export interface Type {
+    readonly id: Type.Id;
+    readonly baseSymbol: Symbol;
+  }
+
+  export module Type {
+    export enum Id {
+      weight, length, time,
+    }
+
+    export const weight: Type = {
+      id: Id.weight,
+      baseSymbol: Symbol.g,
+    };
+
+    export const length: Type = {
+      id: Id.length,
+      baseSymbol: Symbol.m,
+    };
+
+    export const time: Type = {
+      id: Id.time,
+      baseSymbol: Symbol.s,
+    };
   }
 
   export enum System {

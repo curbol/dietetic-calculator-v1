@@ -41,11 +41,19 @@ export class CalculationToolComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.calcsList.selectedOptions.onChange.subscribe(list => {
+      this.selectedShiftsUpdated.emit(this.selectionList.selectedOptions.selected.map(option => option.value));
+    });
+
     this.calculators = this.activatedRoute.snapshot.data['calculators'];
     this.inputs = this.activatedRoute.snapshot.data['inputs'];
 
     this.system = Unit.System[Unit.System.metric];
     this.setDefaultUnitSystem(this.system);
+  }
+
+  setActiveUnits(input: any): void {
+    console.log('test' + JSON.stringify(input));
   }
 
   setDefaultUnitSystem(systemString: string): void {

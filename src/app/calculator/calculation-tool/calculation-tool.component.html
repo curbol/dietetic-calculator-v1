@@ -1,9 +1,13 @@
 <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="1rem">
-  <div>
-    <mat-selection-list #calcOptions>
+  <div fxFlex='none'>
+    <div fxLayout fxLayoutAlign="center start" fxLayoutGap="1rem">
+      <button mat-raised-button (click)="calcsList.selectAll()">Select all</button>
+      <button mat-raised-button (click)="calcsList.deselectAll()">Deselect all</button>
+    </div>
+    <mat-selection-list #calcsList>
       <div *ngFor="let calc of calculators">
         <mat-divider></mat-divider>
-        <mat-list-option>
+        <mat-list-option [value]="calc" checkboxPosition="before" (selectChange)="setActiveUnits(calcsList.selectedOptions)">
           <h3 mdLine>{{calc.title}}</h3>
           <h6 mdLine>{{calc.subTitle}}</h6>
         </mat-list-option>
@@ -16,15 +20,16 @@
       <mat-radio-group name="unitSystem" fxLayout fxLayoutGap="2rem" [(ngModel)]="system" (change)="setDefaultUnitSystem($event.value)">
         <mat-radio-button value="metric">Metric</mat-radio-button>
         <mat-radio-button value="imperial">Imperial</mat-radio-button>
+        <mat-radio-button value="mixed" disabled>Mixed</mat-radio-button>
       </mat-radio-group>
 
       <div fxLayout fxLayoutGap=".2rem" *ngFor="let input of inputs">
         <mat-form-field color="accent">
-          <input matInput required name="{{input.settings.name}}Value" type="number" [placeholder]="input.settings.name" [(ngModel)]="input.value" />
+          <input matInput required name="{{input.name}}Value" type="number" [placeholder]="input.name" [(ngModel)]="input.value" />
           <mat-hint align="end">{{unitString(input?.unit?.symbol)}}</mat-hint>
         </mat-form-field>
         <mat-form-field color="accent">
-          <mat-select name="{{input.settings.name}}Units" placeholder="Units" (change)="updateSystem()" [(ngModel)]="input.unit">
+          <mat-select name="{{input.name}}Units" placeholder="Units" (change)="updateSystem()" [(ngModel)]="input.unit">
             <mat-option *ngFor="let unit of input.group" [value]="unit">
               {{unit?.name}} ({{unitString(unit?.symbol)}})
             </mat-option>
@@ -33,7 +38,7 @@
       </div>
     </form>
   </div>
-  <div>
+  <div fxFlex="15rem">
     <dc-result class="dc-full-width"
       [title]="'Body Mass Index (BMI)'"
       [value]="(result || 0) | number:'1.1-1'"
