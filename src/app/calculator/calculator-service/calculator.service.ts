@@ -20,44 +20,43 @@ export class CalculatorService {
     }
   ];
 
-  private inputSettings: Calc.Input.Settings[] = [
+  private inputSettings = <Calc.Input.Settings[]>[
     {
       name: 'Weight',
       id: Calc.Input.Id.weight,
-      symbols: [Unit.Weight.Symbol.kg, Unit.Weight.Symbol.g, Unit.Weight.Symbol.lb, Unit.Weight.Symbol.st],
-      defaultSymbol: Unit.Weight.Symbol.kg,
+      type: Unit.Type.weight,
+      symbols: [Unit.Symbol.kg, Unit.Symbol.g, Unit.Symbol.lb, Unit.Symbol.st],
+      defaultSymbol: Unit.Symbol.kg,
     },
     {
       name: 'Height',
       id: Calc.Input.Id.height,
-      symbols: [Unit.Length.Symbol.cm, Unit.Length.Symbol.m, Unit.Length.Symbol.in, Unit.Length.Symbol.ft, Unit.Length.Symbol.yd],
-      defaultSymbol: Unit.Length.Symbol.cm,
+      type: Unit.Type.length,
+      symbols: [Unit.Symbol.cm, Unit.Symbol.m, Unit.Symbol.in, Unit.Symbol.ft, Unit.Symbol.yd],
+      defaultSymbol: Unit.Symbol.cm,
     },
     {
       name: 'Age',
       id: Calc.Input.Id.age,
-      symbols: [Unit.Time.Symbol.y],
-      defaultSymbol: Unit.Time.Symbol.y,
+      type: Unit.Type.time,
+      symbols: [Unit.Symbol.y],
+      defaultSymbol: Unit.Symbol.y,
     },
   ];
 
   constructor(private unitService: UnitService) { }
 
-  getCalculators(): Promise<Calc.Calc[]> {
-    return new Promise<Calc.Calc[]>((resolve, reject) => resolve(this.calcs));
-  }
+  private getInputSettings = () => new Promise<Calc.Input.Settings[]>((resolve, reject) => resolve(this.inputSettings));
 
-  private getInputSettings(): Promise<Calc.Input.Settings[]> {
-    return new Promise<Calc.Input.Settings[]>((resolve, reject) => resolve(this.inputSettings));
-  }
+  getCalculators = () => new Promise<Calc.Calc[]>((resolve, reject) => resolve(this.calcs));
 
   getAllInputs(): Promise<Calc.Input[]> {
     return Promise.all([this.getInputSettings(), this.unitService.getAllUnits()]).then(value => {
       const inputSettings: Calc.Input.Settings[] = value[0];
-      const units: Unit.Unit[] = value[1];
+      const units: {[type: number]: Unit.Unit[]} = value[1];
 
       return inputSettings.map<Calc.Input>(s => {
-        const group = s.symbols.map(symbol => units.find(u => u.symbol === symbol));
+        const group = this.unitService.filterUnits(units[s.type])(s.symbols);
         const unit = group.find(u => u.symbol === s.defaultSymbol);
         return {
           settings: s,
@@ -70,25 +69,23 @@ export class CalculatorService {
     });
   }
 
-  getInputs(inputIds: Calc.Input.Id[]): Promise<Calc.Input[]> {
-    return this.getAllInputs().then((inputs: Calc.Input[]) =>
-      inputs.filter(input => inputIds.find(id => id === input.settings.id))
-    );
-  }
+  getInputs = (inputIds: Calc.Input.Id[]) => this.getAllInputs().then(
+    (inputs: Calc.Input[]) => inputs.filter(input => inputIds.find(id => id === input.settings.id))
+  )
 
-  commonUnitSystem = (selections: Calc.Input[]) => {
-    if (!selections || selections.length <= 0) {
+  commonUnitSystem = (inputs: Calc.Input[]) => {
+    if (!inputs || inputs.length <= 0) {
       return null;
     }
 
-    const firstSystem: Unit.System = selections[0].unit.system;
-    const allSame: boolean = selections.every(v => v.unit.system === firstSystem);
+    const firstSystem: Unit.System = inputs[0].unit.system;
+    const allSame: boolean = inputs.every(v => v.unit.system === firstSystem);
 
     return allSame ? firstSystem : null;
   }
 
-  inputConversion = (selection: Calc.Input) => (targetSymbol: Unit.Symbol) => {
-    const targetUnit = selection.group.find(u => u.symbol === targetSymbol);
-    return this.unitService.conversion(selection.unit)(targetUnit)(selection.value);
+  inputConversion = (input: Calc.Input) => (targetSymbol: Unit.Symbol) => {
+    const targetUnit = input.group.find(u => u.symbol === targetSymbol);
+    return this.unitService.conversion(input.unit.factor)(targetUnit.factor)(input.value);
   }
 }

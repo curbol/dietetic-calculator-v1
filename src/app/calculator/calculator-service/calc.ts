@@ -22,12 +22,13 @@ export module Calc {
 
   export module Input {
     export enum Id {
-      weight, height, age
+      weight, height, age,
     }
 
     export interface Settings {
       name: string;
       id: Id;
+      type: Unit.Type;
       symbols: Unit.Symbol[];
       defaultSymbol: Unit.Symbol;
     }

@@ -6,178 +6,117 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UnitService {
-  private units: Unit.Unit[] = [
-    {
-      name: 'kilograms',
-      symbol: Unit.Symbol.kg,
-      type: Unit.Type.weight,
-      baseSymbol: Unit.Symbol.g,
-      system: Unit.System.metric,
-      convertToBase: (value: number) => value / 0.001,
-      convertFromBase: (value: number) => value * 0.001,
-    },
-    {
-      name: 'grams',
-      symbol: Unit.Symbol.g,
-      type: Unit.Type.weight,
-      baseSymbol: Unit.Symbol.g,
-      system: Unit.System.metric,
-      convertToBase: (value: number) => value,
-      convertFromBase: (value: number) => value,
-    },
-    {
-      name: 'pounds',
-      symbol: Unit.Symbol.lb,
-      type: Unit.Type.weight,
-      baseSymbol: Unit.Symbol.g,
-      system: Unit.System.imperial,
-      convertToBase: (value: number) => value / 0.0022046,
-      convertFromBase: (value: number) => value * 0.0022046,
-    },
-    {
-      name: 'stone',
-      symbol: Unit.Symbol.st,
-      type: Unit.Type.weight,
-      baseSymbol: Unit.Symbol.g,
-      system: Unit.System.imperial,
-      convertToBase: (value: number) => value / 0.00015747,
-      convertFromBase: (value: number) => value * 0.00015747,
-    },
-    {
-      name: 'centimeters',
-      symbol: Unit.Symbol.cm,
-      type: Unit.Type.length,
-      baseSymbol: Unit.Symbol.m,
-      system: Unit.System.metric,
-      convertToBase: (value: number) => value / 100,
-      convertFromBase: (value: number) => value * 100,
-    },
-    {
-      name: 'meters',
-      symbol: Unit.Symbol.m,
-      type: Unit.Type.length,
-      baseSymbol: Unit.Symbol.m,
-      system: Unit.System.metric,
-      convertToBase: (value: number) => value,
-      convertFromBase: (value: number) => value,
-    },
-    {
-      name: 'inches',
-      symbol: Unit.Symbol.in,
-      type: Unit.Type.length,
-      baseSymbol: Unit.Symbol.m,
-      system: Unit.System.imperial,
-      convertToBase: (value: number) => value / 39.37,
-      convertFromBase: (value: number) => value * 39.37,
-    },
-    {
-      name: 'feet',
-      symbol: Unit.Symbol.ft,
-      type: Unit.Type.length,
-      baseSymbol: Unit.Symbol.m,
-      system: Unit.System.imperial,
-      convertToBase: (value: number) => value / 3.2808,
-      convertFromBase: (value: number) => value * 3.2808,
-    },
-    {
-      name: 'yards',
-      symbol: Unit.Symbol.yd,
-      type: Unit.Type.length,
-      baseSymbol: Unit.Symbol.m,
-      system: Unit.System.imperial,
-      convertToBase: (value: number) => value / 1.0936,
-      convertFromBase: (value: number) => value * 1.0936,
-    },
-    {
-      name: 'seconds',
-      symbol: Unit.Symbol.s,
-      type: Unit.Type.time,
-      baseSymbol: Unit.Symbol.s,
-      system: null,
-      convertToBase: (value: number) => value,
-      convertFromBase: (value: number) => value,
-    },
-    {
-      name: 'minutes',
-      symbol: Unit.Symbol.min,
-      type: Unit.Type.time,
-      baseSymbol: Unit.Symbol.s,
-      system: null,
-      convertToBase: (value: number) => value * 60,
-      convertFromBase: (value: number) => value / 60,
-    },
-    {
-      name: 'hours',
-      symbol: Unit.Symbol.hr,
-      type: Unit.Type.time,
-      baseSymbol: Unit.Symbol.s,
-      system: null,
-      convertToBase: (value: number) => value * 3600,
-      convertFromBase: (value: number) => value / 3600,
-    },
-    {
-      name: 'days',
-      symbol: Unit.Symbol.d,
-      type: Unit.Type.time,
-      baseSymbol: Unit.Symbol.s,
-      system: null,
-      convertToBase: (value: number) => value * 86400,
-      convertFromBase: (value: number) => value / 86400,
-    },
-    {
-      name: 'months',
-      symbol: Unit.Symbol.mo,
-      type: Unit.Type.time,
-      baseSymbol: Unit.Symbol.s,
-      system: null,
-      convertToBase: (value: number) => value * 2630016,
-      convertFromBase: (value: number) => value / 2630016,
-    },
-    {
-      name: 'years',
-      symbol: Unit.Symbol.y,
-      type: Unit.Type.time,
-      baseSymbol: Unit.Symbol.s,
-      system: null,
-      convertToBase: (value: number) => value * 31556952,
-      convertFromBase: (value: number) => value / 31556952,
-    },
-  ];
 
-  constructor() { }
+  units: {[type: number]: Unit.Unit[]} = {
+    [Unit.Type.weight]: <Unit.Weight[]>[
+      {
+        name: 'Kilograms',
+        symbol: Unit.Symbol.kg,
+        system: Unit.System.metric,
+        factor: 1000,
+      },
+      {
+        name: 'Grams',
+        symbol: Unit.Symbol.g,
+        system: Unit.System.metric,
+        factor: 1,
+      },
+      {
+        name: 'Pounds',
+        symbol: Unit.Symbol.lb,
+        system: Unit.System.imperial,
+        factor: 453.5929094356,
+      },
+      {
+        name: 'Stone',
+        symbol: Unit.Symbol.st,
+        system: Unit.System.imperial,
+        factor: 6350.4159522449,
+      }
+    ],
+    [Unit.Type.length]: <Unit.Length[]>[
+      {
+        name: 'Centimeters',
+        symbol: Unit.Symbol.cm,
+        system: Unit.System.metric,
+        factor: 0.01,
+      },
+      {
+        name: 'Meters',
+        symbol: Unit.Symbol.m,
+        system: Unit.System.metric,
+        factor: 1,
+      },
+      {
+        name: 'Inches',
+        symbol: Unit.Symbol.in,
+        system: Unit.System.imperial,
+        factor: 0.0254,
+      },
+      {
+        name: 'Feet',
+        symbol: Unit.Symbol.ft,
+        system: Unit.System.imperial,
+        factor: 0.3048037064,
+      },
+      {
+        name: 'Yards',
+        symbol: Unit.Symbol.yd,
+        system: Unit.System.imperial,
+        factor: 0.9144111192,
+      },
+    ],
+    [Unit.Type.time]: <Unit.Time[]>[
+      {
+        name: 'Seconds',
+        symbol: Unit.Symbol.s,
+        system: null,
+        factor: 1,
+      },
+      {
+        name: 'Minutes',
+        symbol: Unit.Symbol.min,
+        system: null,
+        factor: 60,
+      },
+      {
+        name: 'Hours',
+        symbol: Unit.Symbol.hr,
+        system: null,
+        factor: 3600,
+      },
+      {
+        name: 'Days',
+        symbol: Unit.Symbol.d,
+        system: null,
+        factor: 86400,
+      },
+      {
+        name: 'Months',
+        symbol: Unit.Symbol.mo,
+        system: null,
+        factor: 2630016,
+      },
+      {
+        name: 'Years',
+        symbol: Unit.Symbol.y,
+        system: null,
+        factor: 31556952,
+      },
+    ],
+  };
 
-  getAllUnits(): Promise<Unit.Unit[]> {
-    return new Promise<Unit.Unit[]>((resolve, reject) => resolve(this.units));
-  }
+  constructor() {}
 
-  getUnits(symbols: Unit.Symbol[]) {
-    return new Promise<Unit.Unit[]>((resolve, reject) =>
-      this.getAllUnits().then((units: Unit.Unit[]) => symbols.map(s => units.find(u => u.symbol === s)))
-    );
-  }
+  getAllUnits = () => new Promise<{[type: number]: Unit.Unit[]}>((resolve, reject) => resolve(this.units));
 
-  getUnitsOfType(type: Unit.Type): Promise<Unit.Unit[]> {
-    return new Promise<Unit.Unit[]>((resolve, reject) =>
-      this.getAllUnits().then((units: Unit.Unit[]) => units.filter(u => u.type === type))
-    );
-  }
+  getUnitsOfType = (type: Unit.Type) => new Promise<Unit.Unit[]>((resolve, reject) => resolve(this.units[type]));
+
+  getUnitGroup = (type: Unit.Type) => (symbols: Unit.Symbol[]) => this.getUnitsOfType(type).then(units => this.filterUnits(units)(symbols));
+
+  filterUnits = (units: Unit.Unit[]) => (symbols: Unit.Symbol[]) => symbols.map(s => units.find(u => u.symbol === s));
 
   defaultUnit = (group: Unit.Unit[]) => (system: Unit.System) => group.find(u => u.system === system);
 
-  conversion = (sourceUnit: Unit.Unit) => (targetUnit: Unit.Unit) => (sourceValue: number) => {
-    if (!sourceUnit || !targetUnit) {
-      throw Error(`Source or target unit does not exist.
-        Source: {${Unit.Symbol[sourceUnit.baseSymbol]}: ${sourceUnit}},
-        Target: {${Unit.Symbol[targetUnit.baseSymbol]}: ${targetUnit}}`);
-    }
-    if (sourceUnit.baseSymbol !== targetUnit.baseSymbol) {
-      throw Error(`Units must have the same base unit.
-        Source: {${Unit.Symbol[sourceUnit.baseSymbol]}: ${sourceUnit}},
-        Target: {${Unit.Symbol[targetUnit.baseSymbol]}: ${targetUnit}}`);
-    }
-
-    const baseValue: number = sourceUnit.convertToBase(sourceValue);
-    const targetValue: number = targetUnit.convertFromBase(baseValue);
-    return targetValue;
-  }
+  conversion = (sourceFactor: number) => (targetFactor: number) => (sourceValue: number) => sourceValue * sourceFactor / targetFactor;
 }
