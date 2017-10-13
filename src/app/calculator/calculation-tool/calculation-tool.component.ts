@@ -6,6 +6,8 @@ import { CalculatorService } from '../calculator-service/calculator.service';
 import { EquationService } from '../equation/equation.service';
 import { Unit } from '../unit/unit';
 import { Calc } from '../calculator-service/calc';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatListOption } from '@angular/material';
 
 @Component({
   selector: 'dc-calculation-tool',
@@ -41,10 +43,6 @@ export class CalculationToolComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.calcsList.selectedOptions.onChange.subscribe(list => {
-      this.selectedShiftsUpdated.emit(this.selectionList.selectedOptions.selected.map(option => option.value));
-    });
-
     this.calculators = this.activatedRoute.snapshot.data['calculators'];
     this.inputs = this.activatedRoute.snapshot.data['inputs'];
 
@@ -52,8 +50,9 @@ export class CalculationToolComponent implements OnInit {
     this.setDefaultUnitSystem(this.system);
   }
 
-  setActiveUnits(input: any): void {
-    console.log('test' + JSON.stringify(input));
+  setActiveUnits(selectedCalcs: SelectionModel<MatListOption>): void {
+    const calcs: Calc.Calc[] = selectedCalcs.selected.map<Calc.Calc>((o: MatListOption) => o.value);
+    const mergedInputIds: Calc.Input.Id[] = [].concat.apply([], calcs.map(i => i.inputIds));
   }
 
   setDefaultUnitSystem(systemString: string): void {

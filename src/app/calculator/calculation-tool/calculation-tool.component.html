@@ -7,7 +7,7 @@
     <mat-selection-list #calcsList>
       <div *ngFor="let calc of calculators">
         <mat-divider></mat-divider>
-        <mat-list-option [value]="calc" checkboxPosition="before" (selectChange)="setActiveUnits(calcsList.selectedOptions)">
+        <mat-list-option [value]="calc" checkboxPosition="before" (selectionChange)="setActiveUnits(calcsList.selectedOptions)">
           <h3 mdLine>{{calc.title}}</h3>
           <h6 mdLine>{{calc.subTitle}}</h6>
         </mat-list-option>
