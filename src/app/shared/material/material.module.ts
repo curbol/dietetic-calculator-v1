@@ -12,6 +12,7 @@ import {
   MatToolbarModule,
   MatCheckboxModule,
   MatListModule,
+  MatTooltipModule,
 } from '@angular/material';
 
 @NgModule({
@@ -30,6 +31,7 @@ import {
     MatToolbarModule,
     MatCheckboxModule,
     MatListModule,
+    MatTooltipModule,
   ]
 })
 export class MaterialModule { }

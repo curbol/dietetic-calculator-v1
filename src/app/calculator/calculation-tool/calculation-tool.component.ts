@@ -8,11 +8,15 @@ import { Unit } from '../unit/unit';
 import { Calc } from '../calculator-service/calc';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatListOption } from '@angular/material';
+import { appearOnActive } from '../../animation/animations';
 
 @Component({
   selector: 'dc-calculation-tool',
   templateUrl: './calculation-tool.component.html',
-  styleUrls: ['./calculation-tool.component.css']
+  styleUrls: ['./calculation-tool.component.css'],
+  animations: [
+    appearOnActive()
+  ]
 })
 export class CalculationToolComponent implements OnInit {
   system: string;
@@ -53,6 +57,9 @@ export class CalculationToolComponent implements OnInit {
   setActiveUnits(selectedCalcs: SelectionModel<MatListOption>): void {
     const calcs: Calc.Calc[] = selectedCalcs.selected.map<Calc.Calc>((o: MatListOption) => o.value);
     const mergedInputIds: Calc.Input.Id[] = [].concat.apply([], calcs.map(i => i.inputIds));
+    const inputIdsToActivate: Calc.Input.Id[] = mergedInputIds.filter((v, i, a) => a.indexOf(v) === i);
+
+    this.inputs.forEach(input => input.active = inputIdsToActivate.includes(input.id));
   }
 
   setDefaultUnitSystem(systemString: string): void {

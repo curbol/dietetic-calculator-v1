@@ -73,9 +73,8 @@ table {
 }
 
 button.dc-small {
-  min-width: 1em;
-  padding-left: .5em;
-  padding-right: .5em;
+  min-width: 1rem;
+  padding: 0 0.5em;
 }
 
 .dc-bottom-shadow {
@@ -95,4 +94,12 @@ button.dc-small {
 
 .dc-full-width {
   width: 100%;
+}
+
+.dc-list-option-title {
+  font-size: 1.1rem !important;
+}
+
+.dc-list-option-subtitle {
+  font-size: 0.9em !important;
 }

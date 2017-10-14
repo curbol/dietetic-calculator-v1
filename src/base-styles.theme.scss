@@ -28,4 +28,8 @@
   .dc-default-text {
     color: mat-color($foreground, text) !important;
   }
+
+  .dc-secondary-text {
+    color: mat-color($foreground, secondary-text) !important;
+  }
 }
