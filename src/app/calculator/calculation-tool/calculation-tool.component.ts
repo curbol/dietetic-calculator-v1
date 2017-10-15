@@ -63,13 +63,16 @@ export class CalculationToolComponent implements OnInit {
   }
 
   setDefaultUnitSystem(systemString: string): void {
-    // const system: Unit.System = Unit.System[systemString] || Unit.System.metric;
-    // [this.weightSelector, this.heightSelector].forEach(s => s.unit = this.unitService.defaultUnit(s.group)(system));
+    const system: Unit.System = Unit.System[systemString] || Unit.System.metric;
+    this.inputs.filter(input => input.unit && input.unit.system !== system).forEach(input => {
+      const defaultUnit: Unit.Unit = this.unitService.defaultUnit(input.group)(system);
+      if (defaultUnit) { input.unit = defaultUnit; }
+    });
   }
 
   updateSystem(): void {
-    // const commonSystem: Unit.System = this.calculatorService.commonUnitSystem([this.weightSelector, this.heightSelector]);
-    // this.system = commonSystem ? Unit.System[commonSystem] : null;
+    const commonSystem: Unit.System = this.calculatorService.commonUnitSystem(this.inputs);
+    this.system = commonSystem != null ? Unit.System[commonSystem] : 'mixed';
   }
 
   unitString(symbol: Unit.Symbol): string {

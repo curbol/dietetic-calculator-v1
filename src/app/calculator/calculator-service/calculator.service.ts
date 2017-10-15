@@ -79,10 +79,12 @@ export class CalculatorService {
       return null;
     }
 
-    const firstSystem: Unit.System = inputs[0].unit.system;
-    const allSame: boolean = inputs.every(i => !i.unit.system || i.unit.system === firstSystem);
+    const inputsWithSystem = inputs.filter(input => input.unit && input.unit.system != null);
+    const systems = inputsWithSystem.map(input => input.unit.system);
+    const distinctSystems = systems.filter((v, i, a) => a.indexOf(v) === i);
+    const allSame: boolean = distinctSystems.length === 1;
 
-    return allSame ? firstSystem : null;
+    return allSame ? distinctSystems[0] : null;
   }
 
   inputConversion = (input: Calc.Input) => (targetSymbol: Unit.Symbol) => {

@@ -5,7 +5,6 @@ export function slideInOnRouteChange(): AnimationTriggerMetadata {
     transition('* <=> *', [
       style({
         transform: 'translateX(-4em)',
-        opacity: 0
       }),
       animate('400ms ease-in-out')
     ])
@@ -14,15 +13,14 @@ export function slideInOnRouteChange(): AnimationTriggerMetadata {
 
 export function appearOnActive(): AnimationTriggerMetadata {
   return trigger('appearOnActive', [
-    state('false', style({
+    state('0', style({
+        transform: 'scale(0)',
+        opacity: 0
+    })),
+    state('1', style({
         transform: 'scale(1)',
-        backgroundColor: '#eee'
     })),
-    state('true', style({
-        transform: 'scale(1.1)',
-        backgroundColor: '#cfd8dc'
-    })),
-    transition('inactive => active', animate('100ms ease-in')),
-    transition('active => inactive', animate('100ms ease-out'))
+    transition('0 => 1', animate('200ms ease-in-out')),
+    transition('1 => 0', animate('200ms ease-in-out')),
   ]);
 }
