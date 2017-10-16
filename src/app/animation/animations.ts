@@ -20,7 +20,7 @@ export function appearOnActive(): AnimationTriggerMetadata {
     })),
     state('*', style({
         transform: 'scale(1)',
-    })),    
+    })),
     transition('void => *', animate('400ms ease-in-out')),
     transition('* => void', animate('400ms ease-in-out')),
   ]);

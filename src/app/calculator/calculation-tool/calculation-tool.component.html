@@ -28,7 +28,8 @@
       </mat-radio-group>
 
       <div *ngFor="let input of inputs">
-        <div class="dc-padding-top" fxLayout fxLayoutGap=".2rem" *ngIf="input.active" [@appearOnActive]='input.active'>
+        <div fxLayout fxLayoutGap=".2rem" *ngIf="input.active" [@appearOnActive]>
+          <div class="dc-input-spacer"></div>
           <mat-form-field color="accent">
             <input matInput required name="{{input.name}}Value" type="number" [placeholder]="input.name" [(ngModel)]="input.value" />
             <mat-hint align="end">{{unitString(input?.unit?.symbol)}}</mat-hint>
