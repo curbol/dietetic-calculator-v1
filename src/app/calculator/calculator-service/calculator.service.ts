@@ -76,7 +76,7 @@ export class CalculatorService {
 
   getInputIds = (calcs: Calc.Calc[]) => {
     if (!calcs || calcs.length <= 0) {
-      return null;
+      return [];
     }
 
     const mergedInputIds: Calc.Input.Id[] = [].concat.apply([], calcs.map(i => i.inputIds));

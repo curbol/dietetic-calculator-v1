@@ -59,10 +59,6 @@ export class CalculationToolComponent implements OnInit {
   }
 
   setActiveUnits(selectedCalcs: SelectionModel<MatListOption>): void {
-    if (!selectedCalcs || selectedCalcs.selected.length <= 0) {
-      return;
-    }
-
     const calcs: Calc.Calc[] = selectedCalcs.selected.map<Calc.Calc>((o: MatListOption) => o.value);
     const inputIdsToActivate = this.calculatorService.getInputIds(calcs);
 
