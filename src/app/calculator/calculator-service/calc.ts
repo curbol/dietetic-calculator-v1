@@ -5,7 +5,9 @@ export module Calc {
     id: Calc.Id;
     title: string;
     subTitle: string;
+    active: boolean;
     inputIds: Calc.Input.Id[];
+    output: Output;
   }
 
   export enum Id {
@@ -36,9 +38,7 @@ export module Calc {
   }
 
   export interface Output {
-    name: string;
-    unit: string;
-    calcId: Calc.Id.bmi;
-    value: number;
+    unitText: string;
+    result(inputs: Calc.Input[]): number;
   }
 }

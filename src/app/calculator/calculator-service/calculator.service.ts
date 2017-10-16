@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UnitService } from '../unit/unit.service';
 import { Unit } from '../unit/unit';
 import { Calc } from './calc';
+import { EquationService } from '../equation/equation.service';
 
 @Injectable()
 export class CalculatorService {
@@ -10,13 +11,41 @@ export class CalculatorService {
       id: Calc.Id.bmi,
       title: 'Body Mass Index (BMI)',
       subTitle: 'A measure of body fat in adults',
+      active: false,
       inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight],
+      output: <Calc.Output>{
+        unitText: 'kg/m²',
+        result: (inputs: Calc.Input[]): number => {
+          const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
+          const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
+          if ([weight, height].find(i => !this.readyToCalculate(i))) { return null; }
+
+          const weight_kg: number = this.inputConversion(weight)(Unit.Symbol.kg);
+          const height_m: number = this.inputConversion(height)(Unit.Symbol.m);
+          return this.equationService.bodyMassIndex(weight_kg)(height_m);
+        }
+      }
     },
     {
       id: Calc.Id.mifflin,
       title: 'Mifflin St. Jeor',
       subTitle: 'Daily calorie needs for adults',
-      inputIds: [Calc.Input.Id.weight, Calc.Input.Id.age],
+      active: false,
+      inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight, Calc.Input.Id.age],
+      output: <Calc.Output>{
+        unitText: 'kg/m²',
+        result: (inputs: Calc.Input[]): number => {
+          const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
+          const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
+          const age: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.age);
+          if ([weight, height, age].find(i => !this.readyToCalculate(i))) { return null; }
+
+          const weight_kg: number = this.inputConversion(weight)(Unit.Symbol.kg);
+          const height_cm: number = this.inputConversion(height)(Unit.Symbol.cm);
+          const age_y: number = this.inputConversion(age)(Unit.Symbol.y);
+          return this.equationService.mifflinStJeor(weight_kg)(height_cm)(age_y);
+        }
+      }
     }
   ];
 
@@ -44,9 +73,11 @@ export class CalculatorService {
     },
   ];
 
-  constructor(private unitService: UnitService) { }
+  constructor(private unitService: UnitService, private equationService: EquationService) { }
 
   private getInputSettings = () => new Promise<Calc.Input.Settings[]>((resolve, reject) => resolve(this.inputSettings));
+
+  readyToCalculate = (input: Calc.Input): boolean => (input != null && input.value != null);
 
   getCalculators = () => new Promise<Calc.Calc[]>((resolve, reject) => resolve(this.calcs));
 

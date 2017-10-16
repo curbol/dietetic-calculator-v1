@@ -1,61 +1,72 @@
-<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="1rem" id="dc-calc-tool-container">
+<div fxLayout="row" fxLayoutAlign="center start">
+  <div id="dc-calc-tool-container"
+       fxLayout="row"
+       fxLayout.lt-md="column"
+       fxLayoutAlign="center start"
+       fxLayoutAlign.lt-md="start center"
+       fxLayoutGap="2rem">
 
-  <div fxFlex='none' id="dc-calcs-container">
-    <div><h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3></div>
-    <div fxLayout fxLayoutAlign="center start" fxLayoutGap="1rem">
-      <button mat-button class="dc-small" (click)="calcsList.selectAll()"><mat-icon>check_box</mat-icon></button>
-      <button mat-button class="dc-small" (click)="calcsList.deselectAll()"><mat-icon>check_box_outline_blank</mat-icon></button>
-    </div>
-    <mat-selection-list #calcsList>
-      <div *ngFor="let calc of calculators">
-        <mat-list-option [value]="calc" checkboxPosition="before" (selectionChange)="setActiveUnits(calcsList.selectedOptions)">
-          <h3 mdLine class="dc-list-option-title">{{calc.title}}</h3>
-          <h6 mdLine class="dc-list-option-subtitle dc-secondary-text">{{calc.subTitle}}</h6>
-        </mat-list-option>
-        <mat-divider></mat-divider>
+    <div id="dc-calcs-container" class="dc-tool-panel-container">
+      <div><h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3></div>
+      <div fxLayout fxLayoutAlign="center start" fxLayoutGap="1rem">
+        <button mat-button class="dc-small" (click)="calcsList.selectAll()"><mat-icon>check_box</mat-icon></button>
+        <button mat-button class="dc-small" (click)="calcsList.deselectAll()"><mat-icon>check_box_outline_blank</mat-icon></button>
       </div>
-    </mat-selection-list>
-  </div>
+      <mat-selection-list #calcsList>
+        <div *ngFor="let calc of calculators">
+          <mat-list-option [value]="calc" checkboxPosition="before" (selectionChange)="setActiveInputs(calcsList.selectedOptions)">
+            <h3 mdLine class="dc-list-option-title">{{calc.title}}</h3>
+            <h6 mdLine class="dc-list-option-subtitle dc-secondary-text">{{calc.subTitle}}</h6>
+          </mat-list-option>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-selection-list>
+    </div>
 
-  <div id="dc-inputs-container">
-    <div><h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Inputs</h3></div>
-    <form fxLayout="column" fxLayoutAlign="start center">
+    <div id="dc-inputs-container" class="dc-tool-panel-container" *ngIf="activeInputs.length > 0" [@appearOnActive]>
+      <div><h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Inputs</h3></div>
+      <form fxLayout="column" fxLayoutAlign="start center">
 
-      <mat-radio-group name="unitSystem" fxLayout fxLayoutGap="2rem" [(ngModel)]="system" (change)="setDefaultUnitSystem($event.value)">
-        <mat-radio-button value="metric">Metric</mat-radio-button>
-        <mat-radio-button value="imperial">Imperial</mat-radio-button>
-        <mat-radio-button value="mixed" disabled>Mixed</mat-radio-button>
-      </mat-radio-group>
+        <mat-radio-group name="unitSystem" fxLayout fxLayoutGap="2rem" [(ngModel)]="system" (change)="setDefaultUnitSystem($event.value)">
+          <mat-radio-button value="metric">Metric</mat-radio-button>
+          <mat-radio-button value="imperial">Imperial</mat-radio-button>
+          <mat-radio-button value="mixed" disabled>Mixed</mat-radio-button>
+        </mat-radio-group>
 
-      <div *ngFor="let input of inputs">
-        <div *ngIf="input.active" [@appearOnActive]>
-          <div class="dc-input-spacer"></div>
-          <div fxLayout fxLayoutGap=".2rem" >
-            <mat-form-field color="accent">
-              <input matInput required name="{{input.name}}Value" type="number" [placeholder]="input.name" [(ngModel)]="input.value" />
-              <mat-hint align="end">{{unitString(input?.unit?.symbol)}}</mat-hint>
-            </mat-form-field>
-            <mat-form-field color="accent">
-              <mat-select required name="{{input.name}}Units" placeholder="Units" (change)="updateSystem()" [(ngModel)]="input.unit">
-                <mat-option *ngFor="let unit of input.group" [value]="unit">
-                  {{unit?.name}} ({{unitString(unit?.symbol)}})
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+        <div *ngFor="let input of inputs">
+          <div *ngIf="input.active" [@appearOnActive]>
+            <div class="dc-input-spacer"></div>
+            <div fxLayout fxLayoutGap=".2rem" >
+              <mat-form-field color="accent">
+                <input matInput required name="{{input.name}}Value" type="number" [placeholder]="input.name" [(ngModel)]="input.value" />
+                <mat-hint align="end">{{unitString(input?.unit?.symbol)}}</mat-hint>
+              </mat-form-field>
+              <mat-form-field color="accent">
+                <mat-select required name="{{input.name}}Units" placeholder="Units" (change)="updateSystem()" [(ngModel)]="input.unit">
+                  <mat-option *ngFor="let unit of input.group" [value]="unit">
+                    {{unit?.name}} ({{unitString(unit?.symbol)}})
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
         </div>
+
+      </form>
+    </div>
+
+    <div id="dc-results-container" class="dc-tool-panel-container" *ngIf="activeInputs.length > 0 && completedResults.length > 0" [@appearOnActive]>
+      <div><h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Results</h3></div>
+      <div *ngFor="let calc of calculators">
+        <div *ngIf="calc.active" [@appearOnActive]>
+          <dc-result class="dc-full-width"
+            [title]="calc.title"
+            [value]="(calc.output.result(inputs) || 0) | number:'1.1-1'"
+            [units]="calc.output.unitText">
+          </dc-result>
+        </div>
       </div>
+    </div>
 
-    </form>
   </div>
-
-  <div fxFlex="15rem" id="dc-results-container">
-    <div><h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Results</h3></div>
-    <dc-result class="dc-full-width"
-      [title]="'Body Mass Index (BMI)'"
-      [value]="(result || 0) | number:'1.1-1'"
-      [units]="'kg/m&#178;'">
-    </dc-result>
-  </div>
-
 </div>

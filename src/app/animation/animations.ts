@@ -17,10 +17,9 @@ export function appearOnActive(): AnimationTriggerMetadata {
         transform: 'scale(0)',
         opacity: 0,
         height: 0,
+        width: 0
     })),
-    state('*', style({
-        transform: 'scale(1)',
-    })),
+    state('*', style({})),
     transition('void => *', animate('400ms ease-in-out')),
     transition('* => void', animate('400ms ease-in-out')),
   ]);

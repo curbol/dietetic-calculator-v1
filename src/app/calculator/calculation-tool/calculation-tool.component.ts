@@ -23,23 +23,12 @@ export class CalculationToolComponent implements OnInit {
   calculators: Calc.Calc[];
   inputs: Calc.Input[];
 
-  // get activeInputs(): Calc.Input[] {
+  get activeInputs(): Calc.Input[] {
+    return this.inputs.filter(i => i.active);
+  }
 
-  // }
-
-  get result(): number {
-    return 123;
-
-    // if (this.weightSelector === null || this.heightSelector === null) {
-    //   return null;
-    // }
-
-    // const weight_kg: number = this.calculatorService.inputConversion(this.weightSelector)(Unit.Symbol.kg);
-    // const height_m: number = this.calculatorService.inputConversion(this.heightSelector)(Unit.Symbol.m);
-    // const bmi: number = this.equationService.bodyMassIndex(weight_kg)(height_m);
-    // const roundedBmi: number = Math.round(bmi * 10) / 10;
-
-    // return roundedBmi;
+  get completedResults(): Calc.Calc[] {
+    return this.calculators.filter(c => (c.output.result(this.inputs) || 0) !== 0);
   }
 
   constructor(
@@ -58,10 +47,10 @@ export class CalculationToolComponent implements OnInit {
     this.setDefaultUnitSystem(this.system);
   }
 
-  setActiveUnits(selectedCalcs: SelectionModel<MatListOption>): void {
-    const calcs: Calc.Calc[] = selectedCalcs.selected.map<Calc.Calc>((o: MatListOption) => o.value);
-    const inputIdsToActivate = this.calculatorService.getInputIds(calcs);
-
+  setActiveInputs(selectedOptions: SelectionModel<MatListOption>): void {
+    const selectedCalcs: Calc.Calc[] = selectedOptions.selected.map<Calc.Calc>((o: MatListOption) => o.value);
+    const inputIdsToActivate = this.calculatorService.getInputIds(selectedCalcs);
+    this.calculators.forEach(calc => calc.active = selectedCalcs.includes(calc));
     this.inputs.forEach(input => input.active = inputIdsToActivate.includes(input.id));
   }
 
