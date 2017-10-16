@@ -23,6 +23,10 @@ export class CalculationToolComponent implements OnInit {
   calculators: Calc.Calc[];
   inputs: Calc.Input[];
 
+  // get activeInputs(): Calc.Input[] {
+
+  // }
+
   get result(): number {
     return 123;
 
@@ -55,18 +59,25 @@ export class CalculationToolComponent implements OnInit {
   }
 
   setActiveUnits(selectedCalcs: SelectionModel<MatListOption>): void {
+    if (!selectedCalcs || selectedCalcs.selected.length <= 0) {
+      return;
+    }
+
     const calcs: Calc.Calc[] = selectedCalcs.selected.map<Calc.Calc>((o: MatListOption) => o.value);
-    const mergedInputIds: Calc.Input.Id[] = [].concat.apply([], calcs.map(i => i.inputIds));
-    const inputIdsToActivate: Calc.Input.Id[] = mergedInputIds.filter((v, i, a) => a.indexOf(v) === i);
+    const inputIdsToActivate = this.calculatorService.getInputIds(calcs);
 
     this.inputs.forEach(input => input.active = inputIdsToActivate.includes(input.id));
   }
 
   setDefaultUnitSystem(systemString: string): void {
     const system: Unit.System = Unit.System[systemString] || Unit.System.metric;
-    this.inputs.filter(input => input.unit && input.unit.system !== system).forEach(input => {
+    const inputsToUpdate = this.inputs.filter(input => input.unit && input.unit.system !== system);
+
+    inputsToUpdate.forEach(input => {
       const defaultUnit: Unit.Unit = this.unitService.defaultUnit(input.group)(system);
-      if (defaultUnit) { input.unit = defaultUnit; }
+      if (defaultUnit) {
+        input.unit = defaultUnit;
+      }
     });
   }
 

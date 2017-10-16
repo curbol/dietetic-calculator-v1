@@ -16,7 +16,7 @@ export class CalculatorService {
       id: Calc.Id.mifflin,
       title: 'Mifflin St. Jeor',
       subTitle: 'Daily calorie needs for adults',
-      inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight, Calc.Input.Id.age],
+      inputIds: [Calc.Input.Id.weight, Calc.Input.Id.age],
     }
   ];
 
@@ -73,6 +73,17 @@ export class CalculatorService {
   getInputs = (inputIds: Calc.Input.Id[]) => this.getAllInputs().then(
     (inputs: Calc.Input[]) => inputs.filter(input => inputIds.find(id => id === input.id))
   )
+
+  getInputIds = (calcs: Calc.Calc[]) => {
+    if (!calcs || calcs.length <= 0) {
+      return null;
+    }
+
+    const mergedInputIds: Calc.Input.Id[] = [].concat.apply([], calcs.map(i => i.inputIds));
+    const distinctInputIds: Calc.Input.Id[] = mergedInputIds.filter((v, i, a) => a.indexOf(v) === i);
+
+    return distinctInputIds;
+  }
 
   commonUnitSystem = (inputs: Calc.Input[]) => {
     if (!inputs || inputs.length <= 0) {

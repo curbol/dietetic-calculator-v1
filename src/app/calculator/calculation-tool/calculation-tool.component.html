@@ -1,6 +1,7 @@
-<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="1rem">
+<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="1rem" id="dc-calc-tool-container">
 
-  <div fxFlex='none'>
+  <div fxFlex='none' id="dc-calcs-container">
+    <div><h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3></div>
     <div fxLayout fxLayoutAlign="center start" fxLayoutGap="1rem">
       <button mat-button class="dc-small" (click)="calcsList.selectAll()"><mat-icon>check_box</mat-icon></button>
       <button mat-button class="dc-small" (click)="calcsList.deselectAll()"><mat-icon>check_box_outline_blank</mat-icon></button>
@@ -16,8 +17,9 @@
     </mat-selection-list>
   </div>
 
-  <div>
-    <form fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="2rem">
+  <div id="dc-inputs-container">
+    <div><h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Inputs</h3></div>
+    <form fxLayout="column" fxLayoutAlign="start center">
 
       <mat-radio-group name="unitSystem" fxLayout fxLayoutGap="2rem" [(ngModel)]="system" (change)="setDefaultUnitSystem($event.value)">
         <mat-radio-button value="metric">Metric</mat-radio-button>
@@ -26,7 +28,7 @@
       </mat-radio-group>
 
       <div *ngFor="let input of inputs">
-        <div fxLayout fxLayoutGap=".2rem" [@appearOnActive]="input.active">
+        <div class="dc-padding-top" fxLayout fxLayoutGap=".2rem" *ngIf="input.active" [@appearOnActive]='input.active'>
           <mat-form-field color="accent">
             <input matInput required name="{{input.name}}Value" type="number" [placeholder]="input.name" [(ngModel)]="input.value" />
             <mat-hint align="end">{{unitString(input?.unit?.symbol)}}</mat-hint>
@@ -44,7 +46,8 @@
     </form>
   </div>
 
-  <div fxFlex="15rem">
+  <div fxFlex="15rem" id="dc-results-container">
+    <div><h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Results</h3></div>
     <dc-result class="dc-full-width"
       [title]="'Body Mass Index (BMI)'"
       [value]="(result || 0) | number:'1.1-1'"
