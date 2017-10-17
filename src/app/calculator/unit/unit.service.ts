@@ -135,4 +135,16 @@ export class UnitService {
   defaultUnit = (group: Unit.Unit[]) => (system: Unit.System) => group.find(u => u.system === system);
 
   conversion = (sourceFactor: number) => (targetFactor: number) => (sourceValue: number) => sourceValue * sourceFactor / targetFactor;
+
+  commonSystem = (units: Unit.Unit[]) => {
+    if (!units || units.length <= 0) {
+      return null;
+    }
+
+    const systems = units.filter(unit => unit && unit.system != null).map(unit => unit.system);
+    const distinctSystems = systems.filter((v, i, a) => a.indexOf(v) === i);
+    const allSame: boolean = distinctSystems.length === 1;
+
+    return allSame ? distinctSystems[0] : null;
+  }
 }

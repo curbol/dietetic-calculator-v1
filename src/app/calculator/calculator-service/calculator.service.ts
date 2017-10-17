@@ -33,7 +33,7 @@ export class CalculatorService {
       active: false,
       inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight, Calc.Input.Id.age],
       output: <Calc.Output>{
-        unitText: 'kg/m²',
+        unitText: 'kcal',
         result: (inputs: Calc.Input[]): number => {
           const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
           const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
@@ -114,19 +114,6 @@ export class CalculatorService {
     const distinctInputIds: Calc.Input.Id[] = mergedInputIds.filter((v, i, a) => a.indexOf(v) === i);
 
     return distinctInputIds;
-  }
-
-  commonUnitSystem = (inputs: Calc.Input[]) => {
-    if (!inputs || inputs.length <= 0) {
-      return null;
-    }
-
-    const inputsWithSystem = inputs.filter(input => input.unit && input.unit.system != null);
-    const systems = inputsWithSystem.map(input => input.unit.system);
-    const distinctSystems = systems.filter((v, i, a) => a.indexOf(v) === i);
-    const allSame: boolean = distinctSystems.length === 1;
-
-    return allSame ? distinctSystems[0] : null;
   }
 
   inputConversion = (input: Calc.Input) => (targetSymbol: Unit.Symbol) => {

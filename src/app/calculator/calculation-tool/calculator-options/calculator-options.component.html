@@ -1,0 +1,14 @@
+<div><h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3></div>
+<div fxLayout fxLayoutAlign="center start" fxLayoutGap="1rem">
+  <button mat-button class="dc-small" (click)="calcsList.selectAll()"><mat-icon>check_box</mat-icon></button>
+  <button mat-button class="dc-small" (click)="calcsList.deselectAll()"><mat-icon>check_box_outline_blank</mat-icon></button>
+</div>
+<mat-selection-list #calcsList>
+  <div *ngFor="let calc of calculators">
+    <mat-list-option [value]="calc" checkboxPosition="before" (selectionChange)="setActiveCalculators(calcsList.selectedOptions)">
+      <h3 mdLine class="dc-list-option-title">{{calc.title}}</h3>
+      <h6 mdLine class="dc-list-option-subtitle dc-secondary-text">{{calc.subTitle}}</h6>
+    </mat-list-option>
+    <mat-divider></mat-divider>
+  </div>
+</mat-selection-list>
