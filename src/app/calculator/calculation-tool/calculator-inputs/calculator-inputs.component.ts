@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Calc } from '../../calculator-service/calc';
 import { Unit } from '../../unit/unit';
@@ -14,14 +14,28 @@ import { appearOnActive } from '../../../animation/animations';
   ]
 })
 export class CalculatorInputsComponent implements OnInit {
-  @Input() system: string = null;
+  systemText: string;
+
+  @Input()
+  get system(): string {
+    return this.systemText;
+  }
+
+  set system(system: string) {
+    this.systemText = system;
+    this.systemChange.emit(this.systemText);
+  }
+
+  @Output() systemChange: EventEmitter<string>;
 
   @Input() inputs: Calc.Input[];
 
-  constructor(private unitService: UnitService) { }
+  constructor(private unitService: UnitService) {
+    this.systemChange = new EventEmitter<string>();
+  }
 
   ngOnInit() {
-    if (this.system === null) {
+    if (!this.system) {
       this.system = Unit.System[Unit.System.metric];
       this.setDefaultUnitSystem(this.system);
     }
@@ -41,7 +55,7 @@ export class CalculatorInputsComponent implements OnInit {
 
   updateSystem(): void {
     const commonSystem: Unit.System = this.unitService.commonSystem(this.inputs.map(i => i.unit));
-    this.system = commonSystem != null ? Unit.System[commonSystem] : 'mixed';
+    this.system = commonSystem != null ? Unit.System[commonSystem] : Unit.System[Unit.System.mixed];
   }
 
   unitString(symbol: Unit.Symbol): string {

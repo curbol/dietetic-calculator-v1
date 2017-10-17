@@ -43,6 +43,6 @@ export module Unit {
   }
 
   export enum System {
-    metric, imperial
+    metric, imperial, mixed
   }
 }

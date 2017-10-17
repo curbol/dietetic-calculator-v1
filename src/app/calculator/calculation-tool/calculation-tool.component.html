@@ -14,6 +14,7 @@
     <div id="dc-inputs-container" class="dc-tool-panel-container"
          *ngIf="activeInputs.length > 0" [@appearOnActive]>
       <dc-calculator-inputs
+        [(system)]="system"
         [inputs]="inputs">
       </dc-calculator-inputs>
     </div>
