@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="center start" fxLayoutWrap>
-  <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="2rem" fxShow fxHide.lt-md>
+  <!-- <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="2rem" fxShow fxHide.lt-md>
 
     <div class="dc-tool-panel-container" fxFlex="none">
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3>
@@ -25,9 +25,9 @@
       </dc-calculator-outputs>
     </div>
 
-  </div>
+  </div> -->
 
-  <mat-horizontal-stepper fxHide fxShow.lt-md>
+  <!-- <mat-horizontal-stepper fxHide fxShow.lt-md>
     <mat-step>
       <ng-template matStepLabel>Calculators</ng-template>
       <div class="dc-tool-panel-container" fxFlex="none">
@@ -58,6 +58,36 @@
         </dc-calculator-outputs>
       </div>
     </mat-step>
-  </mat-horizontal-stepper>
+  </mat-horizontal-stepper> -->
+
+  <mat-tab-group [dynamicHeight]="true" fxHide fxShow.lt-md>
+    <mat-tab label="Calculators">
+      <div class="dc-tool-panel-container" fxFlex="none">
+        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3>
+        <dc-calculator-options
+          [calculators]="calculators"
+          (activeCalculatorsChanged)="setActiveInputs($event)">
+        </dc-calculator-options>
+      </div>
+    </mat-tab>
+    <mat-tab label="Inputs">
+      <div class="dc-tool-panel-container" *ngIf="activeInputs.length > 0" [@appearOnActive]>
+        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Inputs</h3>
+        <dc-calculator-inputs
+          [(system)]="system"
+          [inputs]="inputs">
+        </dc-calculator-inputs>
+      </div>
+    </mat-tab>
+    <mat-tab label="Results">
+      <div class="dc-tool-panel-container" *ngIf="activeInputs.length > 0 && completedResults.length > 0" [@appearOnActive]>
+        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Results</h3>
+        <dc-calculator-outputs
+          [calculators]="calculators"
+          [inputs]="inputs">
+        </dc-calculator-outputs>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 
 </div>
