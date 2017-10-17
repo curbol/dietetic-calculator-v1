@@ -1,10 +1,9 @@
-<div fxLayout="row" fxLayoutAlign="center start">
-  <div id="dc-calc-tool-container"
-       fxLayout="row" fxLayout.lt-md="column"
-       fxLayoutAlign="center start" fxLayoutAlign.lt-md="start center"
-       fxLayoutGap="2rem">
+<div fxLayout="row" fxLayoutAlign="center start" fxLayoutWrap>
+  <div id="dc-calc-tool-container" fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="2rem">
 
-    <div fxFlex="none" id="dc-calcs-container" class="dc-tool-panel-container">
+    <div id="dc-calcs-container" class="dc-tool-panel-container"
+         fxFlex="none" fxLayout="column" fxLayoutAlign="start center">
+      <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3>
       <dc-calculator-options
         [calculators]="calculators"
         (activeCalculatorsChanged)="setActiveInputs($event)">
@@ -12,7 +11,9 @@
     </div>
 
     <div id="dc-inputs-container" class="dc-tool-panel-container"
-         *ngIf="activeInputs.length > 0" [@appearOnActive]>
+         *ngIf="activeInputs.length > 0" [@appearOnActive]
+         fxLayout="column" fxLayoutAlign="start center">
+      <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Inputs</h3>
       <dc-calculator-inputs
         [(system)]="system"
         [inputs]="inputs">
@@ -21,17 +22,12 @@
 
     <div id="dc-results-container" class="dc-tool-panel-container"
          *ngIf="activeInputs.length > 0 && completedResults.length > 0" [@appearOnActive]
-         fxLayout="column" fxLayoutAlign="start center">
+         fxLayout="column" fxLayoutAlign="center center">
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Results</h3>
-      <div *ngFor="let calc of calculators">
-        <div *ngIf="calc.active" [@appearOnActive]>
-          <dc-result
-            [title]="calc.title"
-            [value]="(calc.output.result(inputs) || 0) | number:'1.1-1'"
-            [units]="calc.output.unitText">
-          </dc-result>
-        </div>
-      </div>
+      <dc-calculator-outputs
+        [calculators]="calculators"
+        [inputs]="inputs">
+      </dc-calculator-outputs>
     </div>
 
   </div>

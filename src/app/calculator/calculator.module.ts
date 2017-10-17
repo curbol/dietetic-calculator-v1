@@ -7,6 +7,7 @@ import { CalculatorService } from './calculator-service/calculator.service';
 import { CalculatorsResolver, InputsResolver } from './calculator-service/calc-resolvers';
 import { CalculatorOptionsComponent } from './calculation-tool/calculator-options/calculator-options.component';
 import { CalculatorInputsComponent } from './calculation-tool/calculator-inputs/calculator-inputs.component';
+import { CalculatorOutputsComponent } from './calculation-tool/calculator-outputs/calculator-outputs.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { CalculatorInputsComponent } from './calculation-tool/calculator-inputs/
     CalculationToolComponent,
     CalculatorOptionsComponent,
     CalculatorInputsComponent,
+    CalculatorOutputsComponent,
   ],
   providers: [
     CalculatorService,

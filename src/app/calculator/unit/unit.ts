@@ -23,7 +23,7 @@ export module Unit {
 
   export module Type {
     export enum Id {
-      weight, length, time,
+      weight, length, time
     }
 
     export const weight: Type = {

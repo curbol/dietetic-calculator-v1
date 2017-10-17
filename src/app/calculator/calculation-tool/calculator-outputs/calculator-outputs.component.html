@@ -1,0 +1,10 @@
+<div *ngFor="let calc of calculators">
+  <div *ngIf="calc.active" [@appearOnActive]>
+    <div class="dc-result-spacer"></div>
+    <dc-result
+      [title]="calc.title"
+      [value]="(calc.output.result(inputs) || 0) | number:'1.1-1'"
+      [units]="calc.output.unitText">
+    </dc-result>
+  </div>
+</div>
