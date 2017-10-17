@@ -1,6 +1,5 @@
 .dietetic-theme .mat-form-field {
-  width: auto !important;
-  max-width: 15rem !important;
+  max-width: 10rem !important;
 }
 
 * {
@@ -106,4 +105,8 @@ button.dc-small {
 
 .dc-center-text {
   text-align: center;
+}
+
+.dc-spacer {
+  height: 1rem;
 }

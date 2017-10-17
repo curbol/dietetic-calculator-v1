@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="center start" fxLayoutWrap>
+<div fxLayout="column" fxLayoutAlign="start center">
   <!-- <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="2rem" fxShow fxHide.lt-md>
 
     <div class="dc-tool-panel-container" fxFlex="none">
@@ -60,8 +60,9 @@
     </mat-step>
   </mat-horizontal-stepper> -->
 
-  <mat-tab-group [dynamicHeight]="true" fxHide fxShow.lt-md>
+  <mat-tab-group color="accent" [dynamicHeight]="true" fxHide fxShow.lt-md>
     <mat-tab label="Calculators">
+      <div class="dc-spacer"></div>
       <div class="dc-tool-panel-container" fxFlex="none">
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3>
         <dc-calculator-options
@@ -71,6 +72,7 @@
       </div>
     </mat-tab>
     <mat-tab label="Inputs">
+      <div class="dc-spacer"></div>
       <div class="dc-tool-panel-container" *ngIf="activeInputs.length > 0" [@appearOnActive]>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Inputs</h3>
         <dc-calculator-inputs
@@ -80,6 +82,7 @@
       </div>
     </mat-tab>
     <mat-tab label="Results">
+      <div class="dc-spacer"></div>
       <div class="dc-tool-panel-container" *ngIf="activeInputs.length > 0 && completedResults.length > 0" [@appearOnActive]>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Results</h3>
         <dc-calculator-outputs
