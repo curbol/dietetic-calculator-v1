@@ -1,4 +1,4 @@
-<form fxLayout="column" fxLayoutAlign="start center">
+<div fxLayout="column" fxLayoutAlign="start center">
 
   <mat-radio-group name="unitSystem" fxLayout fxLayoutGap="2rem" [(ngModel)]="system" (change)="setDefaultUnitSystem($event.value)">
     <mat-radio-button value="metric">Metric</mat-radio-button>
@@ -25,4 +25,4 @@
     </div>
   </div>
 
-</form>
+</div>
