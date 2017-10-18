@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { appearOnActive } from '../../animation/animations';
 import { UnitService } from '../unit/unit.service';
 import { CalculatorService } from '../calculator-service/calculator.service';
 import { Calc } from '../calculator-service/calc';
-import { appearOnActive } from '../../animation/animations';
+import { Unit } from '../unit/unit';
 
 @Component({
   selector: 'dc-calculation-tool',
@@ -36,6 +37,7 @@ export class CalculationToolComponent implements OnInit {
   ngOnInit() {
     this.calculators = this.activatedRoute.snapshot.data['calculators'];
     this.inputs = this.activatedRoute.snapshot.data['inputs'];
+    this.system = Unit.System[Unit.System.metric];
   }
 
   setActiveInputs(activeCalculators: Calc.Calc[]): void {

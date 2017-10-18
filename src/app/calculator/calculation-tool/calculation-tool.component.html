@@ -1,6 +1,8 @@
-<div fxLayout="column" fxLayoutAlign="start center">
-  <!-- <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="2rem" fxShow fxHide.lt-md>
+{{system}}
 
+<div fxLayout="column" fxLayoutAlign="start center">
+
+  <div fxLayout fxLayoutAlign="center start" fxLayoutGap="1rem" fxHide fxShow.gt-sm >
     <div class="dc-tool-panel-container" fxFlex="none">
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3>
       <dc-calculator-options
@@ -24,43 +26,9 @@
         [inputs]="inputs">
       </dc-calculator-outputs>
     </div>
+  </div>
 
-  </div> -->
-
-  <!-- <mat-horizontal-stepper fxHide fxShow.lt-md>
-    <mat-step>
-      <ng-template matStepLabel>Calculators</ng-template>
-      <div class="dc-tool-panel-container" fxFlex="none">
-        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3>
-        <dc-calculator-options
-          [calculators]="calculators"
-          (activeCalculatorsChanged)="setActiveInputs($event)">
-        </dc-calculator-options>
-      </div>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Inputs</ng-template>
-      <div class="dc-tool-panel-container" *ngIf="activeInputs.length > 0" [@appearOnActive]>
-        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Inputs</h3>
-        <dc-calculator-inputs
-          [(system)]="system"
-          [inputs]="inputs">
-        </dc-calculator-inputs>
-      </div>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Results</ng-template>
-      <div class="dc-tool-panel-container" *ngIf="activeInputs.length > 0 && completedResults.length > 0" [@appearOnActive]>
-        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Results</h3>
-        <dc-calculator-outputs
-          [calculators]="calculators"
-          [inputs]="inputs">
-        </dc-calculator-outputs>
-      </div>
-    </mat-step>
-  </mat-horizontal-stepper> -->
-
-  <mat-tab-group color="accent" [dynamicHeight]="true" fxHide fxShow.lt-md>
+  <mat-tab-group color="accent" [dynamicHeight]="true" fxShow fxHide.gt-sm>
     <mat-tab label="Calculators">
       <div class="dc-spacer"></div>
       <div class="dc-tool-panel-container" fxFlex="none">
@@ -71,9 +39,10 @@
         </dc-calculator-options>
       </div>
     </mat-tab>
+
     <mat-tab label="Inputs">
       <div class="dc-spacer"></div>
-      <div class="dc-tool-panel-container" *ngIf="activeInputs.length > 0" [@appearOnActive]>
+      <div class="dc-tool-panel-container">
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Inputs</h3>
         <dc-calculator-inputs
           [(system)]="system"
@@ -81,9 +50,10 @@
         </dc-calculator-inputs>
       </div>
     </mat-tab>
+
     <mat-tab label="Results">
       <div class="dc-spacer"></div>
-      <div class="dc-tool-panel-container" *ngIf="activeInputs.length > 0 && completedResults.length > 0" [@appearOnActive]>
+      <div class="dc-tool-panel-container">
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Results</h3>
         <dc-calculator-outputs
           [calculators]="calculators"

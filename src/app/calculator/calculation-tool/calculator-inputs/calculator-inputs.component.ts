@@ -15,30 +15,34 @@ import { appearOnActive } from '../../../animation/animations';
 })
 export class CalculatorInputsComponent implements OnInit {
   systemText: string;
-
-  @Input()
   get system(): string {
     return this.systemText;
   }
-
-  set system(system: string) {
+  @Input() set system(system: string) {
     this.systemText = system;
     this.systemChange.emit(this.systemText);
   }
 
+  _inputs: Calc.Input[];
+  get inputs(): Calc.Input[] {
+    return this._inputs;
+  }
+  @Input() set inputs(value: Calc.Input[]) {
+    this._inputs = value;
+    this.setDefaultUnitSystem(this.system);
+  }
+
   @Output() systemChange: EventEmitter<string>;
 
-  @Input() inputs: Calc.Input[];
+  get activeInputs(): Calc.Input[] {
+    return this.inputs.filter(i => i.active);
+  }
 
   constructor(private unitService: UnitService) {
     this.systemChange = new EventEmitter<string>();
   }
 
   ngOnInit() {
-    if (!this.system) {
-      this.system = Unit.System[Unit.System.metric];
-      this.setDefaultUnitSystem(this.system);
-    }
   }
 
   setDefaultUnitSystem(systemString: string): void {
