@@ -22,17 +22,9 @@ export class CalculatorInputsComponent implements OnInit {
     this.systemText = system;
     this.systemChange.emit(this.systemText);
   }
-
-  _inputs: Calc.Input[];
-  get inputs(): Calc.Input[] {
-    return this._inputs;
-  }
-  @Input() set inputs(value: Calc.Input[]) {
-    this._inputs = value;
-    this.setDefaultUnitSystem(this.system);
-  }
-
   @Output() systemChange: EventEmitter<string>;
+
+  @Input() inputs: Calc.Input[];
 
   get activeInputs(): Calc.Input[] {
     return this.inputs.filter(i => i.active);
@@ -42,8 +34,7 @@ export class CalculatorInputsComponent implements OnInit {
     this.systemChange = new EventEmitter<string>();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   setDefaultUnitSystem(systemString: string): void {
     const system: Unit.System = Unit.System[systemString] || Unit.System.metric;

@@ -44,4 +44,8 @@ export class CalculationToolComponent implements OnInit {
     const inputIdsToActivate = this.calculatorService.getInputIds(activeCalculators);
     this.inputs.forEach(input => input.active = inputIdsToActivate.includes(input.id));
   }
+
+  test(): string {
+    return JSON.stringify(this.calculators);
+  }
 }

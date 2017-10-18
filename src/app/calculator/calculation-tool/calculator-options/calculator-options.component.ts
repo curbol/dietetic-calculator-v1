@@ -16,8 +16,7 @@ export class CalculatorOptionsComponent implements OnInit {
 
   constructor(private calculatorService: CalculatorService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   setActiveCalculators(selectedOptions: SelectionModel<MatListOption>): void {
     const selectedCalcs: Calc.Calc[] = selectedOptions.selected.map<Calc.Calc>((o: MatListOption) => o.value);

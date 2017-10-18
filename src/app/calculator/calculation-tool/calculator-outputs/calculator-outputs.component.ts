@@ -17,6 +17,5 @@ export class CalculatorOutputsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }
