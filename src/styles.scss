@@ -6,7 +6,7 @@
 @import './themes/dietetic-theme.scss';
 @import './base-styles.theme.scss';
 @import './app/header/header.component.theme.scss';
-@import './app/calculator/result/result.component.theme.scss';
+@import './app/shared/result/result.component.theme.scss';
 
 @mixin custom-components-theme($theme) {
   @include dc-toolbar-component-theme($theme);

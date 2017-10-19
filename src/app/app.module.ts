@@ -10,20 +10,11 @@ import { SharedModule } from './shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { AboutComponent } from './about/about.component';
-import { EquationService } from './calculator/equation/equation.service';
-import { UnitService } from './calculator/unit/unit.service';
-import {
-  WeightUnitsResolver,
-  LengthUnitsResolver
-} from './calculator/unit/unit-resolvers';
+import { EquationService } from './equation/equation.service';
+import { UnitService } from './unit/unit.service';
+import { WeightUnitsResolver, LengthUnitsResolver } from './unit/unit-resolvers';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    ToolbarComponent,
-    AboutComponent,
-  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -31,6 +22,12 @@ import {
     AppRoutingModule,
     CalculatorModule,
     SharedModule
+  ],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    ToolbarComponent,
+    AboutComponent,
   ],
   providers: [
     EquationService,

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Calc } from '../../calculator-service/calc';
-import { Unit } from '../../unit/unit';
-import { UnitService } from '../../unit/unit.service';
+import { Calc } from '../../calc';
+import { Unit } from '../../../unit/unit';
+import { UnitService } from '../../../unit/unit.service';
 import { appearOnActive } from '../../../animation/animations';
 
 @Component({

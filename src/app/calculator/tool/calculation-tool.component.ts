@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { appearOnActive } from '../../animation/animations';
-import { UnitService } from '../unit/unit.service';
-import { CalculatorService } from '../calculator-service/calculator.service';
-import { Calc } from '../calculator-service/calc';
-import { Unit } from '../unit/unit';
+import { UnitService } from '../../unit/unit.service';
+import { CalculatorService } from '../service/calculator.service';
+import { Calc } from '../calc';
+import { Unit } from '../../unit/unit';
 
 @Component({
   selector: 'dc-calculation-tool',
@@ -19,6 +19,9 @@ export class CalculationToolComponent implements OnInit {
   system: Unit.System;
   calculators: Calc.Calc[];
   inputs: Calc.Input[];
+  calculatorsTitle = '1. Select Calculators';
+  inputsTitle = '2. Input Data';
+  outputsTitle = '3. View Results';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -33,7 +36,11 @@ export class CalculationToolComponent implements OnInit {
     this.inputs = this.activatedRoute.snapshot.data['inputs'];
   }
 
+  getActiveCalculators = (): Calc.Calc[] => this.calculators.filter(c => c.active);
+
   getActiveInputs = (): Calc.Input[] => this.inputs.filter(i => i.active);
+
+  getActiveFilledInputs = (): Calc.Input[] => this.inputs.filter(i => i.active && i.value);
 
   getCompletedResults = (): Calc.Calc[] => this.calculators.filter(c => (c.output.result(this.inputs) || 0) !== 0);
 

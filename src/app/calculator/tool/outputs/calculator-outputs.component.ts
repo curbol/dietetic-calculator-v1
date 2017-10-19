@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { appearOnActive } from '../../../animation/animations';
-import { Calc } from '../../calculator-service/calc';
+import { Calc } from '../../calc';
 
 @Component({
   selector: 'dc-calculator-outputs',

@@ -2,19 +2,30 @@
   <div>
     <button mat-button [routerLink]="['']">
       <mat-icon>home</mat-icon>
-      <span id="homeText">Dietetic Calculator</span>
+      <span>Dietetic Calculator</span>
     </button>
   </div>
   <span fxFlex></span>
   <div fxLayout fxLayoutAlign="end center">
-    <button mat-button [matMenuTriggerFor]="dcmenu" class="dc-small">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <mat-menu #dcmenu="matMenu">
-      <button mat-menu-item [routerLink]="['about']">
+
+    <div fxHide fxShow.gt-xs>
+      <button mat-button [routerLink]="['about']">
         <mat-icon>info</mat-icon>
         <span>About</span>
       </button>
-    </mat-menu>
+    </div>
+
+    <div fxShow fxHide.gt-xs>
+      <button mat-button class="dc-small" [matMenuTriggerFor]="dcmenu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #dcmenu="matMenu">
+        <button mat-menu-item [routerLink]="['about']">
+          <mat-icon>info</mat-icon>
+          <span>About</span>
+        </button>
+      </mat-menu>
+    </div>
+
   </div>
 </mat-toolbar>

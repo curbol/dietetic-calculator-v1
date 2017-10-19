@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { UnitService } from '../unit/unit.service';
-import { Unit } from '../unit/unit';
-import { Calc } from './calc';
-import { EquationService } from '../equation/equation.service';
+import { UnitService } from '../../unit/unit.service';
+import { Unit } from '../../unit/unit';
+import { Calc } from '../calc';
+import { EquationService } from '../../equation/equation.service';
 
 @Injectable()
 export class CalculatorService {

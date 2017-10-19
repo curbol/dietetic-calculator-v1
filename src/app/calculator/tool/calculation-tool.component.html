@@ -1,8 +1,8 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
-  <div fxLayout fxLayoutAlign="center start" fxLayoutGap="1rem" fxHide fxShow.gt-sm >
+  <div fxLayout fxLayoutAlign="center start" fxLayoutGap="1rem" fxHide fxShow.gt-sm>
     <div class="dc-tool-panel-container" fxFlex="none">
-      <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3>
+      <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{calculatorsTitle}}</h3>
       <dc-calculator-options
         [calculators]="calculators"
         (activeCalculatorsChanged)="onActiveCalculatorsChanged($event)">
@@ -11,7 +11,7 @@
 
     <div class="dc-tool-panel-container"
          *ngIf="getActiveInputs().length > 0" [@appearOnActive]>
-      <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Inputs</h3>
+      <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
       <dc-calculator-inputs
         [(system)]="system"
         [inputs]="inputs">
@@ -20,7 +20,7 @@
 
     <div class="dc-tool-panel-container"
          *ngIf="getActiveInputs().length > 0 && getCompletedResults().length > 0" [@appearOnActive]>
-      <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Results</h3>
+      <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{outputsTitle}}</h3>
       <dc-calculator-outputs
         [calculators]="calculators"
         [inputs]="inputs">
@@ -29,10 +29,16 @@
   </div>
 
   <mat-tab-group color="accent" [dynamicHeight]="true" fxShow fxHide.gt-sm>
-    <mat-tab label="Calculators">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span>{{calculatorsTitle}}</span>&nbsp;
+        <mat-chip-list>
+          <mat-chip>{{getActiveCalculators().length}}/{{calculators.length}}</mat-chip>
+        </mat-chip-list>
+      </ng-template>
       <div class="dc-spacer"></div>
       <div class="dc-tool-panel-container" fxFlex="none">
-        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3>
+        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{calculatorsTitle}}</h3>
         <dc-calculator-options
           [calculators]="calculators"
           (activeCalculatorsChanged)="onActiveCalculatorsChanged($event)">
@@ -40,10 +46,16 @@
       </div>
     </mat-tab>
 
-    <mat-tab label="Inputs">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span>{{inputsTitle}}</span>&nbsp;
+        <mat-chip-list>
+          <mat-chip color="accent">{{getActiveFilledInputs().length}}/{{getActiveInputs().length}}</mat-chip>
+        </mat-chip-list>
+      </ng-template>
       <div class="dc-spacer"></div>
       <div class="dc-tool-panel-container">
-        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Inputs</h3>
+        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
         <dc-calculator-inputs
           [(system)]="system"
           [inputs]="inputs">
@@ -51,10 +63,16 @@
       </div>
     </mat-tab>
 
-    <mat-tab label="Results">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span>{{outputsTitle}}</span>&nbsp;
+        <mat-chip-list>
+          <mat-chip color="accent">{{getCompletedResults().length}}/{{getActiveCalculators().length}}</mat-chip>
+        </mat-chip-list>
+      </ng-template>
       <div class="dc-spacer"></div>
       <div class="dc-tool-panel-container">
-        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Results</h3>
+        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{outputsTitle}}</h3>
         <dc-calculator-outputs
           [calculators]="calculators"
           [inputs]="inputs">

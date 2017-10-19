@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from './material/material.module';
+import { ResultComponent } from './result/result.component';
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
@@ -21,6 +22,9 @@ import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/take';
 
 @NgModule({
+  declarations: [
+    ResultComponent,
+  ],
   imports: [
     CommonModule,
   ],
@@ -31,6 +35,7 @@ import 'rxjs/add/operator/take';
     MaterialModule,
     FlexLayoutModule,
     RouterModule,
+    ResultComponent
   ]
 })
 export class SharedModule { }
