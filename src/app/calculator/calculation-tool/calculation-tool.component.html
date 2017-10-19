@@ -5,11 +5,12 @@
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3>
       <dc-calculator-options
         [calculators]="calculators"
-        (activeCalculatorsChanged)="setActiveInputs($event)">
+        (activeCalculatorsChanged)="onActiveCalculatorsChanged($event)">
       </dc-calculator-options>
     </div>
 
-    <div class="dc-tool-panel-container" *ngIf="activeInputs.length > 0" [@appearOnActive]>
+    <div class="dc-tool-panel-container"
+         *ngIf="activeInputs.length > 0" [@appearOnActive]>
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Inputs</h3>
       <dc-calculator-inputs
         [(system)]="system"
@@ -17,7 +18,8 @@
       </dc-calculator-inputs>
     </div>
 
-    <div class="dc-tool-panel-container" *ngIf="activeInputs.length > 0 && completedResults.length > 0" [@appearOnActive]>
+    <div class="dc-tool-panel-container"
+         *ngIf="activeInputs.length > 0 && completedResults.length > 0" [@appearOnActive]>
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Results</h3>
       <dc-calculator-outputs
         [calculators]="calculators"
@@ -26,14 +28,14 @@
     </div>
   </div>
 
-  <mat-tab-group color="accent" [dynamicHeight]="true" fxShow fxHide.gt-sm>
+  <mat-tab-group color="accent" fxShow fxHide.gt-sm>
     <mat-tab label="Calculators">
       <div class="dc-spacer"></div>
       <div class="dc-tool-panel-container" fxFlex="none">
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Calculators</h3>
         <dc-calculator-options
           [calculators]="calculators"
-          (activeCalculatorsChanged)="setActiveInputs($event)">
+          (activeCalculatorsChanged)="onActiveCalculatorsChanged($event)">
         </dc-calculator-options>
       </div>
     </mat-tab>

@@ -1,9 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
-  <mat-radio-group name="unitSystem"
-                   fxLayout fxLayoutGap="1rem"
-                   [(ngModel)]="system"
-                   (change)="setDefaultUnitSystem($event.value)"
+  <mat-radio-group [(ngModel)]="system" fxLayout fxLayoutGap="1rem"
+                   (change)="onSystemChange($event.value)"
                    *ngIf="activeInputs.length > 0" [@appearOnActive]>
     <mat-radio-button value="metric">Metric</mat-radio-button>
     <mat-radio-button value="imperial">Imperial</mat-radio-button>
@@ -15,13 +13,13 @@
       <div class="dc-spacer"></div>
       <div fxLayout fxLayoutGap=".2rem" >
         <mat-form-field color="accent">
-          <input matInput required name="{{input.name}}Value" 
-                 type="number" [placeholder]="input.name" [(ngModel)]="input.value" />
+          <input matInput required name="{{input.name}}Value" type="number"
+                 [placeholder]="input.name" [(ngModel)]="input.value" />
           <mat-hint align="end">{{unitString(input?.unit?.symbol)}}</mat-hint>
         </mat-form-field>
         <mat-form-field color="accent">
-          <mat-select required name="{{input.name}}Units" placeholder="Units" 
-                      (change)="updateSystem()" [(ngModel)]="input.unit">
+          <mat-select required name="{{input.name}}Units" placeholder="Units"
+                      (change)="onUnitChange()" [(ngModel)]="input.unit">
             <mat-option *ngFor="let unit of input.group" [value]="unit">
               {{unit?.name}} ({{unitString(unit?.symbol)}})
             </mat-option>

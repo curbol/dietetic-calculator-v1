@@ -18,11 +18,11 @@ export class CalculatorInputsComponent implements OnInit {
   get system(): string {
     return this.systemText;
   }
+  @Output() systemChange: EventEmitter<string> = new EventEmitter<string>();
   @Input() set system(system: string) {
     this.systemText = system;
     this.systemChange.emit(this.systemText);
   }
-  @Output() systemChange: EventEmitter<string>;
 
   @Input() inputs: Calc.Input[];
 
@@ -30,30 +30,36 @@ export class CalculatorInputsComponent implements OnInit {
     return this.inputs.filter(i => i.active);
   }
 
-  constructor(private unitService: UnitService) {
-    this.systemChange = new EventEmitter<string>();
-  }
+  constructor(private unitService: UnitService) {}
 
   ngOnInit() {}
 
-  setDefaultUnitSystem(systemString: string): void {
-    const system: Unit.System = Unit.System[systemString] || Unit.System.metric;
-    const inputsToUpdate = this.inputs.filter(input => input.unit && input.unit.system !== system);
+  onSystemChange(systemString: string): void {
+    const system: Unit.System = Unit.System[systemString];
+    if (system === null || system === undefined) { return; }
 
-    inputsToUpdate.forEach(input => {
-      const defaultUnit: Unit.Unit = this.unitService.defaultUnit(input.group)(system);
-      if (defaultUnit) {
-        input.unit = defaultUnit;
-      }
-    });
+    this.system = systemString;
+    this.setDefaultUnitSystem(system);
   }
 
-  updateSystem(): void {
-    const commonSystem: Unit.System = this.unitService.commonSystem(this.inputs.map(i => i.unit));
-    this.system = commonSystem != null ? Unit.System[commonSystem] : Unit.System[Unit.System.mixed];
+  onUnitChange(): void {
+    this.updateSystem();
   }
 
   unitString(symbol: Unit.Symbol): string {
     return Unit.Symbol[symbol];
+  }
+
+  private setDefaultUnitSystem(system: Unit.System): void {
+    const inputsToUpdate = this.inputs.filter(input => input.unit && input.unit.system !== system);
+    inputsToUpdate.forEach(input => {
+      const defaultUnit: Unit.Unit = this.unitService.defaultUnit(input.group)(system);
+      if (defaultUnit) { input.unit = defaultUnit; }
+    });
+  }
+
+  private updateSystem(): void {
+    const commonSystem: Unit.System = this.unitService.commonSystem(this.inputs.map(i => i.unit));
+    this.system = commonSystem != null ? Unit.System[commonSystem] : Unit.System[Unit.System.mixed];
   }
 }

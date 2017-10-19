@@ -32,20 +32,17 @@ export class CalculationToolComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private unitService: UnitService,
     private calculatorService: CalculatorService,
-  ) { }
+  ) {
+    this.system = Unit.System[Unit.System.metric];
+  }
 
   ngOnInit() {
     this.calculators = this.activatedRoute.snapshot.data['calculators'];
     this.inputs = this.activatedRoute.snapshot.data['inputs'];
-    this.system = Unit.System[Unit.System.metric];
   }
 
-  setActiveInputs(activeCalculators: Calc.Calc[]): void {
+  onActiveCalculatorsChanged(activeCalculators: Calc.Calc[]): void {
     const inputIdsToActivate = this.calculatorService.getInputIds(activeCalculators);
     this.inputs.forEach(input => input.active = inputIdsToActivate.includes(input.id));
-  }
-
-  test(): string {
-    return JSON.stringify(this.calculators);
   }
 }

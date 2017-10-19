@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { MatListOption, MatListOptionChange } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatListOption } from '@angular/material';
 
-import { Calc } from '../../calculator-service/calc';
 import { CalculatorService } from '../../calculator-service/calculator.service';
+import { Calc } from '../../calculator-service/calc';
 
 @Component({
   selector: 'dc-calculator-options',
@@ -18,10 +18,11 @@ export class CalculatorOptionsComponent implements OnInit {
 
   ngOnInit() {}
 
-  setActiveCalculators(selectedOptions: SelectionModel<MatListOption>): void {
-    const selectedCalcs: Calc.Calc[] = selectedOptions.selected.map<Calc.Calc>((o: MatListOption) => o.value);
+  onSelectionChange(event: MatListOptionChange) {
+    const calc: Calc.Calc = event.source.value;
+    calc.active = event.selected;
 
-    this.calculators.forEach(calc => calc.active = selectedCalcs.includes(calc));
+    const selectedCalcs: Calc.Calc[] = this.calculators.filter(c => c.active);
     this.activeCalculatorsChanged.emit(selectedCalcs);
   }
 }
