@@ -16,30 +16,26 @@ import { Unit } from '../unit/unit';
   ]
 })
 export class CalculationToolComponent implements OnInit {
-  system: string;
+  system: Unit.System;
   calculators: Calc.Calc[];
   inputs: Calc.Input[];
-
-  get activeInputs(): Calc.Input[] {
-    return this.inputs.filter(i => i.active);
-  }
-
-  get completedResults(): Calc.Calc[] {
-    return this.calculators.filter(c => (c.output.result(this.inputs) || 0) !== 0);
-  }
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private unitService: UnitService,
     private calculatorService: CalculatorService,
   ) {
-    this.system = Unit.System[Unit.System.metric];
+    this.system = Unit.System.metric;
   }
 
   ngOnInit() {
     this.calculators = this.activatedRoute.snapshot.data['calculators'];
     this.inputs = this.activatedRoute.snapshot.data['inputs'];
   }
+
+  getActiveInputs = (): Calc.Input[] => this.inputs.filter(i => i.active);
+
+  getCompletedResults = (): Calc.Calc[] => this.calculators.filter(c => (c.output.result(this.inputs) || 0) !== 0);
 
   onActiveCalculatorsChanged(activeCalculators: Calc.Calc[]): void {
     const inputIdsToActivate = this.calculatorService.getInputIds(activeCalculators);

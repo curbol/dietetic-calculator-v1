@@ -14,21 +14,15 @@ import { appearOnActive } from '../../../animation/animations';
   ]
 })
 export class CalculatorInputsComponent implements OnInit {
-  systemText: string;
-  get system(): string {
-    return this.systemText;
-  }
-  @Output() systemChange: EventEmitter<string> = new EventEmitter<string>();
-  @Input() set system(system: string) {
-    this.systemText = system;
-    this.systemChange.emit(this.systemText);
+  systemString: string;
+  get system(): Unit.System { return Unit.System[this.systemString]; }
+  @Output() systemChange: EventEmitter<Unit.System> = new EventEmitter<Unit.System>();
+  @Input() set system(system: Unit.System) {
+    this.systemString = Unit.System[system];
+    this.systemChange.emit(this.system);
   }
 
   @Input() inputs: Calc.Input[];
-
-  get activeInputs(): Calc.Input[] {
-    return this.inputs.filter(i => i.active);
-  }
 
   constructor(private unitService: UnitService) {}
 
@@ -38,19 +32,17 @@ export class CalculatorInputsComponent implements OnInit {
     const system: Unit.System = Unit.System[systemString];
     if (system === null || system === undefined) { return; }
 
-    this.system = systemString;
+    this.system = system;
     this.setDefaultUnitSystem(system);
   }
 
-  onUnitChange(): void {
-    this.updateSystem();
-  }
+  onUnitChange = (): void => this.updateSystem();
 
-  unitString(symbol: Unit.Symbol): string {
-    return Unit.Symbol[symbol];
-  }
+  getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
 
-  private setDefaultUnitSystem(system: Unit.System): void {
+  getActiveInputs = (): Calc.Input[] => this.inputs.filter(i => i.active);
+
+  private setDefaultUnitSystem = (system: Unit.System): void => {
     const inputsToUpdate = this.inputs.filter(input => input.unit && input.unit.system !== system);
     inputsToUpdate.forEach(input => {
       const defaultUnit: Unit.Unit = this.unitService.defaultUnit(input.group)(system);
@@ -58,8 +50,8 @@ export class CalculatorInputsComponent implements OnInit {
     });
   }
 
-  private updateSystem(): void {
+  private updateSystem = (): void => {
     const commonSystem: Unit.System = this.unitService.commonSystem(this.inputs.map(i => i.unit));
-    this.system = commonSystem != null ? Unit.System[commonSystem] : Unit.System[Unit.System.mixed];
+    this.system = commonSystem != null ? commonSystem : Unit.System.mixed;
   }
 }

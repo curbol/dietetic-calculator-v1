@@ -10,7 +10,7 @@
     </div>
 
     <div class="dc-tool-panel-container"
-         *ngIf="activeInputs.length > 0" [@appearOnActive]>
+         *ngIf="getActiveInputs().length > 0" [@appearOnActive]>
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Inputs</h3>
       <dc-calculator-inputs
         [(system)]="system"
@@ -19,7 +19,7 @@
     </div>
 
     <div class="dc-tool-panel-container"
-         *ngIf="activeInputs.length > 0 && completedResults.length > 0" [@appearOnActive]>
+         *ngIf="getActiveInputs().length > 0 && getCompletedResults().length > 0" [@appearOnActive]>
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">Results</h3>
       <dc-calculator-outputs
         [calculators]="calculators"
@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <mat-tab-group color="accent" fxShow fxHide.gt-sm>
+  <mat-tab-group color="accent" [dynamicHeight]="true" fxShow fxHide.gt-sm>
     <mat-tab label="Calculators">
       <div class="dc-spacer"></div>
       <div class="dc-tool-panel-container" fxFlex="none">
