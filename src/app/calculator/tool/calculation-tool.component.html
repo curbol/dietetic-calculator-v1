@@ -31,7 +31,7 @@
   <mat-tab-group color="accent" [dynamicHeight]="true" fxShow fxHide.gt-sm>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span>{{calculatorsTitle}}</span>&nbsp;
+        <span>Calculators</span>&nbsp;
         <mat-chip-list>
           <mat-chip>{{getActiveCalculators().length}}/{{calculators.length}}</mat-chip>
         </mat-chip-list>
@@ -48,7 +48,7 @@
 
     <mat-tab>
       <ng-template mat-tab-label>
-        <span>{{inputsTitle}}</span>&nbsp;
+        <span>Data</span>&nbsp;
         <mat-chip-list>
           <mat-chip color="accent">{{getActiveFilledInputs().length}}/{{getActiveInputs().length}}</mat-chip>
         </mat-chip-list>
@@ -65,7 +65,7 @@
 
     <mat-tab>
       <ng-template mat-tab-label>
-        <span>{{outputsTitle}}</span>&nbsp;
+        <span>Results</span>&nbsp;
         <mat-chip-list>
           <mat-chip color="accent">{{getCompletedResults().length}}/{{getActiveCalculators().length}}</mat-chip>
         </mat-chip-list>
