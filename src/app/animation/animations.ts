@@ -24,3 +24,16 @@ export function appearOnActive(): AnimationTriggerMetadata {
     transition('* => void', animate('400ms ease-in-out')),
   ]);
 }
+
+export function expandHeightOnActive(): AnimationTriggerMetadata {
+  return trigger('expandHeightOnActive', [
+    state('void', style({
+        transform: 'scale(0)',
+        opacity: 0,
+        height: 0
+    })),
+    state('*', style({})),
+    transition('void => *', animate('400ms ease-in-out')),
+    transition('* => void', animate('400ms ease-in-out')),
+  ]);
+}

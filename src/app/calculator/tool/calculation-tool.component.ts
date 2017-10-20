@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { appearOnActive } from '../../animation/animations';
+import { appearOnActive, expandHeightOnActive } from '../../animation/animations';
 import { UnitService } from '../../unit/unit.service';
 import { CalculatorService } from '../service/calculator.service';
 import { Calc } from '../calc';
@@ -12,19 +12,24 @@ import { Unit } from '../../unit/unit';
   templateUrl: './calculation-tool.component.html',
   styleUrls: ['./calculation-tool.component.css'],
   animations: [
-    appearOnActive()
+    appearOnActive(),
+    expandHeightOnActive(),
   ]
 })
 export class CalculationToolComponent implements OnInit {
   system: Unit.System;
   calculators: Calc.Calc[];
   inputs: Calc.Input[];
+
   calculatorsTitle = '1. Select Calculators';
   calculatorsShortTitle = '1. Calculators';
   inputsTitle = '2. Input Data';
   inputsShortTitle = '2. Data';
   outputsTitle = '3. View Results';
   outputsShortTitle = '3. Results';
+
+  missingInputsMessage = 'Some inputs are missing values.';
+  noCalculatorsSelectedMessage = 'No calculators are selected.';
 
   constructor(
     private activatedRoute: ActivatedRoute,
