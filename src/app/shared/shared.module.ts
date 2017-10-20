@@ -20,10 +20,12 @@ import 'rxjs/add/operator/max';
 import 'rxjs/add/operator/min';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/take';
+import { ChipComponent } from './chip/chip.component';
 
 @NgModule({
   declarations: [
     ResultComponent,
+    ChipComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ import 'rxjs/add/operator/take';
     MaterialModule,
     FlexLayoutModule,
     RouterModule,
-    ResultComponent
+    ResultComponent,
+    ChipComponent,
   ]
 })
 export class SharedModule { }

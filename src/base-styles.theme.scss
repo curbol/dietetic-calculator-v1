@@ -20,9 +20,24 @@
     }
   }
 
+  .dc-default-background-one {
+    color: mat-color($foreground, text);
+    background-color: mat-color($foreground, secondary-text, 0.3);
+  }
+
   .dc-primary-background {
     color: mat-contrast($primary, 500);
     background-color: mat-color($primary);
+  }
+
+  .dc-accent-background {
+    color: mat-contrast($accent, 500);
+    background-color: mat-color($accent);
+  }
+
+  .dc-warn-background {
+    color: mat-contrast($warn, 500);
+    background-color: mat-color($warn);
   }
 
   .dc-default-text {

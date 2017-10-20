@@ -20,8 +20,11 @@ export class CalculationToolComponent implements OnInit {
   calculators: Calc.Calc[];
   inputs: Calc.Input[];
   calculatorsTitle = '1. Select Calculators';
+  calculatorsShortTitle = '1. Calculators';
   inputsTitle = '2. Input Data';
+  inputsShortTitle = '2. Data';
   outputsTitle = '3. View Results';
+  outputsShortTitle = '3. Results';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -42,7 +45,7 @@ export class CalculationToolComponent implements OnInit {
 
   getActiveFilledInputs = (): Calc.Input[] => this.inputs.filter(i => i.active && i.value);
 
-  getCompletedResults = (): Calc.Calc[] => this.calculators.filter(c => (c.output.result(this.inputs) || 0) !== 0);
+  getActiveCompletedResults = (): Calc.Calc[] => this.calculators.filter(c => c.active && (c.output.result(this.inputs) || 0) !== 0);
 
   onActiveCalculatorsChanged(activeCalculators: Calc.Calc[]): void {
     const inputIdsToActivate = this.calculatorService.getInputIds(activeCalculators);
