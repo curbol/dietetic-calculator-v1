@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { appearOnActive, expandHeightOnActive } from '../../animation/animations';
-import { UnitService } from '../../unit/unit.service';
+import { appearOnActive } from '../../animation/animations';
 import { CalculatorService } from '../service/calculator.service';
 import { Calc } from '../calc';
 import { Unit } from '../../unit/unit';
@@ -13,13 +12,13 @@ import { Unit } from '../../unit/unit';
   styleUrls: ['./calculation-tool.component.css'],
   animations: [
     appearOnActive(),
-    expandHeightOnActive(),
   ]
 })
 export class CalculationToolComponent implements OnInit {
   system: Unit.System;
-  calculators: Calc.Calc[];
-  inputs: Calc.Input[];
+  calculators: Calc.Calc[] = [];
+  inputs: Calc.Input[] = [];
+  selections: Calc.Selection[] = [];
 
   calculatorsTitle = '1. Select Calculators';
   calculatorsShortTitle = '1. Calculators';
@@ -33,16 +32,15 @@ export class CalculationToolComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private unitService: UnitService,
     private calculatorService: CalculatorService,
   ) {
     this.system = Unit.System.metric;
-  }
-
-  ngOnInit() {
     this.calculators = this.activatedRoute.snapshot.data['calculators'];
     this.inputs = this.activatedRoute.snapshot.data['inputs'];
+    this.selections = this.activatedRoute.snapshot.data['selections'];
   }
+
+  ngOnInit() {}
 
   getActiveCalculators = (): Calc.Calc[] => this.calculators.filter(c => c.active);
 

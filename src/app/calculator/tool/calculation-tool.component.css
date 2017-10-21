@@ -1,4 +1,6 @@
 .dc-calc-tool-header {
   font-size: 1.5rem;
   margin-bottom: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
 }

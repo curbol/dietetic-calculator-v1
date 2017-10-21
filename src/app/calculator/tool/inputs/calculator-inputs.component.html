@@ -8,6 +8,14 @@
     <mat-radio-button value="mixed" disabled>Mixed</mat-radio-button>
   </mat-radio-group>
 
+  <div *ngFor="let selection of selections">
+    <span>{{selection.name}}</span>
+    <mat-radio-group name="{{selection.name}}Selection" [(ngModel)]="selection.value" fxLayout fxLayoutGap="1rem">
+      <mat-radio-button *ngFor="let option of selection.group" value="option.id">{{option.name}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+
   <div *ngFor="let input of inputs">
     <div *ngIf="input.active" [@appearOnActive]>
       <div class="dc-spacer"></div>

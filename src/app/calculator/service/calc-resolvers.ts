@@ -22,3 +22,12 @@ export class InputsResolver implements Resolve<Calc.Input[]> {
     return this.calculatorService.getAllInputs();
   }
 }
+
+@Injectable()
+export class SelectionsResolver implements Resolve<Calc.Selection[]> {
+  constructor(private calculatorService: CalculatorService) {}
+
+  resolve(route: ActivatedRouteSnapshot): Observable<Calc.Selection[]>|Promise<Calc.Selection[]>|Calc.Selection[] {
+    return this.calculatorService.getAllSelections();
+  }
+}

@@ -2,8 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouteReuseStrategy } from '@angular/router';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { CalculatorModule } from './calculator/calculator.module';
 import { SharedModule } from './shared/shared.module';
@@ -33,7 +34,7 @@ import { WeightUnitsResolver, LengthUnitsResolver } from './unit/unit-resolvers'
     EquationService,
     UnitService,
     WeightUnitsResolver,
-    LengthUnitsResolver
+    LengthUnitsResolver,
   ],
   bootstrap: [
     AppComponent

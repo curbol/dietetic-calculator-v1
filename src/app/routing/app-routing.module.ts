@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AboutComponent } from './about/about.component';
-import { CalculationToolComponent } from './calculator/tool/calculation-tool.component';
-import { CalculatorsResolver, InputsResolver } from './calculator/service/calc-resolvers';
+import { AboutComponent } from '../about/about.component';
+import { CalculationToolComponent } from '../calculator/tool/calculation-tool.component';
+import { CalculatorsResolver, InputsResolver, SelectionsResolver } from '../calculator/service/calc-resolvers';
 
 const routes: Routes = [
   {
     path: 'calc',
     component: CalculationToolComponent,
     data: { title: 'Calculators', isHome: true },
-    resolve: { calculators: CalculatorsResolver, inputs: InputsResolver }
+    resolve: { calculators: CalculatorsResolver, inputs: InputsResolver, selections: SelectionsResolver }
   },
   { path: 'about',
     component: AboutComponent,

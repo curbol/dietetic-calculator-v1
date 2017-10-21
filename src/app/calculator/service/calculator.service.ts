@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UnitService } from '../../unit/unit.service';
 import { Unit } from '../../unit/unit';
-import { Calc } from '../calc';
+import { Calc, Option } from '../calc';
 import { EquationService } from '../../equation/equation.service';
 
 @Injectable()
@@ -13,9 +13,10 @@ export class CalculatorService {
       subTitle: 'A measure of body fat in adults',
       active: false,
       inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight],
+      selectionIds: [],
       output: <Calc.Output>{
         unitText: 'kg/m²',
-        result: (inputs: Calc.Input[]): number => {
+        result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
           const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
           const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
           if ([weight, height].find(i => !this.readyToCalculate(i))) { return null; }
@@ -32,20 +33,42 @@ export class CalculatorService {
       subTitle: 'Daily calorie needs for adults',
       active: false,
       inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight, Calc.Input.Id.age],
+      selectionIds: [Calc.Selection.Id.gender],
       output: <Calc.Output>{
         unitText: 'kcal',
-        result: (inputs: Calc.Input[]): number => {
+        result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
+          const gender: Calc.Selection = selections.find(selection => selection.id === Calc.Selection.Id.gender);
           const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
           const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
           const age: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.age);
           if ([weight, height, age].find(i => !this.readyToCalculate(i))) { return null; }
 
+          const genderText: string = Option.Id[gender.value.id];
           const weight_kg: number = this.inputConversion(weight)(Unit.Symbol.kg);
           const height_cm: number = this.inputConversion(height)(Unit.Symbol.cm);
           const age_y: number = this.inputConversion(age)(Unit.Symbol.y);
-          return this.equationService.mifflinStJeor(weight_kg)(height_cm)(age_y);
+          return this.equationService.mifflinStJeor(genderText)(weight_kg)(height_cm)(age_y);
         }
       }
+    }
+  ];
+
+  private Selections = <Calc.Selection[]>[
+    {
+      id: Calc.Selection.Id.gender,
+      name: 'Gender',
+      group: <Option.Option[]>[
+        {
+          id: Option.Id.male,
+          name: 'Male',
+        },
+        {
+          id: Option.Id.female,
+          name: 'Female',
+        }
+      ],
+      value: null,
+      active: false,
     }
   ];
 
@@ -81,7 +104,9 @@ export class CalculatorService {
 
   getCalculators = () => new Promise<Calc.Calc[]>((resolve, reject) => resolve(this.calcs));
 
-  getAllInputs(): Promise<Calc.Input[]> {
+  getAllSelections = (): Promise<Calc.Selection[]> => new Promise<Calc.Selection[]>((resolve, reject) => resolve(this.Selections));
+
+  getAllInputs = (): Promise<Calc.Input[]> => {
     return Promise.all([this.getInputSettings(), this.unitService.getAllUnits()]).then(value => {
       const inputSettings: Calc.Input.Settings[] = value[0];
       const units: {[type: number]: Unit.Unit[]} = value[1];

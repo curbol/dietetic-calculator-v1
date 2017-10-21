@@ -15,13 +15,19 @@ export class CalculatorOptionsComponent implements OnInit {
 
   constructor(private calculatorService: CalculatorService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.updateActiveCalculators();
+  }
 
   onSelectionChange(event: MatListOptionChange) {
     const calc: Calc.Calc = event.source.value;
     calc.active = event.selected;
 
-    const selectedCalcs: Calc.Calc[] = this.calculators.filter(c => c.active);
-    this.activeCalculatorsChanged.emit(selectedCalcs);
+    this.updateActiveCalculators();
+  }
+
+  updateActiveCalculators = (): void => {
+    const activeCalcs: Calc.Calc[] = this.calculators.filter(c => c.active);
+    this.activeCalculatorsChanged.emit(activeCalcs);
   }
 }

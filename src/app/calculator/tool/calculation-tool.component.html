@@ -15,7 +15,8 @@
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
       <dc-calculator-inputs
         [(system)]="system"
-        [inputs]="inputs">
+        [inputs]="inputs"
+        [selections]="selections">
       </dc-calculator-inputs>
     </div>
 
@@ -23,7 +24,7 @@
          *ngIf="getActiveCompletedResults().length > 0" [@appearOnActive]
          fxLayout="column" fxLayoutAlign="start center">
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{outputsTitle}}</h3>
-      <div *ngIf="getActiveFilledInputs().length !== getActiveInputs().length" [@expandHeightOnActive]>
+      <div *ngIf="getActiveFilledInputs().length !== getActiveInputs().length" [@appearOnActive]>
         <dc-chip color="warn">{{missingInputsMessage}}</dc-chip>
       </div>
       <dc-calculator-outputs
@@ -69,7 +70,8 @@
         </div>
         <dc-calculator-inputs
           [(system)]="system"
-          [inputs]="inputs">
+          [inputs]="inputs"
+          [selections]="selections">
         </dc-calculator-inputs>
       </div>
     </mat-tab>

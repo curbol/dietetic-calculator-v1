@@ -106,3 +106,8 @@ button.dc-small {
 .dc-spacer {
   height: 1rem;
 }
+
+.dc-nowrap {
+  white-space: nowrap;
+  overflow: hidden;
+}

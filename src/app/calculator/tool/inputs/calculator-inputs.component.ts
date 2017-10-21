@@ -23,17 +23,15 @@ export class CalculatorInputsComponent implements OnInit {
   }
 
   @Input() inputs: Calc.Input[];
+  @Input() selections: Calc.Selection[];
 
   constructor(private unitService: UnitService) {}
 
   ngOnInit() {}
 
   onSystemChange(systemString: string): void {
-    const system: Unit.System = Unit.System[systemString];
-    if (system === null || system === undefined) { return; }
-
-    this.system = system;
-    this.setDefaultUnitSystem(system);
+    this.system = Unit.System[systemString];
+    this.setDefaultUnitSystem(this.system);
   }
 
   onUnitChange = (): void => this.updateSystem();

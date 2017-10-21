@@ -6,7 +6,8 @@ export module Calc {
     title: string;
     subTitle: string;
     active: boolean;
-    inputIds: Calc.Input.Id[];
+    inputIds: Input.Id[];
+    selectionIds: Selection.Id[];
     output: Output;
   }
 
@@ -37,8 +38,33 @@ export module Calc {
     }
   }
 
+  export interface Selection {
+    id: Selection.Id;
+    name: string;
+    group: Option.Option[];
+    value: Option.Option;
+    active: boolean;
+  }
+
+  export module Selection {
+    export enum Id {
+      gender
+    }
+  }
+
   export interface Output {
     unitText: string;
-    result(inputs: Calc.Input[]): number;
+    result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]) => number;
+  }
+}
+
+export module Option {
+  export enum Id {
+    male, female // gender
+  }
+
+  export interface Option {
+    id: Id;
+    name: string;
   }
 }
