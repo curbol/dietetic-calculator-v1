@@ -3,7 +3,9 @@
     <dc-toolbar></dc-toolbar>
     <div id="dc-content" fxLayout="column">
       <dc-header></dc-header>
-      <div id="outlet-container" [@slideInOnRouteChange]="getState(o)">
+      <div class="dc-outlet-container"
+           [class.xs]="{'dc-outlet-container': false, 'dc-outlet-container-small': true}"
+           [@slideInOnRouteChange]="getState(o)">
         <router-outlet #o="outlet"></router-outlet>
       </div>
       <span fxFlex></span>

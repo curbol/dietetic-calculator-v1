@@ -21,11 +21,11 @@ export class CalculationToolComponent implements OnInit {
   selections: Calc.Selection[] = [];
 
   calculatorsTitle = '1. Select Calculators';
-  calculatorsShortTitle = '1. Calculators';
+  calculatorsShortTitle = 'Calculators';
   inputsTitle = '2. Input Data';
-  inputsShortTitle = '2. Data';
+  inputsShortTitle = 'Data';
   outputsTitle = '3. View Results';
-  outputsShortTitle = '3. Results';
+  outputsShortTitle = 'Results';
 
   missingInputsMessage = 'Some inputs are missing values.';
   noCalculatorsSelectedMessage = 'No calculators are selected.';
@@ -61,8 +61,8 @@ export class CalculationToolComponent implements OnInit {
     this.calculators.filter(c => c.active && (c.output.result(this.inputs)(this.selections) || 0) !== 0)
 
   onActiveCalculatorsChanged(activeCalculators: Calc.Calc[]): void {
-    const inputIdsToActivate = this.calculatorService.getInputIds(activeCalculators);
-    const selectionIdsToActivate = this.calculatorService.getSelectionIds(activeCalculators);
+    const inputIdsToActivate: Calc.Input.Id[] = this.calculatorService.getInputIds(activeCalculators);
+    const selectionIdsToActivate: Calc.Selection.Id[] = this.calculatorService.getSelectionIds(activeCalculators);
 
     this.inputs.forEach(input => input.active = inputIdsToActivate.includes(input.id));
     this.selections.forEach(selection => selection.active = selectionIdsToActivate.includes(selection.id));

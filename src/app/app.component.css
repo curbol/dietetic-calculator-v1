@@ -22,8 +22,12 @@
     top: 4rem;
 }
 
-#outlet-container {
+.dc-outlet-container {
   margin: 1.5rem;
+}
+
+.dc-outlet-container-small {
+  margin: 1.5rem 0 !important;
 }
 
 #footer-copywrite {
