@@ -14,6 +14,7 @@ import { Calc } from '../../calc';
 export class CalculatorOutputsComponent implements OnInit {
   @Input() calculators: Calc.Calc[];
   @Input() inputs: Calc.Input[];
+  @Input() selections: Calc.Selection[];
 
   constructor() { }
 

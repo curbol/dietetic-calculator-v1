@@ -42,16 +42,29 @@ export class CalculationToolComponent implements OnInit {
 
   ngOnInit() {}
 
+  private getActiveInputs = (): Calc.Input[] => this.inputs.filter(i => i.active);
+  private getActiveFilledInputs = (): Calc.Input[] => this.inputs.filter(i => i.active && i.value);
+
+  private getActiveSelections = (): Calc.Selection[] => this.selections.filter(s => s.active);
+  private getActiveFilledSelections = (): Calc.Selection[] => this.selections.filter(s => s.active && s.value);
+
   getActiveCalculators = (): Calc.Calc[] => this.calculators.filter(c => c.active);
 
-  getActiveInputs = (): Calc.Input[] => this.inputs.filter(i => i.active);
+  getActiveDataCount = (): number => this.getActiveInputs().length + this.getActiveSelections().length;
+  getActiveFilledDataCount = (): number => this.getActiveFilledInputs().length + this.getActiveFilledSelections().length;
 
-  getActiveFilledInputs = (): Calc.Input[] => this.inputs.filter(i => i.active && i.value);
+  isMissingInputsOrSelections = (): boolean =>
+    this.getActiveFilledInputs().length !== this.getActiveInputs().length ||
+    this.getActiveSelections().length !== this.getActiveFilledSelections().length
 
-  getActiveCompletedResults = (): Calc.Calc[] => this.calculators.filter(c => c.active && (c.output.result(this.inputs) || 0) !== 0);
+  getActiveCompletedResults = (): Calc.Calc[] =>
+    this.calculators.filter(c => c.active && (c.output.result(this.inputs)(this.selections) || 0) !== 0)
 
   onActiveCalculatorsChanged(activeCalculators: Calc.Calc[]): void {
     const inputIdsToActivate = this.calculatorService.getInputIds(activeCalculators);
+    const selectionIdsToActivate = this.calculatorService.getSelectionIds(activeCalculators);
+
     this.inputs.forEach(input => input.active = inputIdsToActivate.includes(input.id));
+    this.selections.forEach(selection => selection.active = selectionIdsToActivate.includes(selection.id));
   }
 }

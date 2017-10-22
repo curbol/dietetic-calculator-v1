@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { UnitService } from '../../unit/unit.service';
-import { Unit } from '../../unit/unit';
-import { Calc, Option } from '../calc';
 import { EquationService } from '../../equation/equation.service';
+import { Unit } from '../../unit/unit';
+import { Calc } from '../calc';
+import { Option } from '../option';
 
 @Injectable()
 export class CalculatorService {
@@ -19,7 +20,7 @@ export class CalculatorService {
         result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
           const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
           const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
-          if ([weight, height].find(i => !this.readyToCalculate(i))) { return null; }
+          if ([weight, height].find(i => !this.inputReadyToCalculate(i))) { return null; }
 
           const weight_kg: number = this.inputConversion(weight)(Unit.Symbol.kg);
           const height_m: number = this.inputConversion(height)(Unit.Symbol.m);
@@ -41,7 +42,8 @@ export class CalculatorService {
           const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
           const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
           const age: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.age);
-          if ([weight, height, age].find(i => !this.readyToCalculate(i))) { return null; }
+          if ([weight, height, age].find(i => !this.inputReadyToCalculate(i)) ||
+              [gender].find(s => !this.selectionReadyToCalculate(s))) { return null; }
 
           const genderText: string = Option.Id[gender.value.id];
           const weight_kg: number = this.inputConversion(weight)(Unit.Symbol.kg);
@@ -100,11 +102,24 @@ export class CalculatorService {
 
   private getInputSettings = () => new Promise<Calc.Input.Settings[]>((resolve, reject) => resolve(this.inputSettings));
 
-  readyToCalculate = (input: Calc.Input): boolean => (input != null && input.value != null);
+  inputReadyToCalculate = (input: Calc.Input): boolean => (input != null && input.value != null);
+
+  selectionReadyToCalculate = (selection: Calc.Selection): boolean => (selection != null && selection.value != null);
 
   getCalculators = () => new Promise<Calc.Calc[]>((resolve, reject) => resolve(this.calcs));
 
   getAllSelections = (): Promise<Calc.Selection[]> => new Promise<Calc.Selection[]>((resolve, reject) => resolve(this.Selections));
+
+  getSelectionIds = (calcs: Calc.Calc[]) => {
+    if (!calcs || calcs.length <= 0) {
+      return [];
+    }
+
+    const mergedSelectionIds: Calc.Selection.Id[] = [].concat.apply([], calcs.map(c => c.selectionIds));
+    const distinctSelectionIds: Calc.Selection.Id[] = mergedSelectionIds.filter((v, i, a) => a.indexOf(v) === i);
+
+    return distinctSelectionIds;
+  }
 
   getAllInputs = (): Promise<Calc.Input[]> => {
     return Promise.all([this.getInputSettings(), this.unitService.getAllUnits()]).then(value => {
@@ -135,7 +150,7 @@ export class CalculatorService {
       return [];
     }
 
-    const mergedInputIds: Calc.Input.Id[] = [].concat.apply([], calcs.map(i => i.inputIds));
+    const mergedInputIds: Calc.Input.Id[] = [].concat.apply([], calcs.map(c => c.inputIds));
     const distinctInputIds: Calc.Input.Id[] = mergedInputIds.filter((v, i, a) => a.indexOf(v) === i);
 
     return distinctInputIds;

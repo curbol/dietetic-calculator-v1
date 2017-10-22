@@ -5,7 +5,7 @@
       <div class="dc-spacer"></div>
       <dc-result
         [title]="calc.title"
-        [value]="(calc.output.result(inputs) || 0) | number:'1.1-1'"
+        [value]="(calc.output.result(inputs)(selections) || 0) | number:'1.1-1'"
         [units]="calc.output.unitText">
       </dc-result>
     </div>

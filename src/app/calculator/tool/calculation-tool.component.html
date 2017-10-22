@@ -10,7 +10,7 @@
     </div>
 
     <div class="dc-tool-panel-container"
-         *ngIf="getActiveInputs().length > 0" [@appearOnActive]
+         *ngIf="getActiveDataCount() > 0" [@appearOnActive]
          fxLayout="column" fxLayoutAlign="start center">
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
       <dc-calculator-inputs
@@ -24,12 +24,13 @@
          *ngIf="getActiveCompletedResults().length > 0" [@appearOnActive]
          fxLayout="column" fxLayoutAlign="start center">
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{outputsTitle}}</h3>
-      <div *ngIf="getActiveFilledInputs().length !== getActiveInputs().length" [@appearOnActive]>
+      <div *ngIf="isMissingInputsOrSelections()" [@appearOnActive]>
         <dc-chip color="warn">{{missingInputsMessage}}</dc-chip>
       </div>
       <dc-calculator-outputs
         [calculators]="calculators"
-        [inputs]="inputs">
+        [inputs]="inputs"
+        [selections]="selections">
       </dc-calculator-outputs>
     </div>
   </div>
@@ -57,14 +58,14 @@
         <span fxHide fxShow.gt-xs>{{inputsTitle}}</span>
         <span fxShow fxHide.gt-xs>{{inputsShortTitle}}</span>
         &nbsp;
-        <dc-chip [dense]="true" [color]="getActiveFilledInputs().length !== getActiveInputs().length ? 'warn' : ''">
-          {{getActiveFilledInputs().length}}/{{getActiveInputs().length}}
+        <dc-chip [dense]="true" [color]="getActiveFilledDataCount() !== getActiveDataCount() ? 'warn' : ''">
+          {{getActiveFilledDataCount()}}/{{getActiveDataCount()}}
         </dc-chip>
       </ng-template>
       <div class="dc-spacer"></div>
       <div class="dc-tool-panel-container" fxLayout="column" fxLayoutAlign="start center">
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
-        <div *ngIf="!getActiveCalculators().length">
+        <div *ngIf="!getActiveCalculators().length" [@appearOnActive]>
           <dc-chip color="warn">{{noCalculatorsSelectedMessage}}</dc-chip>
           <div class="dc-spacer"></div>
         </div>
@@ -88,15 +89,16 @@
       <div class="dc-spacer"></div>
       <div class="dc-tool-panel-container" fxLayout="column" fxLayoutAlign="start center">
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{outputsTitle}}</h3>
-        <div *ngIf="!getActiveCalculators().length">
+        <div *ngIf="!getActiveCalculators().length" [@appearOnActive]>
           <dc-chip color="warn">{{noCalculatorsSelectedMessage}}</dc-chip>
         </div>
-        <div *ngIf="getActiveFilledInputs().length !== getActiveInputs().length">
+        <div *ngIf="isMissingInputsOrSelections()" [@appearOnActive]>
           <dc-chip color="warn">{{missingInputsMessage}}</dc-chip>
         </div>
         <dc-calculator-outputs
           [calculators]="calculators"
-          [inputs]="inputs">
+          [inputs]="inputs"
+          [selections]="selections">
         </dc-calculator-outputs>
       </div>
     </mat-tab>

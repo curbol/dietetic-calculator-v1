@@ -1,3 +1,4 @@
+import { Option } from './option';
 import { Unit } from '../unit/unit';
 
 export module Calc {
@@ -55,16 +56,5 @@ export module Calc {
   export interface Output {
     unitText: string;
     result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]) => number;
-  }
-}
-
-export module Option {
-  export enum Id {
-    male, female // gender
-  }
-
-  export interface Option {
-    id: Id;
-    name: string;
   }
 }
