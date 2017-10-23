@@ -10,7 +10,7 @@
     </div>
 
     <div class="dc-tool-panel-container"
-         *ngIf="getActiveDataCount() > 0" [@appearOnActive]
+         *ngIf="getActiveDataCount()" [@appearOnActive]
          fxLayout="column" fxLayoutAlign="start center">
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
       <dc-calculator-inputs
@@ -21,7 +21,7 @@
     </div>
 
     <div class="dc-tool-panel-container"
-         *ngIf="getActiveCompletedResults().length > 0" [@appearOnActive]
+         *ngIf="getActiveCompletedResults().length" [@appearOnActive]
          fxLayout="column" fxLayoutAlign="start center">
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{outputsTitle}}</h3>
       <div *ngIf="isMissingInputsOrSelections()" [@appearOnActive]>
@@ -35,8 +35,8 @@
     </div>
   </div>
 
-  <mat-tab-group color="accent" [dynamicHeight]="true" fxShow fxHide.gt-sm>
-    <mat-tab>
+  <mat-tab-group #calcTabs class="dc-calc-tabs" color="accent" [dynamicHeight]="true" fxShow fxHide.gt-sm>
+    <mat-tab #calcsTab>
       <ng-template mat-tab-label>
         <span fxHide fxShow.gt-xs>{{calculatorsTitle}}</span>
         <span fxShow fxHide.gt-xs>{{calculatorsShortTitle}}</span>
@@ -50,10 +50,16 @@
           [calculators]="calculators"
           (activeCalculatorsChanged)="onActiveCalculatorsChanged($event)">
         </dc-calculator-options>
+        <div class="dc-spacer"></div>
+        <button mat-button (click)="calcTabs.selectedIndex = 1" 
+                [@appearOnActiveStaticSize]="getActiveCalculators().length">
+          <span>{{inputsTitle}}</span>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
       </div>
     </mat-tab>
 
-    <mat-tab>
+    <mat-tab #inputsTab>
       <ng-template mat-tab-label>
         <span fxHide fxShow.gt-xs>{{inputsTitle}}</span>
         <span fxShow fxHide.gt-xs>{{inputsShortTitle}}</span>
@@ -67,17 +73,27 @@
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
         <div *ngIf="!getActiveCalculators().length">
           <dc-chip color="warn">{{noCalculatorsSelectedMessage}}</dc-chip>
-          <div class="dc-spacer"></div>
         </div>
         <dc-calculator-inputs
           [(system)]="system"
           [inputs]="inputs"
           [selections]="selections">
         </dc-calculator-inputs>
+        <div class="dc-spacer"></div>
+        <button mat-button (click)="calcTabs.selectedIndex = 0"
+                *ngIf="!getActiveCalculators().length">
+          <mat-icon>arrow_back</mat-icon>
+          <span>{{calculatorsTitle}}</span>
+        </button>
+        <button mat-button (click)="calcTabs.selectedIndex = 2"
+                [hidden]="!getActiveCompletedResults().length" [@appearOnActiveStaticSize]>
+          <span>{{outputsTitle}}</span>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
       </div>
     </mat-tab>
 
-    <mat-tab>
+    <mat-tab #outputsTab>
       <ng-template mat-tab-label>
         <span fxHide fxShow.gt-xs>{{outputsTitle}}</span>
         <span fxShow fxHide.gt-xs>{{outputsShortTitle}}</span>
@@ -100,6 +116,17 @@
           [inputs]="inputs"
           [selections]="selections">
         </dc-calculator-outputs>
+        <div class="dc-spacer"></div>
+        <button mat-button (click)="calcTabs.selectedIndex = 0"
+                *ngIf="!getActiveCalculators().length">
+          <mat-icon>arrow_back</mat-icon>
+          <span>{{calculatorsTitle}}</span>
+        </button>
+        <button mat-button (click)="calcTabs.selectedIndex = 1"
+                *ngIf="isMissingInputsOrSelections()">
+          <mat-icon>arrow_back</mat-icon>
+          <span>{{inputsTitle}}</span>
+        </button>
       </div>
     </mat-tab>
   </mat-tab-group>

@@ -3,7 +3,7 @@
   <div id="dc-content" fxLayout="column">
     <dc-header></dc-header>
     <div class="dc-outlet-container"
-         [class.xs]="{'dc-outlet-container': false, 'dc-outlet-container-small': true}"
+         [class.lt-md]="'dc-outlet-container-small'"
          [@slideInOnRouteChange]="getState(o)">
       <router-outlet #o="outlet"></router-outlet>
     </div>

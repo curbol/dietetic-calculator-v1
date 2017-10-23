@@ -16,7 +16,8 @@
     </div>
 
     <div fxShow fxHide.gt-xs>
-      <button mat-button class="dc-small" [matMenuTriggerFor]="dcmenu">
+      <button mat-button class="dc-small" [matMenuTriggerFor]="dcmenu"
+              matTooltip="Menu" matTooltipPosition="left" matTooltipShowDelay="500">
         <mat-icon>menu</mat-icon>
       </button>
       <mat-menu #dcmenu="matMenu">

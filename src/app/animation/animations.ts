@@ -14,13 +14,27 @@ export function slideInOnRouteChange(): AnimationTriggerMetadata {
 export function appearOnActive(): AnimationTriggerMetadata {
   return trigger('appearOnActive', [
     state('void', style({
-        transform: 'scale(0)',
-        opacity: 0,
-        height: 0,
-        width: 0
+      transform: 'scale(0)',
+      opacity: 0,
+      height: 0,
+      width: 0
     })),
     state('*', style({})),
     transition('void => *', animate('400ms ease-in-out')),
     transition('* => void', animate('400ms ease-in-out')),
+  ]);
+}
+
+export function appearOnActiveStaticSize(): AnimationTriggerMetadata {
+  return trigger('appearOnActiveStaticSize', [
+    state('false', style({
+      transform: 'scale(0)',
+      opacity: 0,
+      height: 0,
+      width: 0
+    })),
+    state('true', style({})),
+    transition('false => true', animate('400ms ease-in-out')),
+    transition('true => false', animate('400ms ease-in-out')),
   ]);
 }

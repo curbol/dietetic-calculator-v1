@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
-  <div *ngIf="getActiveDataCount() > 0" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
+  <div *ngIf="getActiveDataCount()" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
     <mat-radio-group [(ngModel)]="systemString" fxLayout fxLayoutGap="1rem"
                      (change)="onSystemChange($event.value)"
                      matTooltip="Unit System" matTooltipPosition="left" matTooltipShowDelay="500">
@@ -18,16 +18,14 @@
   </div>
 
   <div *ngFor="let selection of selections" class="dc-full-width">
-    <div *ngIf="selection.active" [@appearOnActive]>
+    <div *ngIf="selection.active" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
       <div class="dc-spacer"></div>
-      <div fxLayout fxLayoutGap="1rem">
-        <span class="dc-secondary-text">{{selection.name}}:</span>
-        <mat-radio-group required [(ngModel)]="selection.value" fxLayout fxLayoutGap="1rem">
-          <mat-radio-button *ngFor="let option of selection.group" [value]="option">
-            {{option?.name}}
-          </mat-radio-button>
-        </mat-radio-group>
-      </div>
+      <mat-radio-group required [(ngModel)]="selection.value" fxLayout fxLayoutGap="1rem"
+                       [matTooltip]="selection.name" matTooltipPosition="left" matTooltipShowDelay="500">
+        <mat-radio-button *ngFor="let option of selection.group" [value]="option">
+          {{option?.name}}
+        </mat-radio-button>
+      </mat-radio-group>
     </div>
   </div>
 
@@ -41,7 +39,7 @@
           <mat-hint align="end">{{getUnitString(input?.unit?.symbol)}}</mat-hint>
         </mat-form-field>
         <mat-form-field color="accent">
-          <mat-select required placeholder="Units"
+          <mat-select [placeholder]="input.name + ' Units'"
                       (change)="onUnitChange()" [(ngModel)]="input.unit">
             <mat-option *ngFor="let unit of input.group" [value]="unit">
               {{unit?.name}} ({{getUnitString(unit?.symbol)}})

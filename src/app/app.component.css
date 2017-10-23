@@ -1,16 +1,13 @@
 #dc-container {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-
-#dc-sidenav-container {
     height: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 #dc-content {
@@ -23,11 +20,11 @@
 }
 
 .dc-outlet-container {
-  margin: 1.5rem;
+    margin: 1.5rem;
 }
 
 .dc-outlet-container-small {
-  margin: 1.5rem 0 !important;
+    margin: 1.5rem 0;
 }
 
 #footer-copywrite {
