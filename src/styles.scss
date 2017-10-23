@@ -5,6 +5,7 @@
 
 @import './themes/dietetic-theme.scss';
 @import './base-styles.theme.scss';
+@import './app/app.component.theme.scss';
 @import './app/header/header.component.theme.scss';
 @import './app/shared/result/result.component.theme.scss';
 
@@ -12,6 +13,7 @@
   @include dc-toolbar-component-theme($theme);
   @include dc-base-styles-theme($theme);
   @include dc-result-component-theme($theme);
+  @include dc-app-component-theme($theme);
 }
 
 .dietetic-theme {

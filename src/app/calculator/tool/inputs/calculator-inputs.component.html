@@ -1,23 +1,33 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
-  <mat-radio-group [(ngModel)]="systemString" fxLayout fxLayoutGap="1rem"
-                   (change)="onSystemChange($event.value)"
-                   *ngIf="getActiveDataCount() > 0" [@appearOnActive]
-                   matTooltip="Unit System" matTooltipPosition="left" matTooltipShowDelay="500">
-    <mat-radio-button value="metric">Metric</mat-radio-button>
-    <mat-radio-button value="imperial">Imperial</mat-radio-button>
-    <mat-radio-button value="mixed" disabled>Mixed</mat-radio-button>
-  </mat-radio-group>
+  <div *ngIf="getActiveDataCount() > 0" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
+    <mat-radio-group [(ngModel)]="systemString" fxLayout fxLayoutGap="1rem"
+                     (change)="onSystemChange($event.value)"
+                     matTooltip="Unit System" matTooltipPosition="left" matTooltipShowDelay="500">
+      <mat-radio-button value="metric">Metric</mat-radio-button>
+      <mat-radio-button value="imperial">Imperial</mat-radio-button>
+      <mat-radio-button value="mixed" disabled>Mixed</mat-radio-button>
+    </mat-radio-group>
+    <div *ngIf="getActiveFilledDataCount()" [@appearOnActive]>
+      <div class="dc-spacer"></div>
+      <button mat-button (click)="clearDataValues()">
+        <mat-icon>clear</mat-icon>
+        <span>Clear Values</span>
+      </button>
+    </div>
+  </div>
 
-  <div *ngFor="let selection of selections">
+  <div *ngFor="let selection of selections" class="dc-full-width">
     <div *ngIf="selection.active" [@appearOnActive]>
       <div class="dc-spacer"></div>
-      <mat-radio-group required [(ngModel)]="selection.value" fxLayout fxLayoutGap="1rem"
-                       [matTooltip]="selection.name" matTooltipPosition="left" matTooltipShowDelay="500">
-        <mat-radio-button *ngFor="let option of selection.group" [value]="option">
-          {{option?.name}}
-        </mat-radio-button>
-      </mat-radio-group>
+      <div fxLayout fxLayoutGap="1rem">
+        <span class="dc-secondary-text">{{selection.name}}:</span>
+        <mat-radio-group required [(ngModel)]="selection.value" fxLayout fxLayoutGap="1rem">
+          <mat-radio-button *ngFor="let option of selection.group" [value]="option">
+            {{option?.name}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
     </div>
   </div>
 

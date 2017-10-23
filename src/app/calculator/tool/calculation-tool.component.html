@@ -58,14 +58,14 @@
         <span fxHide fxShow.gt-xs>{{inputsTitle}}</span>
         <span fxShow fxHide.gt-xs>{{inputsShortTitle}}</span>
         &nbsp;
-        <dc-chip [dense]="true" [color]="getActiveFilledDataCount() !== getActiveDataCount() ? 'warn' : ''">
+        <dc-chip [dense]="true" [color]="allActiveDataFilled() ? '' : 'warn'">
           {{getActiveFilledDataCount()}}/{{getActiveDataCount()}}
         </dc-chip>
       </ng-template>
       <div class="dc-spacer"></div>
       <div class="dc-tool-panel-container" fxLayout="column" fxLayoutAlign="start center">
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
-        <div *ngIf="!getActiveCalculators().length" [@appearOnActive]>
+        <div *ngIf="!getActiveCalculators().length">
           <dc-chip color="warn">{{noCalculatorsSelectedMessage}}</dc-chip>
           <div class="dc-spacer"></div>
         </div>
@@ -82,17 +82,17 @@
         <span fxHide fxShow.gt-xs>{{outputsTitle}}</span>
         <span fxShow fxHide.gt-xs>{{outputsShortTitle}}</span>
         &nbsp;
-        <dc-chip [dense]="true" [color]="getActiveCompletedResults().length !== getActiveCalculators().length ? 'warn' : ''">
+        <dc-chip [dense]="true" [color]="allActiveResultsCompleted() ? '' : 'warn'">
           {{getActiveCompletedResults().length}}/{{getActiveCalculators().length}}
         </dc-chip>
       </ng-template>
       <div class="dc-spacer"></div>
       <div class="dc-tool-panel-container" fxLayout="column" fxLayoutAlign="start center">
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{outputsTitle}}</h3>
-        <div *ngIf="!getActiveCalculators().length" [@appearOnActive]>
+        <div *ngIf="!getActiveCalculators().length">
           <dc-chip color="warn">{{noCalculatorsSelectedMessage}}</dc-chip>
         </div>
-        <div *ngIf="isMissingInputsOrSelections()" [@appearOnActive]>
+        <div *ngIf="isMissingInputsOrSelections()">
           <dc-chip color="warn">{{missingInputsMessage}}</dc-chip>
         </div>
         <dc-calculator-outputs

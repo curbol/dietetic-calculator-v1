@@ -29,20 +29,24 @@ export class CalculatorInputsComponent implements OnInit {
 
   ngOnInit() {}
 
+  onUnitChange = (): void => this.updateSystem();
+  onSelectionChange = (selection: Calc.Selection, optionId: number) => selection.value = selection.group.find(o => o.id === optionId);
   onSystemChange = (systemString: string): void => {
     this.system = Unit.System[systemString];
     this.setDefaultUnitSystem(this.system);
   }
 
-  onSelectionChange = (selection: Calc.Selection, optionId: number) => selection.value = selection.group.find(o => o.id === optionId);
-
-  onUnitChange = (): void => this.updateSystem();
-
   getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
-
   getActiveInputs = (): Calc.Input[] => this.inputs.filter(i => i.active);
   getActiveSelections = (): Calc.Selection[] => this.selections.filter(s => s.active);
   getActiveDataCount = (): number => this.getActiveInputs().length + this.getActiveSelections().length;
+  getActiveFilledDataCount = (): number =>
+    this.getActiveInputs().filter(i => i.value).length + this.getActiveSelections().filter(s => s.value).length
+
+  clearDataValues = (): void => {
+    this.inputs.forEach(i => i.value = null);
+    this.selections.forEach(s => s.value = null);
+  }
 
   private setDefaultUnitSystem = (system: Unit.System): void => {
     const inputsToUpdate = this.inputs.filter(input => input.unit && input.unit.system !== system);
