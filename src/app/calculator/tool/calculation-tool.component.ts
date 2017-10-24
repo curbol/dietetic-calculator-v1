@@ -33,7 +33,7 @@ export class CalculationToolComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private calculatorService: CalculatorService,
+    private calcService: CalculatorService,
   ) {
     this.system = Unit.System.metric;
     this.calculators = this.activatedRoute.snapshot.data['calculators'];
@@ -43,30 +43,23 @@ export class CalculationToolComponent implements OnInit {
 
   ngOnInit() {}
 
-  getActiveDataCount = (): number => this.getActiveInputs().length + this.getActiveSelections().length;
-  getActiveFilledDataCount = (): number => this.getActiveFilledInputs().length + this.getActiveFilledSelections().length;
+  getActiveDataCount = (): number => this.calcService.getAllActiveCount([this.inputs, this.selections]);
+  getActiveFilledDataCount = (): number => this.calcService.getAllActiveFilledCount([this.inputs, this.selections]);
   getActiveCalculators = (): Calc.Calc[] => this.calculators.filter(c => c.active);
 
-  isMissingInputsOrSelections = (): boolean =>
-    this.getActiveFilledInputs().length !== this.getActiveInputs().length ||
-    this.getActiveSelections().length !== this.getActiveFilledSelections().length
+  allActiveDataFilled = (): boolean => this.getActiveDataCount() === this.getActiveFilledDataCount();
+  notAllActiveDataFilled = (): boolean => !this.allActiveDataFilled();
 
   getActiveCompletedResults = (): Calc.Calc[] =>
     this.calculators.filter(c => c.active && (c.output.result(this.inputs)(this.selections) || 0) !== 0)
 
-  allActiveDataFilled = (): boolean => this.getActiveFilledDataCount() === this.getActiveDataCount();
   allActiveResultsCompleted = (): boolean => this.getActiveCompletedResults().length === this.getActiveCalculators().length;
 
   onActiveCalculatorsChanged(activeCalculators: Calc.Calc[]): void {
-    const inputIdsToActivate: Calc.Input.Id[] = this.calculatorService.getInputIds(activeCalculators);
-    const selectionIdsToActivate: Calc.Selection.Id[] = this.calculatorService.getSelectionIds(activeCalculators);
+    const inputIdsToActivate: Calc.Input.Id[] = this.calcService.getInputIds(activeCalculators);
+    const selectionIdsToActivate: Calc.Selection.Id[] = this.calcService.getSelectionIds(activeCalculators);
 
     this.inputs.forEach(input => input.active = inputIdsToActivate.includes(input.id));
     this.selections.forEach(selection => selection.active = selectionIdsToActivate.includes(selection.id));
   }
-
-  private getActiveInputs = (): Calc.Input[] => this.inputs.filter(i => i.active);
-  private getActiveFilledInputs = (): Calc.Input[] => this.inputs.filter(i => i.active && i.value);
-  private getActiveSelections = (): Calc.Selection[] => this.selections.filter(s => s.active);
-  private getActiveFilledSelections = (): Calc.Selection[] => this.selections.filter(s => s.active && s.value);
 }

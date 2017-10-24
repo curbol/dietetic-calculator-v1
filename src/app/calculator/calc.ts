@@ -16,6 +16,12 @@ export module Calc {
     bmi, mifflin
   }
 
+  export interface Data {
+    name: string;
+    active: boolean;
+    value: number;
+  }
+
   export interface Input {
     name: string;
     id: Input.Id;

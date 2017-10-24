@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Calc } from '../../calc';
 import { Unit } from '../../../unit/unit';
 import { UnitService } from '../../../unit/unit.service';
+import { CalculatorService } from '../../service/calculator.service';
 import { appearOnActive } from '../../../animation/animations';
 
 @Component({
@@ -25,7 +26,7 @@ export class CalculatorInputsComponent implements OnInit {
   @Input() inputs: Calc.Input[];
   @Input() selections: Calc.Selection[];
 
-  constructor(private unitService: UnitService) {}
+  constructor(private unitService: UnitService, private calcService: CalculatorService) {}
 
   ngOnInit() {}
 
@@ -37,11 +38,8 @@ export class CalculatorInputsComponent implements OnInit {
   }
 
   getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
-  getActiveInputs = (): Calc.Input[] => this.inputs.filter(i => i.active);
-  getActiveSelections = (): Calc.Selection[] => this.selections.filter(s => s.active);
-  getActiveDataCount = (): number => this.getActiveInputs().length + this.getActiveSelections().length;
-  getActiveFilledDataCount = (): number =>
-    this.getActiveInputs().filter(i => i.value).length + this.getActiveSelections().filter(s => s.value).length
+  getActiveDataCount = (): number => this.calcService.getAllActiveCount([this.inputs, this.selections]);
+  getActiveFilledDataCount = (): number => this.calcService.getAllActiveFilledCount([this.inputs, this.selections]);
 
   clearDataValues = (): void => {
     this.inputs.forEach(i => i.value = null);

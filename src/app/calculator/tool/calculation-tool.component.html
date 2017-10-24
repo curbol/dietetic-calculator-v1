@@ -24,7 +24,7 @@
          *ngIf="getActiveCompletedResults().length" [@appearOnActive]
          fxLayout="column" fxLayoutAlign="start center">
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{outputsTitle}}</h3>
-      <div *ngIf="isMissingInputsOrSelections()" [@appearOnActive]>
+      <div *ngIf="notAllActiveDataFilled()" [@appearOnActive]>
         <dc-chip color="warn">{{missingInputsMessage}}</dc-chip>
       </div>
       <dc-calculator-outputs
@@ -108,7 +108,7 @@
         <div *ngIf="!getActiveCalculators().length">
           <dc-chip color="warn">{{noCalculatorsSelectedMessage}}</dc-chip>
         </div>
-        <div *ngIf="isMissingInputsOrSelections()">
+        <div *ngIf="notAllActiveDataFilled()">
           <dc-chip color="warn">{{missingInputsMessage}}</dc-chip>
         </div>
         <dc-calculator-outputs

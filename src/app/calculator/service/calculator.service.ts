@@ -160,4 +160,10 @@ export class CalculatorService {
     const targetUnit = input.group.find(u => u.symbol === targetSymbol);
     return this.unitService.conversion(input.unit.factor)(targetUnit.factor)(input.value);
   }
+
+  getActiveCount = (data: Calc.Data[]): number => data.filter(d => d.active).length;
+  getAllActiveCount = (data: (Calc.Input[]|Calc.Selection[]|Calc.Data[])[]): number => this.getActiveCount([].concat.apply([], data));
+
+  getActiveFilledCount = (data: Calc.Data[]): number => data.filter(d => d.active && d.value).length;
+  getAllActiveFilledCount = (data: (Calc.Input[]|Calc.Selection[]|Calc.Data[])[]): number => this.getActiveFilledCount([].concat.apply([], data));
 }
