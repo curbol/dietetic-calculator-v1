@@ -51,8 +51,8 @@
           (activeCalculatorsChanged)="onActiveCalculatorsChanged($event)">
         </dc-calculator-options>
         <div class="dc-spacer"></div>
-        <button mat-button (click)="calcTabs.selectedIndex = 1" 
-                [@appearOnActiveStaticSize]="getActiveCalculators().length">
+        <button mat-button (click)="calcTabs.selectedIndex = 1"
+                *ngIf="getActiveCalculators().length">
           <span>{{inputsTitle}}</span>
           <mat-icon>arrow_forward</mat-icon>
         </button>
@@ -86,7 +86,7 @@
           <span>{{calculatorsTitle}}</span>
         </button>
         <button mat-button (click)="calcTabs.selectedIndex = 2"
-                [hidden]="!getActiveCompletedResults().length" [@appearOnActiveStaticSize]>
+                *ngIf="getActiveCompletedResults().length">
           <span>{{outputsTitle}}</span>
           <mat-icon>arrow_forward</mat-icon>
         </button>
@@ -122,8 +122,7 @@
           <mat-icon>arrow_back</mat-icon>
           <span>{{calculatorsTitle}}</span>
         </button>
-        <button mat-button (click)="calcTabs.selectedIndex = 1"
-                *ngIf="isMissingInputsOrSelections()">
+        <button mat-button (click)="calcTabs.selectedIndex = 1">
           <mat-icon>arrow_back</mat-icon>
           <span>{{inputsTitle}}</span>
         </button>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { appearOnActive, appearOnActiveStaticSize } from '../../animation/animations';
+import { appearOnActive, appearOnTrue } from '../../animation/animations';
 import { CalculatorService } from '../service/calculator.service';
 import { Calc } from '../calc';
 import { Unit } from '../../unit/unit';
@@ -12,7 +12,7 @@ import { Unit } from '../../unit/unit';
   styleUrls: ['./calculation-tool.component.css'],
   animations: [
     appearOnActive(),
-    appearOnActiveStaticSize(),
+    appearOnTrue(),
   ]
 })
 export class CalculationToolComponent implements OnInit {

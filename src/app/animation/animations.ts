@@ -25,8 +25,8 @@ export function appearOnActive(): AnimationTriggerMetadata {
   ]);
 }
 
-export function appearOnActiveStaticSize(): AnimationTriggerMetadata {
-  return trigger('appearOnActiveStaticSize', [
+export function appearOnTrue(): AnimationTriggerMetadata {
+  return trigger('appearOnTrue', [
     state('false', style({
       transform: 'scale(0)',
       opacity: 0,
@@ -34,7 +34,7 @@ export function appearOnActiveStaticSize(): AnimationTriggerMetadata {
       width: 0
     })),
     state('true', style({})),
-    transition('false => true', animate('400ms ease-in-out')),
-    transition('true => false', animate('400ms ease-in-out')),
+    transition('false => *', animate('400ms ease-in-out')),
+    transition('* => false', animate('400ms ease-in-out')),
   ]);
 }
