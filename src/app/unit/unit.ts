@@ -45,4 +45,23 @@ export module Unit {
   export enum System {
     metric, imperial, mixed
   }
+
+  export const filterUnits = (units: Unit.Unit[]) => (symbols: Unit.Symbol[]) =>
+    (!symbols || !symbols.length) ? units : symbols.map(s => units.find(u => u.symbol === s))
+
+  export const defaultUnit = (group: Unit.Unit[]) => (system: Unit.System) => group.find(u => u.system === system);
+
+  export const conversion = (sourceFactor: number) => (targetFactor: number) => (sourceValue: number) => sourceValue * sourceFactor / targetFactor;
+
+  export const commonSystem = (units: Unit.Unit[]) => {
+    if (!units || units.length <= 0) {
+      return null;
+    }
+
+    const systems = units.filter(unit => unit && unit.system != null).map(unit => unit.system);
+    const distinctSystems = systems.filter((v, i, a) => a.indexOf(v) === i);
+    const allSame: boolean = distinctSystems.length === 1;
+
+    return allSame ? distinctSystems[0] : null;
+  }
 }

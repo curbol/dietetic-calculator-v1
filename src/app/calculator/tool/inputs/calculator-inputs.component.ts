@@ -26,7 +26,7 @@ export class CalculatorInputsComponent implements OnInit {
   @Input() inputs: Calc.Input[];
   @Input() selections: Calc.Selection[];
 
-  constructor(private unitService: UnitService, private calcService: CalculatorService) {}
+  constructor() {}
 
   ngOnInit() {}
 
@@ -38,8 +38,8 @@ export class CalculatorInputsComponent implements OnInit {
   }
 
   getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
-  getActiveDataCount = (): number => this.calcService.getAllActiveDataCount([this.inputs, this.selections]);
-  getActiveFilledDataCount = (): number => this.calcService.getAllActiveFilledDataCount([this.inputs, this.selections]);
+  getActiveDataCount = (): number => Calc.getAllActiveDataCount([this.inputs, this.selections]);
+  getActiveFilledDataCount = (): number => Calc.getAllActiveFilledDataCount([this.inputs, this.selections]);
 
   clearDataValues = (): void => {
     this.inputs.forEach(i => i.value = null);
@@ -49,13 +49,13 @@ export class CalculatorInputsComponent implements OnInit {
   private setDefaultUnitSystem = (system: Unit.System): void => {
     const inputsToUpdate = this.inputs.filter(input => input.unit && input.unit.system !== system);
     inputsToUpdate.forEach(input => {
-      const defaultUnit: Unit.Unit = this.unitService.defaultUnit(input.group)(system);
+      const defaultUnit: Unit.Unit = Unit.defaultUnit(input.group)(system);
       if (defaultUnit) { input.unit = defaultUnit; }
     });
   }
 
   private updateSystem = (): void => {
-    const commonSystem: Unit.System = this.unitService.commonSystem(this.inputs.map(i => i.unit));
+    const commonSystem: Unit.System = Unit.commonSystem(this.inputs.map(i => i.unit));
     this.system = commonSystem != null ? commonSystem : Unit.System.mixed;
   }
 }

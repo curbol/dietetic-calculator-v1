@@ -127,24 +127,5 @@ export class UnitService {
 
   getUnitsOfType = (type: Unit.Type) => new Promise<Unit.Unit[]>((resolve, reject) => resolve(this.units[type.id]));
 
-  getUnitGroup = (type: Unit.Type) => (symbols: Unit.Symbol[]) => this.getUnitsOfType(type).then(units => this.filterUnits(units)(symbols));
-
-  filterUnits = (units: Unit.Unit[]) => (symbols: Unit.Symbol[]) =>
-    (!symbols || !symbols.length) ? units : symbols.map(s => units.find(u => u.symbol === s))
-
-  defaultUnit = (group: Unit.Unit[]) => (system: Unit.System) => group.find(u => u.system === system);
-
-  conversion = (sourceFactor: number) => (targetFactor: number) => (sourceValue: number) => sourceValue * sourceFactor / targetFactor;
-
-  commonSystem = (units: Unit.Unit[]) => {
-    if (!units || units.length <= 0) {
-      return null;
-    }
-
-    const systems = units.filter(unit => unit && unit.system != null).map(unit => unit.system);
-    const distinctSystems = systems.filter((v, i, a) => a.indexOf(v) === i);
-    const allSame: boolean = distinctSystems.length === 1;
-
-    return allSame ? distinctSystems[0] : null;
-  }
+  getUnitGroup = (type: Unit.Type) => (symbols: Unit.Symbol[]) => this.getUnitsOfType(type).then(units => Unit.filterUnits(units)(symbols));
 }

@@ -61,11 +61,6 @@ export class CalculationToolComponent implements OnInit {
       stubs.push(calcsStub);
     }
 
-    if (Unit.System[this.system]) {
-      const systemStub = `s-${Unit.System[this.system]}`;
-      stubs.push(systemStub);
-    }
-
     const activeFilledSelecitons: Calc.Selection[] = this.selections.filter(s => s.active && s.value);
     if (activeFilledSelecitons.length) {
       const selectionsStub = activeFilledSelecitons.map(s => `o-${Calc.Selection.Id[s.id]}-${Option.Id[s.value.id]}`).join(',');
@@ -85,8 +80,8 @@ export class CalculationToolComponent implements OnInit {
     return this.location.normalize(url);
   }
 
-  getActiveDataCount = (): number => this.calcService.getAllActiveDataCount([this.inputs, this.selections]);
-  getActiveFilledDataCount = (): number => this.calcService.getAllActiveFilledDataCount([this.inputs, this.selections]);
+  getActiveDataCount = (): number => Calc.getAllActiveDataCount([this.inputs, this.selections]);
+  getActiveFilledDataCount = (): number => Calc.getAllActiveFilledDataCount([this.inputs, this.selections]);
   getActiveCalculators = (): Calc.Calc[] => this.calculators.filter(c => c.active);
 
   allActiveDataFilled = (): boolean => this.getActiveDataCount() === this.getActiveFilledDataCount();
@@ -98,8 +93,8 @@ export class CalculationToolComponent implements OnInit {
   allActiveResultsCompleted = (): boolean => this.getActiveCompletedResults().length === this.getActiveCalculators().length;
 
   onActiveCalculatorsChanged(activeCalculators: Calc.Calc[]): void {
-    const inputIdsToActivate: Calc.Input.Id[] = this.calcService.getInputIds(activeCalculators);
-    const selectionIdsToActivate: Calc.Selection.Id[] = this.calcService.getSelectionIds(activeCalculators);
+    const inputIdsToActivate: Calc.Input.Id[] = Calc.getInputIds(activeCalculators);
+    const selectionIdsToActivate: Calc.Selection.Id[] = Calc.getSelectionIds(activeCalculators);
 
     this.inputs.forEach(input => input.active = inputIdsToActivate.includes(input.id));
     this.selections.forEach(selection => selection.active = selectionIdsToActivate.includes(selection.id));

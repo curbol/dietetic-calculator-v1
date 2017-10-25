@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatListOption, MatListOptionChange } from '@angular/material';
 
 import { Calc } from '../../calc';
-import { CalculatorService } from '../../service/calculator.service';
 
 @Component({
   selector: 'dc-calculator-options',
@@ -13,7 +12,7 @@ export class CalculatorOptionsComponent implements OnInit {
   @Input() calculators: Calc.Calc[];
   @Output() activeCalculatorsChanged = new EventEmitter<Calc.Calc[]>();
 
-  constructor(private calculatorService: CalculatorService) { }
+  constructor() { }
 
   ngOnInit() {
     this.updateActiveCalculators();

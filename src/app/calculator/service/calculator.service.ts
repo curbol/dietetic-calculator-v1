@@ -20,10 +20,10 @@ export class CalculatorService {
         result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
           const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
           const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
-          if ([weight, height].find(i => !this.inputReadyToCalculate(i))) { return null; }
+          if ([weight, height].find(i => !Calc.inputReadyToCalculate(i))) { return null; }
 
-          const weight_kg: number = this.inputConversion(weight)(Unit.Symbol.kg);
-          const height_m: number = this.inputConversion(height)(Unit.Symbol.m);
+          const weight_kg: number = Calc.inputConversion(weight)(Unit.Symbol.kg);
+          const height_m: number = Calc.inputConversion(height)(Unit.Symbol.m);
           return this.equationService.bodyMassIndex(weight_kg)(height_m);
         }
       }
@@ -42,13 +42,13 @@ export class CalculatorService {
           const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
           const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
           const age: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.age);
-          if ([weight, height, age].find(i => !this.inputReadyToCalculate(i)) ||
-              [gender].find(s => !this.selectionReadyToCalculate(s))) { return null; }
+          if ([weight, height, age].find(i => !Calc.inputReadyToCalculate(i)) ||
+              [gender].find(s => !Calc.selectionReadyToCalculate(s))) { return null; }
 
           const genderText: string = Option.Id[gender.value.id];
-          const weight_kg: number = this.inputConversion(weight)(Unit.Symbol.kg);
-          const height_cm: number = this.inputConversion(height)(Unit.Symbol.cm);
-          const age_y: number = this.inputConversion(age)(Unit.Symbol.y);
+          const weight_kg: number = Calc.inputConversion(weight)(Unit.Symbol.kg);
+          const height_cm: number = Calc.inputConversion(height)(Unit.Symbol.cm);
+          const age_y: number = Calc.inputConversion(age)(Unit.Symbol.y);
           return this.equationService.mifflinStJeor(genderText)(weight_kg)(height_cm)(age_y);
         }
       }
@@ -102,24 +102,8 @@ export class CalculatorService {
 
   private getInputSettings = () => new Promise<Calc.Input.Settings[]>((resolve, reject) => resolve(this.inputSettings));
 
-  inputReadyToCalculate = (input: Calc.Input): boolean => (input != null && input.value != null);
-
-  selectionReadyToCalculate = (selection: Calc.Selection): boolean => (selection != null && selection.value != null);
-
   getCalculators = () => new Promise<Calc.Calc[]>((resolve, reject) => resolve(this.calcs));
-
   getAllSelections = (): Promise<Calc.Selection[]> => new Promise<Calc.Selection[]>((resolve, reject) => resolve(this.Selections));
-
-  getSelectionIds = (calcs: Calc.Calc[]) => {
-    if (!calcs || calcs.length <= 0) {
-      return [];
-    }
-
-    const mergedSelectionIds: Calc.Selection.Id[] = [].concat.apply([], calcs.map(c => c.selectionIds));
-    const distinctSelectionIds: Calc.Selection.Id[] = mergedSelectionIds.filter((v, i, a) => a.indexOf(v) === i);
-
-    return distinctSelectionIds;
-  }
 
   getAllInputs = (): Promise<Calc.Input[]> => {
     return Promise.all([this.getInputSettings(), this.unitService.getAllUnits()]).then(value => {
@@ -127,7 +111,7 @@ export class CalculatorService {
       const units: {[type: number]: Unit.Unit[]} = value[1];
 
       return inputSettings.map<Calc.Input>(p => {
-        const group = this.unitService.filterUnits(units[p.typeId])(p.symbolsFilter);
+        const group = Unit.filterUnits(units[p.typeId])(p.symbolsFilter);
         const unit = group.find(u => u.symbol === p.defaultSymbol);
         return <Calc.Input>{
           name: p.name,
@@ -141,29 +125,6 @@ export class CalculatorService {
     });
   }
 
-  getInputs = (inputIds: Calc.Input.Id[]) => this.getAllInputs().then(
-    (inputs: Calc.Input[]) => inputs.filter(input => inputIds.find(id => id === input.id))
-  )
-
-  getInputIds = (calcs: Calc.Calc[]) => {
-    if (!calcs || calcs.length <= 0) {
-      return [];
-    }
-
-    const mergedInputIds: Calc.Input.Id[] = [].concat.apply([], calcs.map(c => c.inputIds));
-    const distinctInputIds: Calc.Input.Id[] = mergedInputIds.filter((v, i, a) => a.indexOf(v) === i);
-
-    return distinctInputIds;
-  }
-
-  inputConversion = (input: Calc.Input) => (targetSymbol: Unit.Symbol) => {
-    const targetUnit = input.group.find(u => u.symbol === targetSymbol);
-    return this.unitService.conversion(input.unit.factor)(targetUnit.factor)(input.value);
-  }
-
-  getActiveDataCount = (data: Calc.Data[]): number => data.filter(d => d.active).length;
-  getAllActiveDataCount = (data: (Calc.Input[]|Calc.Selection[]|Calc.Data[])[]): number => this.getActiveDataCount([].concat.apply([], data));
-
-  getActiveFilledDataCount = (data: Calc.Data[]): number => data.filter(d => d.active && d.value).length;
-  getAllActiveFilledDataCount = (data: (Calc.Input[]|Calc.Selection[]|Calc.Data[])[]): number => this.getActiveFilledDataCount([].concat.apply([], data));
+  getInputs = (inputIds: Calc.Input.Id[]) => 
+    this.getAllInputs().then((inputs: Calc.Input[]) => inputs.filter(input => inputIds.find(id => id === input.id)))
 }
