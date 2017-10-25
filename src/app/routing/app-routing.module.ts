@@ -12,6 +12,12 @@ const routes: Routes = [
     data: { title: 'Calculators', isHome: true },
     resolve: { calculators: CalculatorsResolver, inputs: InputsResolver, selections: SelectionsResolver }
   },
+  {
+    path: 'calc/:settings',
+    component: CalculationToolComponent,
+    data: { title: 'Calculators', isHome: true },
+    resolve: { calculators: CalculatorsResolver, inputs: InputsResolver, selections: SelectionsResolver }
+  },
   { path: 'about',
     component: AboutComponent,
     data: { title: 'About' }

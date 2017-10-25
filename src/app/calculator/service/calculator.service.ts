@@ -161,9 +161,9 @@ export class CalculatorService {
     return this.unitService.conversion(input.unit.factor)(targetUnit.factor)(input.value);
   }
 
-  getActiveCount = (data: Calc.Data[]): number => data.filter(d => d.active).length;
-  getAllActiveCount = (data: (Calc.Input[]|Calc.Selection[]|Calc.Data[])[]): number => this.getActiveCount([].concat.apply([], data));
+  getActiveDataCount = (data: Calc.Data[]): number => data.filter(d => d.active).length;
+  getAllActiveDataCount = (data: (Calc.Input[]|Calc.Selection[]|Calc.Data[])[]): number => this.getActiveDataCount([].concat.apply([], data));
 
-  getActiveFilledCount = (data: Calc.Data[]): number => data.filter(d => d.active && d.value).length;
-  getAllActiveFilledCount = (data: (Calc.Input[]|Calc.Selection[]|Calc.Data[])[]): number => this.getActiveFilledCount([].concat.apply([], data));
+  getActiveFilledDataCount = (data: Calc.Data[]): number => data.filter(d => d.active && d.value).length;
+  getAllActiveFilledDataCount = (data: (Calc.Input[]|Calc.Selection[]|Calc.Data[])[]): number => this.getActiveFilledDataCount([].concat.apply([], data));
 }

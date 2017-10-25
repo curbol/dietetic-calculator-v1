@@ -38,8 +38,8 @@ export class CalculatorInputsComponent implements OnInit {
   }
 
   getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
-  getActiveDataCount = (): number => this.calcService.getAllActiveCount([this.inputs, this.selections]);
-  getActiveFilledDataCount = (): number => this.calcService.getAllActiveFilledCount([this.inputs, this.selections]);
+  getActiveDataCount = (): number => this.calcService.getAllActiveDataCount([this.inputs, this.selections]);
+  getActiveFilledDataCount = (): number => this.calcService.getAllActiveFilledDataCount([this.inputs, this.selections]);
 
   clearDataValues = (): void => {
     this.inputs.forEach(i => i.value = null);
