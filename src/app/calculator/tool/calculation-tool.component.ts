@@ -53,7 +53,10 @@ export class CalculationToolComponent implements OnInit, DoCheck {
   }
 
   ngOnInit() {
-    this.updateFromSettings();
+    if (this.settingsPath) {
+      this.updateFromSettings(this.settingsPath);
+      this.updateSystem();
+    }
   }
 
   ngDoCheck() {
@@ -109,14 +112,15 @@ export class CalculationToolComponent implements OnInit, DoCheck {
     if (path === this.previousPath) { return; }
     this.previousPath = path;
 
-    console.log('path update');
-
     const url: string = this.location.normalize(`${this.baseUrl}/${path}`);
     this.location.replaceState(url);
   }
 
-  private updateFromSettings = (): void => {
-    const dataSettings = Calc.fromPath(this.settingsPath);
+  private updateFromSettings = (settingsString): void => {
+    if (!settingsString) { return; }
+
+    const dataSettings = Calc.fromPath(settingsString);
+    if (!dataSettings) { return; }
 
     dataSettings.calcs.map(id => this.calculators.find(c => c.id === id)).forEach(c => c.active = true);
 
@@ -132,5 +136,10 @@ export class CalculationToolComponent implements OnInit, DoCheck {
       input.value = data.value;
       input.unit = input.group.find(u => u.symbol === data.symbol);
     });
+  }
+
+  private updateSystem = (): void => {
+    const commonSystem: Unit.System = Unit.commonSystem(this.inputs.map(i => i.unit));
+    this.system = commonSystem != null ? commonSystem : Unit.System.mixed;
   }
 }

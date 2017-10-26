@@ -51,7 +51,8 @@ export module Unit {
 
   export const defaultUnit = (group: Unit.Unit[]) => (system: Unit.System) => group.find(u => u.system === system);
 
-  export const conversion = (sourceFactor: number) => (targetFactor: number) => (sourceValue: number) => sourceValue * sourceFactor / targetFactor;
+  export const conversion = (sourceFactor: number) => (targetFactor: number) => (sourceValue: number): number =>
+    sourceValue * sourceFactor / targetFactor;
 
   export const commonSystem = (units: Unit.Unit[]) => {
     if (!units || units.length <= 0) {

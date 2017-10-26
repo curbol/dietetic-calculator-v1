@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AboutComponent } from '../about/about.component';
 import { CalculationToolComponent } from '../calculator/tool/calculation-tool.component';
 import { CalculatorsResolver, InputsResolver, SelectionsResolver } from '../calculator/service/calc-resolvers';
+import { ConverterToolComponent } from '../unit-conversion/converter-tool/converter-tool.component';
+import { AllUnitsResolver } from '../unit/unit-resolvers';
 
 const routes: Routes = [
   {
@@ -18,9 +20,15 @@ const routes: Routes = [
     data: { title: 'Calculators', isHome: true },
     resolve: { calculators: CalculatorsResolver, inputs: InputsResolver, selections: SelectionsResolver }
   },
+  {
+    path: 'convert',
+    component: ConverterToolComponent,
+    data: { title: 'Unit Converter', subtitle: 'Tool For Converting a Value\'s Units' },
+    resolve: { units: AllUnitsResolver }
+  },
   { path: 'about',
     component: AboutComponent,
-    data: { title: 'About' }
+    data: { title: 'About', subtitle: 'Information About This Site' }
   },
   {
     path: '',
