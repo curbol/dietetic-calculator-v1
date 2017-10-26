@@ -47,7 +47,7 @@ export module Unit {
   }
 
   export const filterUnits = (units: Unit.Unit[]) => (symbols: Unit.Symbol[]) =>
-    (!symbols || !symbols.length) ? units : symbols.map(s => units.find(u => u.symbol === s))
+    (!symbols || !symbols.length) ? units : symbols.map(s => units.find(u => u.symbol === s));
 
   export const defaultUnit = (group: Unit.Unit[]) => (system: Unit.System) => group.find(u => u.system === system);
 
@@ -64,5 +64,5 @@ export module Unit {
     const allSame: boolean = distinctSystems.length === 1;
 
     return allSame ? distinctSystems[0] : null;
-  }
+  };
 }

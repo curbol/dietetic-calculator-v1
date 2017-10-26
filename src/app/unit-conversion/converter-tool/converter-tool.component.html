@@ -1,20 +1,19 @@
 <div fxLayout="column" fxLayoutAlign="start center">
   <mat-form-field color="accent">
-    <mat-select placeholder="Type">
-      <mat-option *ngFor="let type of unitTypes" [value]="type">
-          {{type | capitalize}}
+    <mat-select #unitType placeholder="Type" (change)="onTypeChange(unitType.value)">
+      <mat-option *ngFor="let typeId of unitTypeIds" [value]="typeId">
+          {{getTypeString(typeId) | capitalize}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <div fxLayout fxLayoutGap=".2rem" >
     <mat-form-field color="accent">
-      <input matInput required type="number" placeholder="Value" [(ngModel)]="sourceValue" />
+      <input #sourceValue matInput required type="number" placeholder="Value" />
       <mat-hint align="end">{{getUnitString(sourceUnit?.symbol)}}</mat-hint>
     </mat-form-field>
     <mat-form-field color="accent">
-      <mat-select placeholder="Units"
-                  [(ngModel)]="sourceUnit">
-        <mat-option *ngFor="let unit of unitGroup" [value]="unit">
+      <mat-select #sourceUnit placeholder="Units">
+        <mat-option *ngFor="let unit of allUnits[unitType.value]" [value]="unit">
           {{unit?.name}} ({{getUnitString(unit?.symbol)}})
         </mat-option>
       </mat-select>
@@ -22,15 +21,14 @@
   </div>
 
   <div fxLayout fxLayoutGap=".2rem" >
-    <dc-result
+    <dc-result #targetValue
       title="Conversion"
-      value="0"
-      [units]="targetUnit">
+      [value]="getConversion(sourceUnit.value)(targetUnit.value)(sourceValue.value) | number:'1.1-5'"
+      [units]="targetUnit.value">
     </dc-result>
     <mat-form-field color="accent">
-      <mat-select placeholder="Units"
-                  [(ngModel)]="sourceUnit">
-        <mat-option *ngFor="let unit of unitGroup" [value]="unit">
+      <mat-select #targetUnit placeholder="Units">
+        <mat-option *ngFor="let unit of allUnits[unitType.value]" [value]="unit">
           {{unit?.name}} ({{getUnitString(unit?.symbol)}})
         </mat-option>
       </mat-select>

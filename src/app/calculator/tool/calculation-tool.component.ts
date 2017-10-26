@@ -63,6 +63,26 @@ export class CalculationToolComponent implements OnInit, DoCheck {
     this.updatePathSettings();
   }
 
+  getActiveDataCount = (): number => Calc.getAllActiveDataCount([this.inputs, this.selections]);
+  getActiveFilledDataCount = (): number => Calc.getAllActiveFilledDataCount([this.inputs, this.selections]);
+  getActiveCalculators = (): Calc.Calc[] => this.calculators.filter(c => c.active);
+
+  allActiveDataFilled = (): boolean => this.getActiveDataCount() === this.getActiveFilledDataCount();
+  notAllActiveDataFilled = (): boolean => !this.allActiveDataFilled();
+
+  getActiveCompletedResults = (): Calc.Calc[] =>
+    this.calculators.filter(c => c.active && (c.output.result(this.inputs)(this.selections) || 0) !== 0)
+
+  allActiveResultsCompleted = (): boolean => this.getActiveCompletedResults().length === this.getActiveCalculators().length;
+
+  onActiveCalculatorsChanged = (activeCalculators: Calc.Calc[]): void => {
+    const inputIdsToActivate: Calc.Input.Id[] = Calc.getInputIds(activeCalculators);
+    const selectionIdsToActivate: Calc.Selection.Id[] = Calc.getSelectionIds(activeCalculators);
+
+    this.inputs.forEach(input => input.active = inputIdsToActivate.includes(input.id));
+    this.selections.forEach(selection => selection.active = selectionIdsToActivate.includes(selection.id));
+  }
+
   calcToolSettingsToURL = (calcs: Calc.Calc[]) => (selections: Calc.Selection[]) => (inputs: Calc.Input[]): string => {
     const stubs: string[] = [];
 
@@ -87,24 +107,9 @@ export class CalculationToolComponent implements OnInit, DoCheck {
     return stubs.join(',');
   }
 
-  getActiveDataCount = (): number => Calc.getAllActiveDataCount([this.inputs, this.selections]);
-  getActiveFilledDataCount = (): number => Calc.getAllActiveFilledDataCount([this.inputs, this.selections]);
-  getActiveCalculators = (): Calc.Calc[] => this.calculators.filter(c => c.active);
-
-  allActiveDataFilled = (): boolean => this.getActiveDataCount() === this.getActiveFilledDataCount();
-  notAllActiveDataFilled = (): boolean => !this.allActiveDataFilled();
-
-  getActiveCompletedResults = (): Calc.Calc[] =>
-    this.calculators.filter(c => c.active && (c.output.result(this.inputs)(this.selections) || 0) !== 0)
-
-  allActiveResultsCompleted = (): boolean => this.getActiveCompletedResults().length === this.getActiveCalculators().length;
-
-  onActiveCalculatorsChanged = (activeCalculators: Calc.Calc[]): void => {
-    const inputIdsToActivate: Calc.Input.Id[] = Calc.getInputIds(activeCalculators);
-    const selectionIdsToActivate: Calc.Selection.Id[] = Calc.getSelectionIds(activeCalculators);
-
-    this.inputs.forEach(input => input.active = inputIdsToActivate.includes(input.id));
-    this.selections.forEach(selection => selection.active = selectionIdsToActivate.includes(selection.id));
+  private updateSystem = (): void => {
+    const commonSystem: Unit.System = Unit.commonSystem(this.inputs.map(i => i.unit));
+    this.system = commonSystem != null ? commonSystem : Unit.System.mixed;
   }
 
   private updatePathSettings = (): void => {
@@ -136,10 +141,5 @@ export class CalculationToolComponent implements OnInit, DoCheck {
       input.value = data.value;
       input.unit = input.group.find(u => u.symbol === data.symbol);
     });
-  }
-
-  private updateSystem = (): void => {
-    const commonSystem: Unit.System = Unit.commonSystem(this.inputs.map(i => i.unit));
-    this.system = commonSystem != null ? commonSystem : Unit.System.mixed;
   }
 }

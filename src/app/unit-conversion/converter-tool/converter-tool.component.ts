@@ -10,24 +10,27 @@ import { Enum } from '../../shared/enum';
   styleUrls: ['./converter-tool.component.css'],
 })
 export class ConverterToolComponent implements OnInit {
-  unitTypes: string[];
-  sourceValue: number;
-  targetValue: number;
-  sourceUnit: Unit.Unit;
-  targetUnit: Unit.Unit;
+  unitTypeIds: Unit.Type.Id[];
   allUnits: {[type: number]: Unit.Unit[]};
-  unitGroup: Unit.Unit[];
 
   constructor(unitService: UnitService) {
-    this.unitTypes = Enum.getNames(Unit.Type.Id);
+    this.unitTypeIds = Enum.getValues(Unit.Type.Id);
 
     unitService.getAllUnits().then(units => {
       this.allUnits = units;
-      this.unitGroup = units[0];
     });
   }
 
   ngOnInit() {}
+
+  onTypeChange = (type: string) => {};
+
+  getConversion = (sourceUnit: Unit.Unit) => (targetUnit: Unit.Unit) => (sourceValue: number) => {
+    if (!sourceUnit || !targetUnit || !sourceValue) { return; }
+    return Unit.conversion(sourceUnit.factor)(targetUnit.factor)(sourceValue);
+  }
+
+  getTypeString = (typeId: Unit.Type.Id): string => Unit.Type.Id[typeId];
 
   getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
 }
