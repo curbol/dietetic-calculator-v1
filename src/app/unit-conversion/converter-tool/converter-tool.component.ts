@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Calc } from '../../calculator/calc';
 import { Unit } from '../../unit/unit';
 import { UnitService } from '../../unit/unit.service';
+import { Enum } from '../../shared/enum';
 
 @Component({
   selector: 'dc-converter-tool',
@@ -18,7 +19,7 @@ export class ConverterToolComponent implements OnInit {
   unitGroup: Unit.Unit[];
 
   constructor(unitService: UnitService) {
-    this.unitTypes = Object.keys(Unit.Type.Id).map(k => Unit.Type.Id[k]).filter(v => typeof v === 'string');
+    this.unitTypes = Enum.getNames(Unit.Type.Id);
 
     unitService.getAllUnits().then(units => {
       this.allUnits = units;
