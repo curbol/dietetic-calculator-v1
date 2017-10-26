@@ -1,3 +1,39 @@
-<p>
-  converter-tool works!
-</p>
+<div fxLayout="column" fxLayoutAlign="start center">
+  <mat-form-field color="accent">
+    <mat-select placeholder="Type">
+      <mat-option *ngFor="let type of unitTypes" [value]="type">
+          {{type | capitalize}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div fxLayout fxLayoutGap=".2rem" >
+    <mat-form-field color="accent">
+      <input matInput required type="number" placeholder="Value" [(ngModel)]="sourceValue" />
+      <mat-hint align="end">{{getUnitString(sourceUnit?.symbol)}}</mat-hint>
+    </mat-form-field>
+    <mat-form-field color="accent">
+      <mat-select placeholder="Units"
+                  [(ngModel)]="sourceUnit">
+        <mat-option *ngFor="let unit of unitGroup" [value]="unit">
+          {{unit?.name}} ({{getUnitString(unit?.symbol)}})
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout fxLayoutGap=".2rem" >
+    <dc-result
+      title="Conversion"
+      value="0"
+      [units]="targetUnit">
+    </dc-result>
+    <mat-form-field color="accent">
+      <mat-select placeholder="Units"
+                  [(ngModel)]="sourceUnit">
+        <mat-option *ngFor="let unit of unitGroup" [value]="unit">
+          {{unit?.name}} ({{getUnitString(unit?.symbol)}})
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

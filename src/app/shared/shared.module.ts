@@ -6,6 +6,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from './material/material.module';
 import { ResultComponent } from './result/result.component';
+import { ChipComponent } from './chip/chip.component';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
@@ -20,12 +22,12 @@ import 'rxjs/add/operator/max';
 import 'rxjs/add/operator/min';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/take';
-import { ChipComponent } from './chip/chip.component';
 
 @NgModule({
   declarations: [
     ResultComponent,
     ChipComponent,
+    CapitalizePipe,
   ],
   imports: [
     CommonModule,
@@ -39,6 +41,7 @@ import { ChipComponent } from './chip/chip.component';
     RouterModule,
     ResultComponent,
     ChipComponent,
+    CapitalizePipe,
   ]
 })
 export class SharedModule { }
