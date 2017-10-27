@@ -1,4 +1,5 @@
-<div fxLayout="column" fxLayoutAlign="start center">
+<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1rem">
+
   <mat-form-field color="accent">
     <mat-select #unitType placeholder="Type" (change)="onTypeChange(unitType.value)">
       <mat-option *ngFor="let typeId of unitTypeIds" [value]="typeId">
@@ -6,32 +7,39 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <div fxLayout fxLayoutGap=".2rem" >
-    <mat-form-field color="accent">
-      <input #sourceValue matInput required type="number" placeholder="Value" />
-      <mat-hint align="end">{{getUnitString(sourceUnit?.symbol)}}</mat-hint>
-    </mat-form-field>
-    <mat-form-field color="accent">
-      <mat-select #sourceUnit placeholder="Units">
-        <mat-option *ngFor="let unit of allUnits[unitType.value]" [value]="unit">
-          {{unit?.name}} ({{getUnitString(unit?.symbol)}})
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+
+  <div fxLayout="column" fxLayoutGap="1rem">
+    <div fxLayout>
+      <mat-form-field color="accent">
+        <input #sourceValueInput matInput required type="number" placeholder="Value"
+              [(ngModel)]="sourceValue"/>
+        <mat-hint align="end">{{getUnitString(sourceUnitSelect?.value?.symbol)}}</mat-hint>
+      </mat-form-field>
+      <mat-form-field color="accent">
+        <mat-select #sourceUnitSelect placeholder="Units">
+          <mat-option *ngFor="let unit of allUnits[unitType.value]" [value]="unit">
+            {{unit?.name}} ({{getUnitString(unit?.symbol)}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxLayout fxLayoutAlign="center center">
+      <span>=</span>
+    </div>
+    <div fxLayout>
+      <mat-form-field color="accent">
+        <input #targetValueInput matInput required type="number" placeholder="Value"
+              [(ngModel)]="targetValue"/>
+        <mat-hint align="end">{{getUnitString(targetUnitSelect?.value?.symbol)}}</mat-hint>
+      </mat-form-field>
+      <mat-form-field color="accent">
+        <mat-select #targetUnitSelect placeholder="Units">
+          <mat-option *ngFor="let unit of allUnits[unitType.value]" [value]="unit">
+            {{unit?.name}} ({{getUnitString(unit?.symbol)}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
 
-  <div fxLayout fxLayoutGap=".2rem" >
-    <dc-result #targetValue
-      title="Conversion"
-      [value]="getConversion(sourceUnit.value)(targetUnit.value)(sourceValue.value) | number:'1.1-5'"
-      [units]="targetUnit.value">
-    </dc-result>
-    <mat-form-field color="accent">
-      <mat-select #targetUnit placeholder="Units">
-        <mat-option *ngFor="let unit of allUnits[unitType.value]" [value]="unit">
-          {{unit?.name}} ({{getUnitString(unit?.symbol)}})
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
 </div>

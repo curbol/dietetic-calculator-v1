@@ -13,6 +13,22 @@ export class ConverterToolComponent implements OnInit {
   unitTypeIds: Unit.Type.Id[];
   allUnits: {[type: number]: Unit.Unit[]};
 
+  _sourceValue: number;
+  get sourceValue(): number {
+    return this._sourceValue;
+  }
+  set sourceValue(value: number) {
+    this._sourceValue = value;
+  }
+
+  _targetValue: number;
+  get targetValue(): number {
+    return this._targetValue;
+  }
+  set targetValue(value: number) {
+    this._targetValue = value;
+  }
+
   constructor(unitService: UnitService) {
     this.unitTypeIds = Enum.getValues(Unit.Type.Id);
 

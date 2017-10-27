@@ -50,6 +50,8 @@ export class CalculationToolComponent implements OnInit, DoCheck {
     this.calculators = activatedRoute.snapshot.data['calculators'];
     this.inputs = activatedRoute.snapshot.data['inputs'];
     this.selections = activatedRoute.snapshot.data['selections'];
+
+    this.calculators.forEach(c => c.active = false);
   }
 
   ngOnInit() {
