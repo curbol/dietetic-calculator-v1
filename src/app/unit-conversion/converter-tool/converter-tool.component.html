@@ -11,12 +11,11 @@
   <div fxLayout="column" fxLayoutGap="1rem">
     <div fxLayout>
       <mat-form-field color="accent">
-        <input #sourceValueInput matInput required type="number" placeholder="Value"
-              [(ngModel)]="sourceValue"/>
+        <input #sourceValueInput matInput required type="number" placeholder="Value" [(ngModel)]="sourceValue"/>
         <mat-hint align="end">{{getUnitString(sourceUnitSelect?.value?.symbol)}}</mat-hint>
       </mat-form-field>
       <mat-form-field color="accent">
-        <mat-select #sourceUnitSelect placeholder="Units">
+        <mat-select #sourceUnitSelect placeholder="Units" [(ngModel)]="sourceUnit">
           <mat-option *ngFor="let unit of allUnits[unitType.value]" [value]="unit">
             {{unit?.name}} ({{getUnitString(unit?.symbol)}})
           </mat-option>
@@ -28,12 +27,11 @@
     </div>
     <div fxLayout>
       <mat-form-field color="accent">
-        <input #targetValueInput matInput required type="number" placeholder="Value"
-              [(ngModel)]="targetValue"/>
+        <input #targetValueInput matInput required type="number" placeholder="Value" [(ngModel)]="targetValue"/>
         <mat-hint align="end">{{getUnitString(targetUnitSelect?.value?.symbol)}}</mat-hint>
       </mat-form-field>
       <mat-form-field color="accent">
-        <mat-select #targetUnitSelect placeholder="Units">
+        <mat-select #targetUnitSelect placeholder="Units" [(ngModel)]="targetUnit">
           <mat-option *ngFor="let unit of allUnits[unitType.value]" [value]="unit">
             {{unit?.name}} ({{getUnitString(unit?.symbol)}})
           </mat-option>
