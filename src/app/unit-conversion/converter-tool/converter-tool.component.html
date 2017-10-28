@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1rem">
 
   <mat-form-field color="accent">
-    <mat-select #unitType placeholder="Type" (change)="onTypeChange(unitType.value)">
+    <mat-select #unitType placeholder="Type" (change)="onTypeChange(unitType.value)" [(ngModel)]="selectedTypeId">
       <mat-option *ngFor="let typeId of unitTypeIds" [value]="typeId">
           {{getTypeString(typeId) | capitalize}}
       </mat-option>

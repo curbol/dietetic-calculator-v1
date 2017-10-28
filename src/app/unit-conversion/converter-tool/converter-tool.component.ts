@@ -3,6 +3,7 @@ import { Calc } from '../../calculator/calc';
 import { Unit } from '../../unit/unit';
 import { UnitService } from '../../unit/unit.service';
 import { Enum } from '../../shared/enum';
+import { Num } from '../../shared/num';
 
 @Component({
   selector: 'dc-converter-tool',
@@ -10,6 +11,7 @@ import { Enum } from '../../shared/enum';
   styleUrls: ['./converter-tool.component.css'],
 })
 export class ConverterToolComponent implements OnInit {
+  selectedTypeId: Unit.Type.Id;
   unitTypeIds: Unit.Type.Id[];
   allUnits: {[type: number]: Unit.Unit[]};
 
@@ -18,10 +20,11 @@ export class ConverterToolComponent implements OnInit {
     return this._sourceValue;
   }
   set sourceValue(value: number) {
-    console.log(`source: ${value}`);
-    if (value === this._sourceValue) { return; }
-    this._sourceValue = value;
-    this.updateTargetValue();
+    const roundValue = Num.round(value, 5);
+    console.log(`set source: ${roundValue}`);
+    if (roundValue === this._sourceValue) { return; }
+    this._sourceValue = Num.round(roundValue, 5);
+    this._targetValue = Num.round(this.getConversion(this.sourceUnit)(this.targetUnit)(this.sourceValue), 5);
   }
 
   _sourceUnit: Unit.Unit;
@@ -31,7 +34,7 @@ export class ConverterToolComponent implements OnInit {
   set sourceUnit(value: Unit.Unit) {
     if (value === this._sourceUnit) { return; }
     this._sourceUnit = value;
-    this.updateTargetValue();
+    this._targetValue = Num.round(this.getConversion(this.sourceUnit)(this.targetUnit)(this.sourceValue), 5);
   }
 
   _targetValue: number;
@@ -39,10 +42,11 @@ export class ConverterToolComponent implements OnInit {
     return this._targetValue;
   }
   set targetValue(value: number) {
-    console.log(`target: ${value}`);
-    if (value === this._targetValue) { return; }
-    this._targetValue = value;
-    this.updateSourceValue();
+    const roundValue = Num.round(value, 5);
+    console.log(`set target: ${roundValue}`);
+    if (roundValue === this._targetValue) { return; }
+    this._targetValue = Num.round(roundValue, 5);
+    this._sourceValue = Num.round(this.getConversion(this.targetUnit)(this.sourceUnit)(this.targetValue), 5);
   }
 
   _targetUnit: Unit.Unit;
@@ -52,7 +56,7 @@ export class ConverterToolComponent implements OnInit {
   set targetUnit(value: Unit.Unit) {
     if (value === this._targetUnit) { return; }
     this._targetUnit = value;
-    this.updateTargetValue();
+    this._sourceValue = Num.round(this.getConversion(this.targetUnit)(this.sourceUnit)(this.targetValue), 5);
   }
 
   constructor(unitService: UnitService) {
@@ -60,12 +64,18 @@ export class ConverterToolComponent implements OnInit {
 
     unitService.getAllUnits().then(units => {
       this.allUnits = units;
+      this.selectedTypeId = this.unitTypeIds[0];
+      this.onTypeChange(this.selectedTypeId);
     });
   }
 
   ngOnInit() {}
 
-  onTypeChange = (type: string) => {};
+  onTypeChange = (typeId: Unit.Type.Id) => {
+    const unitGroup: Unit.Unit[] = this.allUnits[typeId];
+    this.sourceUnit = unitGroup[0];
+    this.targetUnit = unitGroup[0];
+  }
 
   getConversion = (sourceUnit: Unit.Unit) => (targetUnit: Unit.Unit) => (sourceValue: number) => {
     if (!sourceUnit || !targetUnit || !sourceValue) { return; }
