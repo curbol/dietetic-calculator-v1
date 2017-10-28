@@ -4,6 +4,7 @@ import { Unit } from '../../unit/unit';
 import { UnitService } from '../../unit/unit.service';
 import { Enum } from '../../shared/enum';
 import { Num } from '../../shared/num';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'dc-converter-tool',
@@ -20,11 +21,8 @@ export class ConverterToolComponent implements OnInit {
     return this._sourceValue;
   }
   set sourceValue(value: number) {
-    const roundValue = Num.round(value, 5);
-    console.log(`set source: ${roundValue}`);
-    if (roundValue === this._sourceValue) { return; }
-    this._sourceValue = Num.round(roundValue, 5);
-    this._targetValue = Num.round(this.getConversion(this.sourceUnit)(this.targetUnit)(this.sourceValue), 5);
+    this._sourceValue = Num.round(value, 5) || 0;
+    this.updateTargetValue();
   }
 
   _sourceUnit: Unit.Unit;
@@ -32,9 +30,8 @@ export class ConverterToolComponent implements OnInit {
     return this._sourceUnit;
   }
   set sourceUnit(value: Unit.Unit) {
-    if (value === this._sourceUnit) { return; }
     this._sourceUnit = value;
-    this._targetValue = Num.round(this.getConversion(this.sourceUnit)(this.targetUnit)(this.sourceValue), 5);
+    this.updateTargetValue();
   }
 
   _targetValue: number;
@@ -42,11 +39,8 @@ export class ConverterToolComponent implements OnInit {
     return this._targetValue;
   }
   set targetValue(value: number) {
-    const roundValue = Num.round(value, 5);
-    console.log(`set target: ${roundValue}`);
-    if (roundValue === this._targetValue) { return; }
-    this._targetValue = Num.round(roundValue, 5);
-    this._sourceValue = Num.round(this.getConversion(this.targetUnit)(this.sourceUnit)(this.targetValue), 5);
+    this._targetValue = Num.round(value, 5) || 0;
+    this.updateSourceValue();
   }
 
   _targetUnit: Unit.Unit;
@@ -54,27 +48,26 @@ export class ConverterToolComponent implements OnInit {
     return this._targetUnit;
   }
   set targetUnit(value: Unit.Unit) {
-    if (value === this._targetUnit) { return; }
     this._targetUnit = value;
-    this._sourceValue = Num.round(this.getConversion(this.targetUnit)(this.sourceUnit)(this.targetValue), 5);
+    this.updateTargetValue();
   }
 
-  constructor(unitService: UnitService) {
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.allUnits = activatedRoute.snapshot.data['allUnits'];
     this.unitTypeIds = Enum.getValues(Unit.Type.Id);
-
-    unitService.getAllUnits().then(units => {
-      this.allUnits = units;
-      this.selectedTypeId = this.unitTypeIds[0];
-      this.onTypeChange(this.selectedTypeId);
-    });
+    this.selectedTypeId = this.unitTypeIds[0];
+    this._sourceUnit = this.allUnits[this.selectedTypeId][0];
+    this._targetUnit = this.allUnits[this.selectedTypeId][1];
+    this._sourceValue = 0;
+    this._targetValue = 0;
   }
 
   ngOnInit() {}
 
-  onTypeChange = (typeId: Unit.Type.Id) => {
-    const unitGroup: Unit.Unit[] = this.allUnits[typeId];
-    this.sourceUnit = unitGroup[0];
-    this.targetUnit = unitGroup[0];
+  onTypeChange = () => {
+    const unitGroup: Unit.Unit[] = this.allUnits[this.selectedTypeId];
+    this._sourceUnit = unitGroup[0];
+    this._targetUnit = unitGroup[1];
   }
 
   getConversion = (sourceUnit: Unit.Unit) => (targetUnit: Unit.Unit) => (sourceValue: number) => {
@@ -83,16 +76,11 @@ export class ConverterToolComponent implements OnInit {
   }
 
   getTypeString = (typeId: Unit.Type.Id): string => Unit.Type.Id[typeId];
-
   getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
 
-  private updateSourceValue = () => {
-    this.sourceValue = this.getConversion(this.targetUnit)(this.sourceUnit)(this.targetValue);
-    console.log('update source');
-  }
+  private updateSourceValue = () =>
+    this._sourceValue = Num.round(this.getConversion(this.targetUnit)(this.sourceUnit)(this.targetValue), 5)
 
-  private updateTargetValue = () => {
-    this.targetValue = this.getConversion(this.sourceUnit)(this.targetUnit)(this.sourceValue);
-    console.log('update target');
-  }
+  private updateTargetValue = () =>
+    this._targetValue = Num.round(this.getConversion(this.sourceUnit)(this.targetUnit)(this.sourceValue), 5)
 }

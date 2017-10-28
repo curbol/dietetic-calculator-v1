@@ -24,7 +24,7 @@ const routes: Routes = [
     path: 'convert',
     component: ConverterToolComponent,
     data: { title: 'Unit Converter', subtitle: 'Convert a Value From One Unit to Another' },
-    resolve: { units: AllUnitsResolver }
+    resolve: { allUnits: AllUnitsResolver }
   },
   { path: 'about',
     component: AboutComponent,

@@ -85,30 +85,6 @@ export class CalculationToolComponent implements OnInit, DoCheck {
     this.selections.forEach(selection => selection.active = selectionIdsToActivate.includes(selection.id));
   }
 
-  calcToolSettingsToURL = (calcs: Calc.Calc[]) => (selections: Calc.Selection[]) => (inputs: Calc.Input[]): string => {
-    const stubs: string[] = [];
-
-    const activeCalculators: Calc.Calc[] = calcs.filter(c => c.active);
-    if (activeCalculators.length) {
-      const calcsStub = `c-${activeCalculators.map(c => Calc.Id[c.id]).join('-')}`;
-      stubs.push(calcsStub);
-    }
-
-    const activeFilledSelecitons: Calc.Selection[] = selections.filter(s => s.active && s.value);
-    if (activeFilledSelecitons.length) {
-      const selectionsStub = activeFilledSelecitons.map(s => `o-${Calc.Selection.Id[s.id]}-${Option.Id[s.value.id]}`).join(',');
-      stubs.push(selectionsStub);
-    }
-
-    const activeFilledSelections: Calc.Input[] = inputs.filter(i => i.active && i.value);
-    if (activeFilledSelections.length) {
-      const inputsStub = activeFilledSelections.map(i => `i-${Calc.Input.Id[i.id]}-${i.value}-${Unit.Symbol[i.unit.symbol]}`).join(',');
-      stubs.push(inputsStub);
-    }
-
-    return stubs.join(',');
-  }
-
   private updateSystem = (): void => {
     const commonSystem: Unit.System = Unit.commonSystem(this.inputs.map(i => i.unit));
     this.system = commonSystem != null ? commonSystem : Unit.System.mixed;

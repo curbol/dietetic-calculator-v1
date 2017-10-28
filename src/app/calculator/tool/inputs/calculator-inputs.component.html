@@ -32,7 +32,7 @@
   <div *ngFor="let input of inputs">
     <div *ngIf="input.active" [@appearOnActive]>
       <div class="dc-spacer"></div>
-      <div fxLayout fxLayoutGap=".2rem" >
+      <div fxLayout fxLayoutGap=".2rem">
         <mat-form-field color="accent">
           <input matInput required type="number"
                  [placeholder]="input.name" [(ngModel)]="input.value" />

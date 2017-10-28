@@ -9,7 +9,7 @@ export module Num {
 
     const multiplier = Math.pow(10, digits);
     result = parseFloat((result * multiplier).toFixed(11));
-    result = +(Math.round(result) / multiplier).toFixed(2);
+    result = +(Math.round(result) / multiplier).toFixed(digits);
 
     if (negative) { result *= -1; }
 
