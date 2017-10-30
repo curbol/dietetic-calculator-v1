@@ -1,13 +1,13 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
-  <div *ngFor="let calc of calculators">
+  <div *ngFor="let calc of calculators" class="dc-full-width">
     <div *ngIf="calc.active" [@appearOnActive]>
-      <div class="dc-spacer"></div>
       <dc-result
         [title]="calc.title"
         [value]="(calc.output.result(inputs)(selections) || 0) | number:'1.1-1'"
         [units]="calc.output.unitText">
       </dc-result>
+      <div class="dc-spacer"></div>
     </div>
   </div>
 
