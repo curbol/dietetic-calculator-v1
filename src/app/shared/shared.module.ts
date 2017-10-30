@@ -22,12 +22,14 @@ import 'rxjs/add/operator/max';
 import 'rxjs/add/operator/min';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/take';
+import { GroupByPipe } from './pipes/group-by.pipe';
 
 @NgModule({
   declarations: [
     ResultComponent,
     ChipComponent,
     CapitalizePipe,
+    GroupByPipe,
   ],
   imports: [
     CommonModule,
@@ -42,6 +44,7 @@ import 'rxjs/add/operator/take';
     ResultComponent,
     ChipComponent,
     CapitalizePipe,
+    GroupByPipe,
   ]
 })
 export class SharedModule { }

@@ -29,4 +29,6 @@ export class CalculatorOptionsComponent implements OnInit {
     const activeCalcs: Calc.Calc[] = this.calculators.filter(c => c.active);
     this.activeCalculatorsChanged.emit(activeCalcs);
   }
+
+  getCalcGroupString = (group: Calc.Group): string => Calc.Group[group];
 }

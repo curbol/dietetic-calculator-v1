@@ -12,6 +12,7 @@ export class CalculatorService {
       id: Calc.Id.bmi,
       title: 'Body Mass Index (BMI)',
       subTitle: 'A measure of body fat in adults',
+      group: Calc.Group.anthropometrics,
       active: false,
       inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight],
       selectionIds: [],
@@ -32,6 +33,7 @@ export class CalculatorService {
       id: Calc.Id.mifflin,
       title: 'Mifflin St. Jeor',
       subTitle: 'Daily calorie needs for adults',
+      group: Calc.Group.anthropometrics,
       active: false,
       inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight, Calc.Input.Id.age],
       selectionIds: [Calc.Selection.Id.gender],
@@ -50,6 +52,76 @@ export class CalculatorService {
           const height_cm: number = Calc.inputConversion(height)(Unit.Symbol.cm);
           const age_y: number = Calc.inputConversion(age)(Unit.Symbol.y);
           return this.equationService.mifflinStJeor(genderText)(weight_kg)(height_cm)(age_y);
+        }
+      }
+    },
+    {
+      id: Calc.Id.ibw,
+      title: 'Ideal Body Weight (IBW)',
+      subTitle: 'G. J. Hamwi Formula (1964)',
+      group: Calc.Group.anthropometrics,
+      active: false,
+      inputIds: [Calc.Input.Id.height],
+      selectionIds: [Calc.Selection.Id.gender],
+      output: <Calc.Output>{
+        unitText: Unit.Symbol[Unit.Symbol.kg],
+        result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
+          const gender: Calc.Selection = selections.find(selection => selection.id === Calc.Selection.Id.gender);
+          const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
+          if ([height].find(i => !Calc.inputReadyToCalculate(i)) ||
+              [gender].find(s => !Calc.selectionReadyToCalculate(s))) { return null; }
+
+          const genderText: string = Option.Id[gender.value.id];
+          const height_in: number = Calc.inputConversion(height)(Unit.Symbol.in);
+          return this.equationService.idealBodyWeight(genderText)(height_in);
+        }
+      }
+    },
+    {
+      id: Calc.Id.abw,
+      title: 'Adjusted Body Weight (ABW)',
+      subTitle: 'Estimated adjusted body weight',
+      group: Calc.Group.anthropometrics,
+      active: false,
+      inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight],
+      selectionIds: [Calc.Selection.Id.gender],
+      output: <Calc.Output>{
+        unitText: Unit.Symbol[Unit.Symbol.kg],
+        result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
+          const gender: Calc.Selection = selections.find(selection => selection.id === Calc.Selection.Id.gender);
+          const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
+          const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
+          if ([weight, height].find(i => !Calc.inputReadyToCalculate(i)) ||
+              [gender].find(s => !Calc.selectionReadyToCalculate(s))) { return null; }
+
+          const genderText: string = Option.Id[gender.value.id];
+          const weight_kg: number = Calc.inputConversion(weight)(Unit.Symbol.kg);
+          const height_in: number = Calc.inputConversion(height)(Unit.Symbol.in);
+          return this.equationService.adjustedBodyWeight(genderText)(weight_kg)(height_in);
+        }
+      }
+    },
+    {
+      id: Calc.Id.abw,
+      title: 'Nutritional Body Weight (NBW)',
+      subTitle: 'Estimated nutritional body weight',
+      group: Calc.Group.anthropometrics,
+      active: false,
+      inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight],
+      selectionIds: [Calc.Selection.Id.gender],
+      output: <Calc.Output>{
+        unitText: Unit.Symbol[Unit.Symbol.kg],
+        result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
+          const gender: Calc.Selection = selections.find(selection => selection.id === Calc.Selection.Id.gender);
+          const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
+          const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
+          if ([weight, height].find(i => !Calc.inputReadyToCalculate(i)) ||
+              [gender].find(s => !Calc.selectionReadyToCalculate(s))) { return null; }
+
+          const genderText: string = Option.Id[gender.value.id];
+          const weight_kg: number = Calc.inputConversion(weight)(Unit.Symbol.kg);
+          const height_in: number = Calc.inputConversion(height)(Unit.Symbol.in);
+          return this.equationService.nutritionalBodyWeight(genderText)(weight_kg)(height_in);
         }
       }
     }
@@ -125,6 +197,6 @@ export class CalculatorService {
     });
   }
 
-  getInputs = (inputIds: Calc.Input.Id[]) => 
+  getInputs = (inputIds: Calc.Input.Id[]) =>
     this.getAllInputs().then((inputs: Calc.Input[]) => inputs.filter(input => inputIds.find(id => id === input.id)))
 }

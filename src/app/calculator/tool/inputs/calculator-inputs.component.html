@@ -1,19 +1,23 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
-  <div *ngIf="getActiveDataCount()" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
-    <mat-radio-group [(ngModel)]="systemString" fxLayout fxLayoutGap="1rem"
-                     (change)="onSystemChange($event.value)"
-                     matTooltip="Unit System" matTooltipPosition="left" matTooltipShowDelay="500">
-      <mat-radio-button value="metric">Metric</mat-radio-button>
-      <mat-radio-button value="imperial">Imperial</mat-radio-button>
-      <mat-radio-button value="mixed" disabled>Mixed</mat-radio-button>
-    </mat-radio-group>
-    <div *ngIf="getActiveFilledDataCount()" [@appearOnActive]>
-      <div class="dc-spacer"></div>
-      <button mat-button (click)="clearDataValues()">
-        <mat-icon>clear</mat-icon>
-        <span>Clear Values</span>
-      </button>
+  <div class="dc-full-width">
+    <div *ngIf="getActiveDataCount()" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
+      <mat-radio-group [(ngModel)]="systemString" fxLayout fxLayoutGap="1rem"
+                      (change)="onSystemChange($event.value)"
+                      matTooltip="Unit System" matTooltipPosition="left" matTooltipShowDelay="500">
+        <mat-radio-button value="metric">Metric</mat-radio-button>
+        <mat-radio-button value="imperial">Imperial</mat-radio-button>
+        <mat-radio-button value="mixed" disabled>Mixed</mat-radio-button>
+      </mat-radio-group>
+      <div class="dc-full-width">
+        <div *ngIf="getActiveFilledDataCount()" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
+          <div class="dc-spacer"></div>
+          <button mat-button (click)="clearDataValues()">
+            <mat-icon>clear</mat-icon>
+            <span>Clear Values</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -29,7 +33,7 @@
     </div>
   </div>
 
-  <div *ngFor="let input of inputs">
+  <div *ngFor="let input of inputs" class="dc-full-width">
     <div *ngIf="input.active" [@appearOnActive]>
       <div class="dc-spacer"></div>
       <div fxLayout fxLayoutGap=".2rem">

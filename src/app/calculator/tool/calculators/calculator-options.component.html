@@ -10,15 +10,19 @@
     </button>
   </div>
 
-  <mat-selection-list #calcsList>
-    <div *ngFor="let calc of calculators">
-      <mat-list-option checkboxPosition="before"
-                       [value]="calc" [selected]="calc.active"
-                       (selectionChange)="onSelectionChange($event)">
-        <h3 mdLine class="dc-list-option-title">{{calc.title}}</h3>
-        <h6 mdLine class="dc-list-option-subtitle dc-secondary-text">{{calc.subTitle}}</h6>
-      </mat-list-option>
-      <mat-divider></mat-divider>
+  <mat-selection-list #calcsList fxLayout="column" fxLayoutGap="1rem">
+    <div *ngFor="let group of calculators | groupBy:'group'">
+      <h3 matSubheader>{{getCalcGroupString(group.key) | capitalize}}</h3>
+      <div *ngFor="let calc of group.value">
+        <mat-divider></mat-divider>
+        <mat-list-option checkboxPosition="before"
+                        [value]="calc" [selected]="calc.active"
+                        (selectionChange)="onSelectionChange($event)">
+          <h3 mdLine class="dc-list-option-title">{{calc.title}}</h3>
+          <h6 mdLine class="dc-list-option-subtitle dc-secondary-text">{{calc.subTitle}}</h6>
+        </mat-list-option>
+        <mat-divider></mat-divider>
+      </div>
     </div>
   </mat-selection-list>
 

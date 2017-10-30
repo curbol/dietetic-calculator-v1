@@ -6,6 +6,7 @@ export module Calc {
     id: Calc.Id;
     title: string;
     subTitle: string;
+    group: Group;
     active: boolean;
     inputIds: Input.Id[];
     selectionIds: Selection.Id[];
@@ -13,7 +14,11 @@ export module Calc {
   }
 
   export enum Id {
-    bmi, mifflin
+    bmi, mifflin, ibw, abw
+  }
+
+  export enum Group {
+    anthropometrics
   }
 
   export interface Data {

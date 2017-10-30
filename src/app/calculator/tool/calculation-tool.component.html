@@ -122,7 +122,8 @@
           <mat-icon>arrow_back</mat-icon>
           <span>{{calculatorsTitle}}</span>
         </button>
-        <button mat-button (click)="calcTabs.selectedIndex = 1">
+        <button mat-button (click)="calcTabs.selectedIndex = 1"
+                *ngIf="getActiveCalculators().length">
           <mat-icon>arrow_back</mat-icon>
           <span>{{inputsTitle}}</span>
         </button>

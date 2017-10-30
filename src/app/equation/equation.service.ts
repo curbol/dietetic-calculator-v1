@@ -17,4 +17,33 @@ export class EquationService {
 
     return null;
   }
+
+  idealBodyWeight = (gender: string) => (height_in: number) => {
+    const deltaFiveFeet = height_in - 60;
+    if (gender === 'male') {
+      return 48 + 2.7 * deltaFiveFeet;
+    } else if (gender === 'female') {
+      return 45.5 + 2.2 * deltaFiveFeet;
+    }
+
+    return null;
+  }
+
+  adjustedBodyWeight = (gender: string) => (weight_kg: number) => (height_in: number) => {
+    const ibw = this.idealBodyWeight(gender)(height_in);
+    if (ibw) {
+      return 0.4 * (weight_kg - ibw) + ibw;
+    }
+
+    return null;
+  }
+
+  nutritionalBodyWeight = (gender: string) => (weight_kg: number) => (height_in: number) => {
+    const ibw = this.idealBodyWeight(gender)(height_in);
+    if (ibw) {
+      return 0.25 * (weight_kg - ibw) + ibw;
+    }
+
+    return null;
+  }
 }
