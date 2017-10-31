@@ -15,6 +15,8 @@ export class ConverterToolComponent implements OnInit {
   selectedTypeId: Unit.Type.Id;
   unitTypeIds: Unit.Type.Id[];
   allUnits: {[type: number]: Unit.Unit[]};
+  sourceUnit: Unit.Unit;
+  targetUnit: Unit.Unit;
 
   _sourceValue: number;
   get sourceValue(): number {
@@ -22,15 +24,6 @@ export class ConverterToolComponent implements OnInit {
   }
   set sourceValue(value: number) {
     this._sourceValue = Num.round(value, 5) || 0;
-    this.updateTargetValue();
-  }
-
-  _sourceUnit: Unit.Unit;
-  get sourceUnit(): Unit.Unit {
-    return this._sourceUnit;
-  }
-  set sourceUnit(value: Unit.Unit) {
-    this._sourceUnit = value;
     this.updateTargetValue();
   }
 
@@ -43,32 +36,21 @@ export class ConverterToolComponent implements OnInit {
     this.updateSourceValue();
   }
 
-  _targetUnit: Unit.Unit;
-  get targetUnit(): Unit.Unit {
-    return this._targetUnit;
-  }
-  set targetUnit(value: Unit.Unit) {
-    this._targetUnit = value;
-    this.updateTargetValue();
-  }
-
   constructor(private activatedRoute: ActivatedRoute) {
     this.allUnits = activatedRoute.snapshot.data['allUnits'];
     this.unitTypeIds = Enum.getValues(Unit.Type.Id);
     this.selectedTypeId = this.unitTypeIds[0];
-    this._sourceUnit = this.allUnits[this.selectedTypeId][0];
-    this._targetUnit = this.allUnits[this.selectedTypeId][1];
     this._sourceValue = 0;
     this._targetValue = 0;
+
+    this.setDefaultUnits(this.allUnits[this.selectedTypeId]);
   }
 
   ngOnInit() {}
 
-  onTypeChange = () => {
-    const unitGroup: Unit.Unit[] = this.allUnits[this.selectedTypeId];
-    this._sourceUnit = unitGroup[0];
-    this._targetUnit = unitGroup[1];
-  }
+  onTypeChange = () => this.setDefaultUnits(this.allUnits[this.selectedTypeId]);
+
+  onUnitChange = () => this.updateTargetValue();
 
   getConversion = (sourceUnit: Unit.Unit) => (targetUnit: Unit.Unit) => (sourceValue: number) => {
     if (!sourceUnit || !targetUnit || !sourceValue) { return; }
@@ -78,9 +60,18 @@ export class ConverterToolComponent implements OnInit {
   getTypeString = (typeId: Unit.Type.Id): string => Unit.Type.Id[typeId];
   getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
 
-  private updateSourceValue = () =>
-    this._sourceValue = Num.round(this.getConversion(this.targetUnit)(this.sourceUnit)(this.targetValue), 5)
+  private setDefaultUnits = (unitGroup: Unit.Unit[]) => {
+    this.sourceUnit = unitGroup[0];
+    this.targetUnit = unitGroup[1];
+  }
 
-  private updateTargetValue = () =>
-    this._targetValue = Num.round(this.getConversion(this.sourceUnit)(this.targetUnit)(this.sourceValue), 5)
+  private updateSourceValue = () => {
+    const conversion: number = this.getConversion(this.targetUnit)(this.sourceUnit)(this.targetValue);
+    this._sourceValue = Num.round(conversion, 5) || 0;
+  }
+
+  private updateTargetValue = () => {
+    const conversion: number = this.getConversion(this.sourceUnit)(this.targetUnit)(this.sourceValue);
+    this._targetValue = Num.round(conversion, 5) || 0;
+  }
 }

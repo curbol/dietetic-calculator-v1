@@ -11,11 +11,13 @@
   <div fxLayout="column">
     <div fxLayout fxLayoutGap=".2rem">
       <mat-form-field color="accent">
-        <input #sourceValueInput matInput required type="number" placeholder="Value" [(ngModel)]="sourceValue"/>
-        <mat-hint align="end">{{getUnitString(sourceUnitSelect?.value?.symbol)}}</mat-hint>
+        <input #sourceValueInput matInput required type="number" placeholder="Value"
+               [(ngModel)]="sourceValue" (click)="sourceValueInput.select()"/>
+        <mat-hint align="end">{{getUnitString(sourceUnit?.symbol)}}</mat-hint>
       </mat-form-field>
       <mat-form-field color="accent">
-        <mat-select #sourceUnitSelect [placeholder]="getTypeString(selectedTypeId) + ' Units' | capitalize" [(ngModel)]="sourceUnit">
+        <mat-select #sourceUnitSelect [(ngModel)]="sourceUnit"
+                    [placeholder]="getTypeString(selectedTypeId) + ' Units' | capitalize" (change)="onUnitChange()">
           <mat-option *ngFor="let unit of allUnits[selectedTypeId]" [value]="unit">
             {{unit?.name}} ({{getUnitString(unit?.symbol)}})
           </mat-option>
@@ -27,11 +29,13 @@
     </div>
     <div fxLayout fxLayoutGap=".2rem">
       <mat-form-field color="accent">
-        <input #targetValueInput matInput required type="number" placeholder="Value" [(ngModel)]="targetValue"/>
-        <mat-hint align="end">{{getUnitString(targetUnitSelect?.value?.symbol)}}</mat-hint>
+        <input #targetValueInput matInput required type="number" placeholder="Value"
+               [(ngModel)]="targetValue" (click)="targetValueInput.select()"/>
+        <mat-hint align="end">{{getUnitString(targetUnit?.symbol)}}</mat-hint>
       </mat-form-field>
       <mat-form-field color="accent">
-        <mat-select #targetUnitSelect [placeholder]="getTypeString(selectedTypeId) + ' Units' | capitalize" [(ngModel)]="targetUnit">
+        <mat-select #targetUnitSelect [(ngModel)]="targetUnit"
+                    [placeholder]="getTypeString(selectedTypeId) + ' Units' | capitalize" (change)="onUnitChange()">
           <mat-option *ngFor="let unit of allUnits[selectedTypeId]" [value]="unit">
             {{unit?.name}} ({{getUnitString(unit?.symbol)}})
           </mat-option>

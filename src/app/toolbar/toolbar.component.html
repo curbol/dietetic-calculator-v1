@@ -4,15 +4,15 @@
       <mat-icon>home</mat-icon>
       <span>Dietetic Calculator</span>
     </button>
-    <button mat-button [routerLink]="['convert']">
-      <mat-icon>loop</mat-icon>
-      <span>Unit Converter</span>
-    </button>
   </div>
   <span fxFlex></span>
   <div fxLayout fxLayoutAlign="end center">
 
     <div fxHide fxShow.gt-xs>
+      <button mat-button [routerLink]="['convert']">
+        <mat-icon>loop</mat-icon>
+        <span>Unit Converter</span>
+      </button>
       <button mat-button [routerLink]="['about']">
         <mat-icon>info</mat-icon>
         <span>About</span>
@@ -25,6 +25,10 @@
         <mat-icon>menu</mat-icon>
       </button>
       <mat-menu #dcmenu="matMenu">
+        <button mat-menu-item [routerLink]="['convert']">
+          <mat-icon>loop</mat-icon>
+          <span>Unit Converter</span>
+        </button>
         <button mat-menu-item [routerLink]="['about']">
           <mat-icon>info</mat-icon>
           <span>About</span>
