@@ -30,5 +30,5 @@ export class CalculatorOptionsComponent implements OnInit {
     this.activeCalculatorsChanged.emit(activeCalcs);
   }
 
-  getCalcGroupString = (group: Calc.Group): string => Calc.Group[group];
+  getCalcGroupString = (group: Calc.Group): string => Calc.Group[group].replace('_', ' ');
 }

@@ -32,15 +32,6 @@ export class EquationService {
   adjustedBodyWeight = (gender: string) => (weight_kg: number) => (height_in: number) => {
     const ibw = this.idealBodyWeight(gender)(height_in);
     if (ibw) {
-      return 0.4 * (weight_kg - ibw) + ibw;
-    }
-
-    return null;
-  }
-
-  nutritionalBodyWeight = (gender: string) => (weight_kg: number) => (height_in: number) => {
-    const ibw = this.idealBodyWeight(gender)(height_in);
-    if (ibw) {
       return 0.25 * (weight_kg - ibw) + ibw;
     }
 

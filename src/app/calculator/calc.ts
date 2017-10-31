@@ -18,7 +18,7 @@ export module Calc {
   }
 
   export enum Group {
-    anthropometrics
+    anthropometric, nutritional_needs
   }
 
   export interface Data {
