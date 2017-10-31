@@ -19,8 +19,11 @@ export class CalculatorService {
       output: <Calc.Output>{
         unitText: 'kg/m²',
         result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
-          const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
-          const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
+          // pass in (inputId, targetSymbol) pairs, return conversions
+          const data = this.getInputsFromIds([Calc.Input.Id.height, Calc.Input.Id.weight])(inputs);
+
+          const weight: Calc.Input = data[Calc.Input.Id[Calc.Input.Id.weight]];
+          const height: Calc.Input = data[Calc.Input.Id[Calc.Input.Id.height]];
           if ([weight, height].find(i => !Calc.inputReadyToCalculate(i))) { return null; }
 
           const weight_kg: number = Calc.inputConversion(weight)(Unit.Symbol.kg);
@@ -148,8 +151,6 @@ export class CalculatorService {
 
   constructor(private unitService: UnitService, private equationService: EquationService) { }
 
-  private getInputSettings = () => new Promise<Calc.Input.Settings[]>((resolve, reject) => resolve(this.inputSettings));
-
   getCalculators = () => new Promise<Calc.Calc[]>((resolve, reject) => resolve(this.calcs));
   getAllSelections = (): Promise<Calc.Selection[]> => new Promise<Calc.Selection[]>((resolve, reject) => resolve(this.Selections));
 
@@ -175,4 +176,20 @@ export class CalculatorService {
 
   getInputs = (inputIds: Calc.Input.Id[]) =>
     this.getAllInputs().then((inputs: Calc.Input[]) => inputs.filter(input => inputIds.find(id => id === input.id)))
+
+  private getSelections =
+  (selectionIds: Calc.Selection.Id[]) => (selections: Calc.Selection[]) => {
+    const result: {[key: string]: Calc.Selection} = {};
+    selectionIds.forEach(id => result[Calc.Selection.Id[id]] = selections.find(s => s.id === id));
+    return result;
+  }
+
+  private getInputsFromIds =
+  (inputIds: Calc.Input.Id[]) => (inputs: Calc.Input[]) => {
+    const result: {[key: string]: Calc.Input} = {};
+    inputIds.forEach(id => result[Calc.Input.Id[id]] = inputs.find(s => s.id === id));
+    return result;
+  }
+
+  private getInputSettings = () => new Promise<Calc.Input.Settings[]>((resolve, reject) => resolve(this.inputSettings));
 }
