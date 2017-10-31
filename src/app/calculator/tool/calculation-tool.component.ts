@@ -73,7 +73,7 @@ export class CalculationToolComponent implements OnInit, DoCheck {
   notAllActiveDataFilled = (): boolean => !this.allActiveDataFilled();
 
   getActiveCompletedResults = (): Calc.Calc[] =>
-    this.calculators.filter(c => c.active && (c.output.result(this.inputs)(this.selections) || 0) !== 0)
+    this.calculators.filter(c => c.active && (this.calcService.getResult(c)(this.inputs)(this.selections) || 0) !== 0)
 
   allActiveResultsCompleted = (): boolean => this.getActiveCompletedResults().length === this.getActiveCalculators().length;
 

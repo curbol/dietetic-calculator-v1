@@ -7,6 +7,32 @@ import { Option } from '../option';
 
 @Injectable()
 export class CalculatorService {
+  private resultMap: {[key: string]: (inputs: {[key: string]: number}) => (selections: {[key: string]: string}) => number} = {
+    'bmi': (inputs: {[key: string]: number}) => (selections: {[key: string]: string}): number => {
+      const weight = inputs[Calc.Input.Id[Calc.Input.Id.weight]];
+      const height = inputs[Calc.Input.Id[Calc.Input.Id.height]];
+      return this.equationService.bodyMassIndex(weight)(height);
+    },
+    'mifflin': (inputs: {[key: string]: number}) => (selections: {[key: string]: string}): number => {
+      const gender = selections[Calc.Selection.Id[Calc.Selection.Id.gender]];
+      const weight = inputs[Calc.Input.Id[Calc.Input.Id.weight]];
+      const height = inputs[Calc.Input.Id[Calc.Input.Id.height]];
+      const age = inputs[Calc.Input.Id[Calc.Input.Id.age]];
+      return this.equationService.mifflinStJeor(gender)(weight)(height)(age);
+    },
+    'ibw': (inputs: {[key: string]: number}) => (selections: {[key: string]: string}): number => {
+      const gender = selections[Calc.Selection.Id[Calc.Selection.Id.gender]];
+      const height = inputs[Calc.Input.Id[Calc.Input.Id.height]];
+      return this.equationService.idealBodyWeight(gender)(height);
+    },
+    'abw': (inputs: {[key: string]: number}) => (selections: {[key: string]: string}): number => {
+      const gender = selections[Calc.Selection.Id[Calc.Selection.Id.gender]];
+      const weight = inputs[Calc.Input.Id[Calc.Input.Id.weight]];
+      const height = inputs[Calc.Input.Id[Calc.Input.Id.height]];
+      return this.equationService.adjustedBodyWeight(gender)(weight)(height);
+    },
+  };
+
   private calcs: Calc.Calc[] = [
     {
       id: Calc.Id.bmi,
@@ -14,23 +40,12 @@ export class CalculatorService {
       subTitle: 'A measure of body fat in adults',
       group: Calc.Group.anthropometric,
       active: false,
-      inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight],
+      inputs: [
+        { id: Calc.Input.Id.height, targetSymbol: Unit.Symbol.m },
+        { id: Calc.Input.Id.weight, targetSymbol: Unit.Symbol.kg },
+      ],
       selectionIds: [],
-      output: <Calc.Output>{
-        unitText: 'kg/m²',
-        result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
-          // pass in (inputId, targetSymbol) pairs, return conversions
-          const data = this.getInputsFromIds([Calc.Input.Id.height, Calc.Input.Id.weight])(inputs);
-
-          const weight: Calc.Input = data[Calc.Input.Id[Calc.Input.Id.weight]];
-          const height: Calc.Input = data[Calc.Input.Id[Calc.Input.Id.height]];
-          if ([weight, height].find(i => !Calc.inputReadyToCalculate(i))) { return null; }
-
-          const weight_kg: number = Calc.inputConversion(weight)(Unit.Symbol.kg);
-          const height_m: number = Calc.inputConversion(height)(Unit.Symbol.m);
-          return this.equationService.bodyMassIndex(weight_kg)(height_m);
-        }
-      }
+      outputUnitText: 'kg/m²',
     },
     {
       id: Calc.Id.mifflin,
@@ -38,25 +53,13 @@ export class CalculatorService {
       subTitle: 'Daily calorie needs for adults',
       group: Calc.Group.nutritional_needs,
       active: false,
-      inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight, Calc.Input.Id.age],
+      inputs: [
+        { id: Calc.Input.Id.height, targetSymbol: Unit.Symbol.cm },
+        { id: Calc.Input.Id.weight, targetSymbol: Unit.Symbol.kg },
+        { id: Calc.Input.Id.age, targetSymbol: Unit.Symbol.y },
+      ],
       selectionIds: [Calc.Selection.Id.gender],
-      output: <Calc.Output>{
-        unitText: 'kcal',
-        result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
-          const gender: Calc.Selection = selections.find(selection => selection.id === Calc.Selection.Id.gender);
-          const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
-          const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
-          const age: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.age);
-          if ([weight, height, age].find(i => !Calc.inputReadyToCalculate(i)) ||
-              [gender].find(s => !Calc.selectionReadyToCalculate(s))) { return null; }
-
-          const genderText: string = Option.Id[gender.value.id];
-          const weight_kg: number = Calc.inputConversion(weight)(Unit.Symbol.kg);
-          const height_cm: number = Calc.inputConversion(height)(Unit.Symbol.cm);
-          const age_y: number = Calc.inputConversion(age)(Unit.Symbol.y);
-          return this.equationService.mifflinStJeor(genderText)(weight_kg)(height_cm)(age_y);
-        }
-      }
+      outputUnitText: 'kcal',
     },
     {
       id: Calc.Id.ibw,
@@ -64,21 +67,11 @@ export class CalculatorService {
       subTitle: 'Estimated ideal weight for adults',
       group: Calc.Group.anthropometric,
       active: false,
-      inputIds: [Calc.Input.Id.height],
+      inputs: [
+        { id: Calc.Input.Id.height, targetSymbol: Unit.Symbol.in },
+      ],
       selectionIds: [Calc.Selection.Id.gender],
-      output: <Calc.Output>{
-        unitText: Unit.Symbol[Unit.Symbol.kg],
-        result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
-          const gender: Calc.Selection = selections.find(selection => selection.id === Calc.Selection.Id.gender);
-          const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
-          if ([height].find(i => !Calc.inputReadyToCalculate(i)) ||
-              [gender].find(s => !Calc.selectionReadyToCalculate(s))) { return null; }
-
-          const genderText: string = Option.Id[gender.value.id];
-          const height_in: number = Calc.inputConversion(height)(Unit.Symbol.in);
-          return this.equationService.idealBodyWeight(genderText)(height_in);
-        }
-      }
+      outputUnitText: Unit.Symbol[Unit.Symbol.kg],
     },
     {
       id: Calc.Id.abw,
@@ -86,23 +79,12 @@ export class CalculatorService {
       subTitle: 'Adjusted ideal weight for the obese',
       group: Calc.Group.anthropometric,
       active: false,
-      inputIds: [Calc.Input.Id.height, Calc.Input.Id.weight],
+      inputs: [
+        { id: Calc.Input.Id.height, targetSymbol: Unit.Symbol.in },
+        { id: Calc.Input.Id.weight, targetSymbol: Unit.Symbol.kg },
+      ],
       selectionIds: [Calc.Selection.Id.gender],
-      output: <Calc.Output>{
-        unitText: Unit.Symbol[Unit.Symbol.kg],
-        result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
-          const gender: Calc.Selection = selections.find(selection => selection.id === Calc.Selection.Id.gender);
-          const weight: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.weight);
-          const height: Calc.Input = inputs.find(input => input.id === Calc.Input.Id.height);
-          if ([weight, height].find(i => !Calc.inputReadyToCalculate(i)) ||
-              [gender].find(s => !Calc.selectionReadyToCalculate(s))) { return null; }
-
-          const genderText: string = Option.Id[gender.value.id];
-          const weight_kg: number = Calc.inputConversion(weight)(Unit.Symbol.kg);
-          const height_in: number = Calc.inputConversion(height)(Unit.Symbol.in);
-          return this.equationService.adjustedBodyWeight(genderText)(weight_kg)(height_in);
-        }
-      }
+      outputUnitText: Unit.Symbol[Unit.Symbol.kg],
     },
   ];
 
@@ -177,17 +159,32 @@ export class CalculatorService {
   getInputs = (inputIds: Calc.Input.Id[]) =>
     this.getAllInputs().then((inputs: Calc.Input[]) => inputs.filter(input => inputIds.find(id => id === input.id)))
 
-  private getSelections =
-  (selectionIds: Calc.Selection.Id[]) => (selections: Calc.Selection[]) => {
-    const result: {[key: string]: Calc.Selection} = {};
-    selectionIds.forEach(id => result[Calc.Selection.Id[id]] = selections.find(s => s.id === id));
+  getResult = (calc: Calc.Calc) => (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
+    const inputConversions: {[key: string]: number} = this.getInputConversions(calc.inputs)(inputs);
+    const selectedValues: {[key: string]: string} = this.getSelectedValues([Calc.Selection.Id.gender])(selections);
+
+    if (Object.values(inputConversions).some(a => a === null) ||
+        Object.values(selectedValues).some(a => a === null)) { return null; }
+
+    return this.resultMap[Calc.Id[calc.id]](inputConversions)(selectedValues);
+  }
+
+  private getSelectedValues = (selectionIds: Calc.Selection.Id[]) => (selections: Calc.Selection[]) => {
+    const result: {[key: string]: string} = {};
+    selectionIds.forEach(id => {
+      const selection: Calc.Selection = selections.find(s => s.id === id);
+      result[Calc.Selection.Id[id]] = selection && selection.value ? Option.Id[selection.value.id] : null;
+    });
     return result;
   }
 
-  private getInputsFromIds =
-  (inputIds: Calc.Input.Id[]) => (inputs: Calc.Input[]) => {
-    const result: {[key: string]: Calc.Input} = {};
-    inputIds.forEach(id => result[Calc.Input.Id[id]] = inputs.find(s => s.id === id));
+  private getInputConversions = (requests: {id: Calc.Input.Id; targetSymbol: Unit.Symbol}[]) => (inputs: Calc.Input[]) => {
+    const result: {[key: string]: number} = {};
+    requests.forEach(r => {
+      const input: Calc.Input = inputs.find(s => s.id === r.id);
+      const conversion: number = input && input.value ? Calc.inputConversion(input)(r.targetSymbol) : null;
+      result[Calc.Input.Id[r.id]] = conversion;
+    });
     return result;
   }
 

@@ -8,9 +8,9 @@ export module Calc {
     subTitle: string;
     group: Group;
     active: boolean;
-    inputIds: Input.Id[];
+    inputs: {id: Calc.Input.Id; targetSymbol: Unit.Symbol}[];
     selectionIds: Selection.Id[];
-    output: Output;
+    outputUnitText: string;
   }
 
   export enum Id {
@@ -73,9 +73,7 @@ export module Calc {
   export const selectionReadyToCalculate = (selection: Calc.Selection): boolean => (selection != null && selection.value != null);
 
   export const getSelectionIds = (calcs: Calc.Calc[]) => {
-    if (!calcs || calcs.length <= 0) {
-      return [];
-    }
+    if (!calcs || calcs.length <= 0) { return []; }
 
     const mergedSelectionIds: Calc.Selection.Id[] = [].concat.apply([], calcs.map(c => c.selectionIds));
     const distinctSelectionIds: Calc.Selection.Id[] = mergedSelectionIds.filter((v, i, a) => a.indexOf(v) === i);
@@ -84,13 +82,10 @@ export module Calc {
   };
 
   export const getInputIds = (calcs: Calc.Calc[]) => {
-    if (!calcs || calcs.length <= 0) {
-      return [];
-    }
+    if (!calcs || calcs.length <= 0) { return []; }
 
-    const mergedInputIds: Calc.Input.Id[] = [].concat.apply([], calcs.map(c => c.inputIds));
+    const mergedInputIds: Calc.Input.Id[] = [].concat.apply([], calcs.map<Calc.Input.Id[]>(c => Object.keys(c.inputs).map(s => +s)));
     const distinctInputIds: Calc.Input.Id[] = mergedInputIds.filter((v, i, a) => a.indexOf(v) === i);
-
     return distinctInputIds;
   };
 
