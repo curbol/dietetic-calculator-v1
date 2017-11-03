@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@app/shared/shared.module';
 import { CalculationToolComponent } from './tool/calculation-tool.component';
 import { CalculatorService } from './service/calculator.service';
 import { CalculatorsResolver, InputsResolver, SelectionsResolver } from './service/calc-resolvers';

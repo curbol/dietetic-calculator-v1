@@ -2,11 +2,11 @@ import { Component, OnInit, DoCheck, OnChanges } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { appearOnActive, appearOnTrue } from '../../animation/animations';
-import { CalculatorService } from '../service/calculator.service';
-import { Calc } from '../calc';
-import { Unit } from '../../unit/unit';
-import { Option } from '../option';
+import { appearOnActive, appearOnTrue } from '@app/animation/animations';
+import { CalculatorService } from '@app/calculator/service/calculator.service';
+import { Calc } from '@app/calculator/calc';
+import { Unit } from '@app/unit/unit';
+import { Option } from '@app/calculator/option';
 
 @Component({
   selector: 'dc-calculation-tool',

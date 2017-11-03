@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Calc } from '../../calc';
-import { Unit } from '../../../unit/unit';
-import { appearOnActive } from '../../../animation/animations';
+import { Calc } from '@app/calculator/calc';
+import { Unit } from '@app/unit/unit';
+import { appearOnActive } from '@app/animation/animations';
 
 @Component({
   selector: 'dc-calculator-inputs',

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatListOption, MatListOptionChange } from '@angular/material';
 
-import { Calc } from '../../calc';
+import { Calc } from '@app/calculator/calc';
 
 @Component({
   selector: 'dc-calculator-options',
