@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { MatListOption, MatListOptionChange } from '@angular/material';
+import { MatListOptionChange } from '@angular/material';
 
 import { Calc } from '@app/calculator/calc';
 
