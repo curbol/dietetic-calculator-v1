@@ -27,12 +27,13 @@
     <div *ngIf="selection.active" [@appearOnActive]
          fxLayout="column" fxLayoutAlign="start center">
       <div class="dc-spacer"></div>
-      <mat-radio-group required [(ngModel)]="selection.value" fxLayout fxLayoutGap="1rem"
-                       [matTooltip]="selection.name" matTooltipPosition="left" matTooltipShowDelay="500">
-        <mat-radio-button *ngFor="let option of selection.group" [value]="option">
-          {{option?.name}}
-        </mat-radio-button>
-      </mat-radio-group>
+      <mat-form-field color="accent">
+        <mat-select required [placeholder]="selection.name | capitalize" [(ngModel)]="selection.value">
+          <mat-option *ngFor="let option of selection.group" [value]="option">
+            {{option?.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
 
