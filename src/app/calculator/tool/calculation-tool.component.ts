@@ -26,11 +26,11 @@ export class CalculationToolComponent implements OnInit, DoCheck {
   settingsPath: string;
   previousPath: string;
 
-  readonly calculatorsTitle = '1. Select Calculators';
+  readonly calculatorsTitle = 'Select Calculators';
   readonly calculatorsShortTitle = 'Calculators';
-  readonly inputsTitle = '2. Input Data';
+  readonly inputsTitle = 'Input Data';
   readonly inputsShortTitle = 'Data';
-  readonly outputsTitle = '3. View Results';
+  readonly outputsTitle = 'View Results';
   readonly outputsShortTitle = 'Results';
 
   readonly missingInputsMessage = 'Some inputs are missing values.';
@@ -62,6 +62,7 @@ export class CalculationToolComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
+    // console.log('do check');
     this.updatePathSettings();
   }
 
