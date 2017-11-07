@@ -62,7 +62,7 @@ export class CalculationToolComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    // console.log('do check');
+    // console.log('calc-tool do-check');
     this.updatePathSettings();
   }
 

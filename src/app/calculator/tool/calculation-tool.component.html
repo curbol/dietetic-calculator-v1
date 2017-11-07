@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <mat-horizontal-stepper>
+  <mat-horizontal-stepper fxShow fxHide.gt-sm>
     <mat-step>
       <ng-template matStepLabel>
         <span fxHide fxShow.gt-xs>{{calculatorsTitle}}</span>
@@ -48,6 +48,7 @@
         <dc-chip fxHide fxShow.gt-xs [dense]="true">{{getActiveCalculators().length}}/{{calculators.length}}</dc-chip>
       </ng-template>
       <div class="dc-tool-panel-container" fxFlex="none" fxLayout="column" fxLayoutAlign="start center">
+        <div class="dc-spacer"></div>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{calculatorsTitle}}</h3>
         <dc-calculator-options
           [calculators]="calculators"
@@ -72,6 +73,7 @@
         </dc-chip>
       </ng-template>
       <div class="dc-tool-panel-container" fxLayout="column" fxLayoutAlign="start center">
+        <div class="dc-spacer"></div>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
         <div *ngIf="!getActiveCalculators().length">
           <dc-chip color="warn">{{noCalculatorsSelectedMessage}}</dc-chip>
@@ -103,6 +105,7 @@
         </dc-chip>
       </ng-template>
       <div class="dc-tool-panel-container" fxLayout="column" fxLayoutAlign="start center">
+        <div class="dc-spacer"></div>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{outputsTitle}}</h3>
         <div *ngIf="!getActiveCalculators().length">
           <dc-chip color="warn">{{noCalculatorsSelectedMessage}}</dc-chip>
@@ -126,108 +129,5 @@
       </div>
     </mat-step>
   </mat-horizontal-stepper>
-
-  <mat-tab-group #calcTabs class="dc-calc-tabs" color="accent" [dynamicHeight]="true" fxShow fxHide.gt-sm>
-    <mat-tab #calcsTab>
-      <ng-template mat-tab-label>
-        <span fxHide fxShow.gt-xs>{{calculatorsTitle}}</span>
-        <span fxShow fxHide.gt-xs>{{calculatorsShortTitle}}</span>
-        &nbsp;
-        <dc-chip [dense]="true">{{getActiveCalculators().length}}/{{calculators.length}}</dc-chip>
-      </ng-template>
-      <div class="dc-spacer"></div>
-      <div class="dc-tool-panel-container" fxFlex="none" fxLayout="column" fxLayoutAlign="start center">
-        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{calculatorsTitle}}</h3>
-        <dc-calculator-options
-          [calculators]="calculators"
-          (activeCalculatorsChanged)="onActiveCalculatorsChanged($event)">
-        </dc-calculator-options>
-        <div *ngIf="getActiveCalculators().length">
-          <div class="dc-spacer"></div>
-          <button mat-button (click)="calcTabs.selectedIndex = 1">
-            <span>{{inputsTitle}}</span>
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
-        </div>
-      </div>
-    </mat-tab>
-
-    <mat-tab #inputsTab>
-      <ng-template mat-tab-label>
-        <span fxHide fxShow.gt-xs>{{inputsTitle}}</span>
-        <span fxShow fxHide.gt-xs>{{inputsShortTitle}}</span>
-        &nbsp;
-        <dc-chip [dense]="true" [color]="allActiveDataFilled() ? '' : 'warn'">
-          {{getActiveFilledDataCount()}}/{{getActiveDataCount()}}
-        </dc-chip>
-      </ng-template>
-      <div class="dc-spacer"></div>
-      <div class="dc-tool-panel-container" fxLayout="column" fxLayoutAlign="start center">
-        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
-        <div *ngIf="!getActiveCalculators().length">
-          <dc-chip color="warn">{{noCalculatorsSelectedMessage}}</dc-chip>
-        </div>
-        <dc-calculator-inputs
-          [(system)]="system"
-          [inputs]="inputs"
-          [selections]="selections">
-        </dc-calculator-inputs>
-        <div *ngIf="!getActiveCalculators().length">
-          <div class="dc-spacer"></div>
-          <button mat-button (click)="calcTabs.selectedIndex = 0">
-            <mat-icon>arrow_back</mat-icon>
-            <span>{{calculatorsTitle}}</span>
-          </button>
-        </div>
-        <div *ngIf="getActiveCompletedResults().length">
-          <div class="dc-spacer"></div>
-          <button mat-button (click)="calcTabs.selectedIndex = 2">
-            <span>{{outputsTitle}}</span>
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
-        </div>
-      </div>
-    </mat-tab>
-
-    <mat-tab #outputsTab>
-      <ng-template mat-tab-label>
-        <span fxHide fxShow.gt-xs>{{outputsTitle}}</span>
-        <span fxShow fxHide.gt-xs>{{outputsShortTitle}}</span>
-        &nbsp;
-        <dc-chip [dense]="true" [color]="allActiveResultsCompleted() ? '' : 'warn'">
-          {{getActiveCompletedResults().length}}/{{getActiveCalculators().length}}
-        </dc-chip>
-      </ng-template>
-      <div class="dc-spacer"></div>
-      <div class="dc-tool-panel-container" fxLayout="column" fxLayoutAlign="start center">
-        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{outputsTitle}}</h3>
-        <div *ngIf="!getActiveCalculators().length">
-          <dc-chip color="warn">{{noCalculatorsSelectedMessage}}</dc-chip>
-          <div class="dc-spacer"></div>
-        </div>
-        <div *ngIf="notAllActiveDataFilled()">
-          <dc-chip color="warn">{{missingInputsMessage}}</dc-chip>
-          <div class="dc-spacer"></div>
-        </div>
-        <dc-calculator-outputs
-          [calculators]="calculators"
-          [inputs]="inputs"
-          [selections]="selections">
-        </dc-calculator-outputs>
-        <div *ngIf="!getActiveCalculators().length">
-          <button mat-button (click)="calcTabs.selectedIndex = 0">
-            <mat-icon>arrow_back</mat-icon>
-            <span>{{calculatorsTitle}}</span>
-          </button>
-        </div>
-        <div *ngIf="getActiveCalculators().length">
-          <button mat-button (click)="calcTabs.selectedIndex = 1">
-            <mat-icon>arrow_back</mat-icon>
-            <span>{{inputsTitle}}</span>
-          </button>
-        </div>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
 
 </div>

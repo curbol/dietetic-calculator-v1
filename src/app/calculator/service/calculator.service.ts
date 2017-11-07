@@ -161,7 +161,7 @@ export class CalculatorService {
 
   getResult = (calc: Calc.Calc) => (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
     const inputConversions: {[key: string]: number} = this.getInputConversions(calc.inputs)(inputs);
-    const selectedValues: {[key: string]: string} = this.getSelectedValues([Calc.Selection.Id.gender])(selections);
+    const selectedValues: {[key: string]: string} = this.getSelectedValues(calc.selectionIds)(selections);
 
     if (Object.values(inputConversions).some(a => a === null) ||
         Object.values(selectedValues).some(a => a === null)) { return null; }
