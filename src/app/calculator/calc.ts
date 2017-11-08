@@ -10,7 +10,7 @@ export module Calc {
     active: boolean;
     inputs: {id: Calc.Input.Id; targetSymbol: Unit.Symbol}[];
     selectionIds: Selection.Id[];
-    outputUnitText: string;
+    outputSymbolText: string;
   }
 
   export enum Id {

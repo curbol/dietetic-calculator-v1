@@ -19,7 +19,7 @@ export class WeightUnitsResolver implements Resolve<Unit.Unit[]> {
   constructor(private unitService: UnitService) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<Unit.Unit[]>|Promise<Unit.Unit[]>|Unit.Unit[] {
-    return this.unitService.getUnitsOfType(Unit.Type.weight);
+    return this.unitService.getUnitsOfType(Unit.Type.weight.id);
   }
 }
 
@@ -28,7 +28,7 @@ export class LengthUnitsResolver implements Resolve<Unit.Unit[]> {
   constructor(private unitService: UnitService) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<Unit.Unit[]>|Promise<Unit.Unit[]>|Unit.Unit[] {
-    return this.unitService.getUnitsOfType(Unit.Type.length);
+    return this.unitService.getUnitsOfType(Unit.Type.length.id);
   }
 }
 
@@ -37,6 +37,6 @@ export class TimeUnitsResolver implements Resolve<Unit.Unit[]> {
   constructor(private unitService: UnitService) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<Unit.Unit[]>|Promise<Unit.Unit[]>|Unit.Unit[] {
-    return this.unitService.getUnitsOfType(Unit.Type.time);
+    return this.unitService.getUnitsOfType(Unit.Type.time.id);
   }
 }

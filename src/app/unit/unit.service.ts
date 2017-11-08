@@ -125,7 +125,15 @@ export class UnitService {
 
   getAllUnits = () => new Promise<{[type: number]: Unit.Unit[]}>((resolve, reject) => resolve(this.units));
 
-  getUnitsOfType = (type: Unit.Type) => new Promise<Unit.Unit[]>((resolve, reject) => resolve(this.units[type.id]));
+  getUnitsOfType = (typeId: Unit.Type.Id) => new Promise<Unit.Unit[]>((resolve, reject) => resolve(this.units[typeId]));
 
-  getUnitGroup = (type: Unit.Type) => (symbols: Unit.Symbol[]) => this.getUnitsOfType(type).then(units => Unit.filterUnits(units)(symbols));
+  getUnitSet = (typeId: Unit.Type.Id) => (symbols: Unit.Symbol[]) =>
+    this.getUnitsOfType(typeId).then(units => Unit.filterUnits(units)(symbols))
+
+  getUnit = (symbol: Unit.Symbol): Promise<Unit.Unit> => {
+    return this.getAllUnits().then((allUnits: {[type: number]: Unit.Unit[]}) => {
+      const unit: Unit.Unit = Object.values<Unit.Unit[]>(allUnits).reduce((a, b) => [...a, ...b]).find(u => u.symbol === symbol);
+      return unit;
+    });
+  }
 }

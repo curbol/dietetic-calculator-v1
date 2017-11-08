@@ -1,9 +1,9 @@
 <div class="dc-input" fxLayout="column">
-  <mat-form-field class="dc-input-value" color="accent">
+  <mat-form-field fxFlex class="dc-input-value" color="accent">
     <input matInput required type="number"
            [placeholder]="input.name" [(ngModel)]="input.value" />
   </mat-form-field>
-  <mat-form-field class="dc-input-unit" color="accent">
+  <mat-form-field fxFlex class="dc-input-unit" color="accent">
     <mat-select (change)="onUnitChange($event.value)" [(ngModel)]="input.unit">
       <mat-option *ngFor="let unit of input.group" [value]="unit">
         {{unit?.name}} ({{getUnitString(unit?.symbol)}})

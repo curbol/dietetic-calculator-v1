@@ -8,7 +8,7 @@
   }
 }
 
-html, body, div, p, span, h1, h2, h3, h4, h5, h6 {
+html, body, header, footer, div, p, span, h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   font-size: 1em;
   margin: 0;
@@ -126,6 +126,10 @@ button.dc-small {
 
 .dc-spacer {
   height: 1rem;
+}
+
+.dc-half-spacer {
+  height: 0.5rem;
 }
 
 .dc-nowrap {

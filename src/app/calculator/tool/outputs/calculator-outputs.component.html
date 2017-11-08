@@ -4,8 +4,8 @@
     <div *ngIf="calc.active" [@appearOnActive]>
       <dc-result
         [title]="calc.title"
-        [value]="(getResult(calc) || 0) | number:'1.1-1'"
-        [units]="calc.outputUnitText">
+        [value]="getResult(calc)"
+        [unitText]="calc.outputSymbolText">
       </dc-result>
       <div class="dc-spacer"></div>
     </div>

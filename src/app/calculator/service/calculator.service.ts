@@ -45,7 +45,7 @@ export class CalculatorService {
         { id: Calc.Input.Id.weight, targetSymbol: Unit.Symbol.kg },
       ],
       selectionIds: [],
-      outputUnitText: 'kg/m²',
+      outputSymbolText: 'kg/m²',
     },
     {
       id: Calc.Id.mifflin,
@@ -59,7 +59,7 @@ export class CalculatorService {
         { id: Calc.Input.Id.age, targetSymbol: Unit.Symbol.y },
       ],
       selectionIds: [Calc.Selection.Id.gender],
-      outputUnitText: 'kcal',
+      outputSymbolText: 'kcal',
     },
     {
       id: Calc.Id.ibw,
@@ -71,7 +71,7 @@ export class CalculatorService {
         { id: Calc.Input.Id.height, targetSymbol: Unit.Symbol.in },
       ],
       selectionIds: [Calc.Selection.Id.gender],
-      outputUnitText: Unit.Symbol[Unit.Symbol.kg],
+      outputSymbolText: Unit.Symbol[Unit.Symbol.kg],
     },
     {
       id: Calc.Id.abw,
@@ -84,7 +84,7 @@ export class CalculatorService {
         { id: Calc.Input.Id.weight, targetSymbol: Unit.Symbol.kg },
       ],
       selectionIds: [Calc.Selection.Id.gender],
-      outputUnitText: Unit.Symbol[Unit.Symbol.kg],
+      outputSymbolText: Unit.Symbol[Unit.Symbol.kg],
     },
   ];
 

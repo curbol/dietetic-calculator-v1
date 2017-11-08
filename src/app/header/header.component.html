@@ -1,4 +1,4 @@
-<div class="dc-primary-background header-toolbar">
+<header class="dc-primary-background header-toolbar">
   <div *ngIf='isHome' id="dc-header" fxLayout="column" fxLayoutAlign="center center">
     <div id="main-text" [@slideInOnRouteChange]="title">
       <h1 id="main-title">Dietetic Calculator</h1>
@@ -12,5 +12,4 @@
       <h5 id="header-subtitle" *ngIf='subtitle'>{{subtitle}}</h5>
     </div>
   </div>
-</div>
-
+</header>
