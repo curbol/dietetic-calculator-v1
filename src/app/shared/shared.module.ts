@@ -5,8 +5,11 @@ import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from './material/material.module';
+
 import { ResultComponent } from './result/result.component';
 import { ChipComponent } from './chip/chip.component';
+import { InputComponent } from './input/input.component';
+
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { GroupByPipe } from './pipes/group-by.pipe';
 
@@ -24,15 +27,22 @@ import 'rxjs/add/operator/min';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/take';
 
+
 @NgModule({
   declarations: [
     ResultComponent,
     ChipComponent,
     CapitalizePipe,
     GroupByPipe,
+    InputComponent,
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    FlexLayoutModule,
+    RouterModule,
   ],
   exports: [
     CommonModule,
@@ -45,6 +55,7 @@ import 'rxjs/add/operator/take';
     ChipComponent,
     CapitalizePipe,
     GroupByPipe,
+    InputComponent,
   ]
 })
 export class SharedModule { }

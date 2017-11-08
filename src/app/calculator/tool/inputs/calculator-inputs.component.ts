@@ -35,7 +35,6 @@ export class CalculatorInputsComponent implements OnInit {
     this.setDefaultUnitSystem(this.system);
   }
 
-  getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
   getActiveDataCount = (): number => Calc.getAllActiveDataCount([this.inputs, this.selections]);
   getActiveFilledDataCount = (): number => Calc.getAllActiveFilledDataCount([this.inputs, this.selections]);
 
