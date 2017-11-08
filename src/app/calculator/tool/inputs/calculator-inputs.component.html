@@ -3,9 +3,9 @@
   <div class="dc-full-width">
     <div *ngIf="getActiveDataCount()" [@appearOnActive]
          fxLayout="column" fxLayoutAlign="start center">
-      <mat-radio-group [(ngModel)]="systemString" fxLayout fxLayoutGap="1rem"
-                      (change)="onSystemChange($event.value)"
-                      matTooltip="Unit System" matTooltipPosition="left" matTooltipShowDelay="500">
+      <mat-radio-group [(ngModel)]="systemString" (change)="onSystemChange($event.value)"
+                       matTooltip="Unit System" matTooltipPosition="left" matTooltipShowDelay="500"
+                       fxLayout fxLayoutGap="1rem">
         <mat-radio-button value="metric">Metric</mat-radio-button>
         <mat-radio-button value="imperial">Imperial</mat-radio-button>
         <mat-radio-button value="mixed" disabled>Mixed</mat-radio-button>

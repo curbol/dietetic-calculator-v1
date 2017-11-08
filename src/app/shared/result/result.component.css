@@ -1,11 +1,11 @@
 #dc-result {
   width: 100%;
-  min-width: 12rem;
+  min-width: 10rem;
 }
 
 #dc-result-title {
   text-align: left;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: normal;
   text-overflow: ellipsis;
 }

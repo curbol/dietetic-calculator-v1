@@ -13,19 +13,19 @@
         <mat-icon>loop</mat-icon>
         <span>Unit Converter</span>
       </button>
-      <button mat-button [routerLink]="['about']">
+      <button mat-button [routerLink]="['about']" fxHide fxShow.gt-sm>
         <mat-icon>info</mat-icon>
         <span>About</span>
       </button>
     </div>
 
-    <div fxShow fxHide.gt-xs>
+    <div fxHide fxShow.lt-md>
       <button mat-button class="dc-small" [matMenuTriggerFor]="dcmenu"
-              matTooltip="Menu" matTooltipPosition="left" matTooltipShowDelay="500">
+              matTooltip="Menu" matTooltipPosition="below" matTooltipShowDelay="500">
         <mat-icon>menu</mat-icon>
       </button>
       <mat-menu #dcmenu="matMenu">
-        <button mat-menu-item [routerLink]="['convert']">
+        <button mat-menu-item [routerLink]="['convert']" fxHide fxShow.lt-sm>
           <mat-icon>loop</mat-icon>
           <span>Unit Converter</span>
         </button>

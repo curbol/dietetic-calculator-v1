@@ -1,10 +1,10 @@
 <div fxLayout="column" fxLayoutAlign="start center">
-  <div fxLayout fxLayoutAlign="center start" fxLayoutGap="1rem">
-    <button mat-button class="dc-small" (click)="calcsList.selectAll()">
+  <div fxLayout>
+    <button mat-button (click)="calcsList.selectAll()">
       <mat-icon>check_box</mat-icon>
       <span>Select all</span>
     </button>
-    <button mat-button class="dc-small" (click)="calcsList.deselectAll()">
+    <button mat-button (click)="calcsList.deselectAll()">
       <mat-icon>check_box_outline_blank</mat-icon>
       <span>Deselect all</span>
     </button>
