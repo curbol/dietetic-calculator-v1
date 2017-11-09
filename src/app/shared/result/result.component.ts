@@ -17,7 +17,7 @@ export class ResultComponent implements OnInit {
   get value(): number { return this._value; }
   @Input() set value(value: number) {
     this._value = value;
-    this.convertValue(this.selectedUnit);
+    this.convertedValue = this.convertValue(this.selectedUnit) || value;
   }
 
   get defaultSymbol(): Unit.Symbol { return Unit.Symbol[this.unitText]; }
@@ -36,7 +36,9 @@ export class ResultComponent implements OnInit {
 
   constructor(private unitService: UnitService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.convertedValue = this.value;
+  }
 
   setDefaultValues = (symbol: Unit.Symbol): void => {
     if (symbol === null || symbol === undefined) { return; }
@@ -45,7 +47,7 @@ export class ResultComponent implements OnInit {
     .then((unit: Unit.Unit) => {
       this.defaultUnit = unit;
       this.selectedUnit = unit;
-      this.convertValue(this.selectedUnit);
+      this.convertedValue = this.convertValue(this.selectedUnit) || this.value;
       return this.unitService.getUnitsOfType(unit.type.id);
     }).then((unitsOfType: Unit.Unit[]) => {
       this.unitGroup = unitsOfType;
@@ -54,10 +56,10 @@ export class ResultComponent implements OnInit {
 
   getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
 
-  onUnitChange = (unit: Unit.Unit): void => this.convertValue(unit);
+  onUnitChange = (unit: Unit.Unit): number => this.convertedValue = this.convertValue(unit) || this.value;
 
-  convertValue = (unit: Unit.Unit): void => {
-    if (!this.selectedUnit || !unit) { return; }
-    this.convertedValue = Unit.conversion(this.defaultUnit.factor)(unit.factor)(this.value);
+  convertValue = (unit: Unit.Unit): number => {
+    if (!this.selectedUnit || !unit) { return null; }
+    return Unit.conversion(this.defaultUnit.factor)(unit.factor)(this.value);
   }
 }
