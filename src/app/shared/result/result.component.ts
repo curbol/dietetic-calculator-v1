@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 
 import { Unit } from '@app/unit/unit';
 import { UnitService } from '@app/unit/unit.service';
+import { Num } from '@app/shared/num';
 
 @Component({
   selector: 'dc-result',
@@ -16,7 +17,7 @@ export class ResultComponent implements OnInit {
   get value(): number { return this._value; }
   @Input() set value(value: number) {
     this._value = value;
-    this.convertedValue = value;
+    this.convertValue(this.selectedUnit);
   }
 
   get defaultSymbol(): Unit.Symbol { return Unit.Symbol[this.unitText]; }
@@ -26,6 +27,8 @@ export class ResultComponent implements OnInit {
     this._unitText = value;
     this.setDefaultValues(this.defaultSymbol);
   }
+
+  get showUnitOptions(): boolean { return this.selectedUnit && this.unitGroup.length > 1; }
 
   selectedUnit: Unit.Unit;
   defaultUnit: Unit.Unit;
@@ -42,6 +45,7 @@ export class ResultComponent implements OnInit {
     .then((unit: Unit.Unit) => {
       this.defaultUnit = unit;
       this.selectedUnit = unit;
+      this.convertValue(this.selectedUnit);
       return this.unitService.getUnitsOfType(unit.type.id);
     }).then((unitsOfType: Unit.Unit[]) => {
       this.unitGroup = unitsOfType;
@@ -50,9 +54,9 @@ export class ResultComponent implements OnInit {
 
   getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
 
-  onUnitChange = (unit: Unit.Unit): void => this.updateUnits(unit);
+  onUnitChange = (unit: Unit.Unit): void => this.convertValue(unit);
 
-  updateUnits = (unit: Unit.Unit): void => {
+  convertValue = (unit: Unit.Unit): void => {
     if (!this.selectedUnit || !unit) { return; }
     this.convertedValue = Unit.conversion(this.defaultUnit.factor)(unit.factor)(this.value);
   }

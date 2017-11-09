@@ -1,17 +1,12 @@
-<!-- <div fxLayout="row" fxLayoutAlign="center start">
-  <div id="dc-result">
-    <div id="dc-result-title" *ngIf="title">{{title}}</div>
-    <div id="dc-result-value" [ngClass]="{'dc-default-text': value != 0.0}">{{value}}</div>
-    <div id="dc-result-underline"></div>
-    <div id="dc-result-units" *ngIf="units">{{units}}</div>
-  </div>
-</div> -->
-
-<div class="dc-input" fxLayout="column">
-  <mat-form-field fxFlex class="dc-input-value" color="accent">
-    <input readonly matInput type="number" [placeholder]="title" [(ngModel)]="convertedValue"/>
+<div fxLayout="column">
+  <mat-form-field fxFlex [ngClass]="{'dc-input-value': showUnitOptions}" color="accent">
+    <input readonly matInput [placeholder]="title" [ngModel]="convertedValue | number:'1.1-1'"/>
+    <mat-hint align="start" *ngIf="!showUnitOptions">
+      <span *ngIf="selectedUnit">{{selectedUnit?.name}} ({{getUnitString(selectedUnit?.symbol)}})</span>
+      <span *ngIf="!selectedUnit">{{unitText}}</span>
+    </mat-hint>
   </mat-form-field>
-  <mat-form-field fxFlex class="dc-input-unit" color="accent">
+  <mat-form-field fxFlex class="dc-input-unit" color="accent" *ngIf="showUnitOptions">
     <mat-select (change)="onUnitChange($event.value)" [(ngModel)]="selectedUnit">
       <mat-option *ngFor="let unit of unitGroup" [value]="unit">
         {{unit?.name}} ({{getUnitString(unit?.symbol)}})

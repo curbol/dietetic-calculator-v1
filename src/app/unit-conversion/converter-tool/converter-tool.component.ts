@@ -15,42 +15,42 @@ export class ConverterToolComponent implements OnInit {
   selectedTypeId: Unit.Type.Id;
   unitTypeIds: Unit.Type.Id[];
   allUnits: {[type: number]: Unit.Unit[]};
-  sourceUnit: Unit.Unit;
-  targetUnit: Unit.Unit;
-
-  _sourceValue: number;
-  get sourceValue(): number {
-    return this._sourceValue;
-  }
-  set sourceValue(value: number) {
-    this._sourceValue = Num.round(value, 5) || 0;
-    this.updateTargetValue();
-  }
-
-  _targetValue: number;
-  get targetValue(): number {
-    return this._targetValue;
-  }
-  set targetValue(value: number) {
-    this._targetValue = Num.round(value, 5) || 0;
-    this.updateSourceValue();
-  }
+  sourceInput: Calc.Input;
+  targetInput: Calc.Input;
 
   constructor(private activatedRoute: ActivatedRoute) {
+    this.sourceInput = {
+      name: 'Value',
+      id: null,
+      group: null,
+      unit: null,
+      active: true,
+      value: null,
+    };
+    this.targetInput = {
+      name: 'Value',
+      id: null,
+      group: null,
+      unit: null,
+      active: true,
+      value: null,
+    };
+
     this.allUnits = activatedRoute.snapshot.data['allUnits'];
     this.unitTypeIds = Enum.getValues(Unit.Type.Id);
     this.selectedTypeId = this.unitTypeIds[0];
-    this._sourceValue = 0;
-    this._targetValue = 0;
-
-    this.setDefaultUnits(this.allUnits[this.selectedTypeId]);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.setUnitGroup(this.allUnits[this.selectedTypeId]);
+  }
 
-  onTypeChange = () => this.setDefaultUnits(this.allUnits[this.selectedTypeId]);
+  onTypeChange = () => this.setUnitGroup(this.allUnits[this.selectedTypeId]);
 
-  onUnitChange = () => this.updateTargetValue();
+  onUnitChange = () => {
+    this.updateTargetValue();
+    this.updateInputNames();
+  }
 
   getConversion = (sourceUnit: Unit.Unit) => (targetUnit: Unit.Unit) => (sourceValue: number) => {
     if (!sourceUnit || !targetUnit || !sourceValue) { return; }
@@ -60,18 +60,28 @@ export class ConverterToolComponent implements OnInit {
   getTypeString = (typeId: Unit.Type.Id): string => Unit.Type.Id[typeId];
   getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
 
-  private setDefaultUnits = (unitGroup: Unit.Unit[]) => {
-    this.sourceUnit = unitGroup[0];
-    this.targetUnit = unitGroup[1];
+  updateSourceValue = () => {
+    const conversion: number = this.getConversion(this.targetInput.unit)(this.sourceInput.unit)(this.targetInput.value);
+    this.sourceInput.value = Num.round(conversion, 5);
   }
 
-  private updateSourceValue = () => {
-    const conversion: number = this.getConversion(this.targetUnit)(this.sourceUnit)(this.targetValue);
-    this._sourceValue = Num.round(conversion, 5) || 0;
+  updateTargetValue = () => {
+    const conversion: number = this.getConversion(this.sourceInput.unit)(this.targetInput.unit)(this.sourceInput.value);
+    this.targetInput.value = Num.round(conversion, 5);
   }
 
-  private updateTargetValue = () => {
-    const conversion: number = this.getConversion(this.sourceUnit)(this.targetUnit)(this.sourceValue);
-    this._targetValue = Num.round(conversion, 5) || 0;
+  updateInputNames = () => {
+    this.sourceInput.name = `${this.sourceInput.unit.name} Value`;
+    this.targetInput.name = `${this.targetInput.unit.name} Value`;
+  }
+
+  private setUnitGroup = (unitGroup: Unit.Unit[]) => {
+    this.sourceInput.group = unitGroup;
+    this.sourceInput.unit = unitGroup[0];
+
+    this.targetInput.group = unitGroup;
+    this.targetInput.unit = unitGroup[1];
+
+    this.updateInputNames();
   }
 }

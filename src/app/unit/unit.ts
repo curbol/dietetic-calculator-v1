@@ -14,6 +14,8 @@ export module Unit {
     in, ft, yd, cm, m,
     /* Time */
     s, min, hr, d, mo, y,
+    /* Energy */
+    kcal,
   }
 
   export interface Type {
@@ -23,7 +25,7 @@ export module Unit {
 
   export module Type {
     export enum Id {
-      weight, length, time
+      weight, length, time, energy
     }
 
     export const weight: Type = {
@@ -39,6 +41,11 @@ export module Unit {
     export const time: Type = {
       id: Id.time,
       baseSymbol: Symbol.s,
+    };
+
+    export const energy: Type = {
+      id: Id.energy,
+      baseSymbol: Symbol.kcal,
     };
   }
 

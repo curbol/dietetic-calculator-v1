@@ -102,23 +102,28 @@ export class CalculationToolComponent implements OnInit, DoCheck {
 
   private updateFromSettings = (settingsString): void => {
     if (!settingsString) { return; }
-
     const dataSettings = Calc.fromPath(settingsString);
     if (!dataSettings) { return; }
 
-    dataSettings.calcs.map(id => this.calculators.find(c => c.id === id)).forEach(c => c.active = true);
+    if (dataSettings.calcs) {
+      dataSettings.calcs.map(id => this.calculators.find(c => c.id === id)).forEach(c => c.active = true);
+    }
 
-    dataSettings.selections.forEach(data => {
-      const selection = this.selections.find(s => s.id === data.id);
-      if (!selection) { return; }
-      selection.value = selection.group.find(o => o.id === data.valueId);
-    });
+    if (dataSettings.selections) {
+      dataSettings.selections.forEach(data => {
+        const selection = this.selections.find(s => s.id === data.id);
+        if (!selection) { return; }
+        selection.value = selection.group.find(o => o.id === data.valueId);
+      });
+    }
 
-    dataSettings.inputs.forEach(data => {
-      const input = this.inputs.find(i => i.id === data.id);
-      if (!input) { return; }
-      input.value = data.value;
-      input.unit = input.group.find(u => u.symbol === data.symbol);
-    });
+    if (dataSettings.inputs) {
+      dataSettings.inputs.forEach(data => {
+        const input = this.inputs.find(i => i.id === data.id);
+        if (!input) { return; }
+        input.value = data.value;
+        input.unit = input.group.find(u => u.symbol === data.symbol);
+      });
+    }
   }
 }

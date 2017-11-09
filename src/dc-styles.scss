@@ -1,0 +1,48 @@
+button.dc-small {
+  min-width: 1rem;
+  padding: 0 0.5em;
+}
+
+.dc-bottom-shadow {
+  -webkit-box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  -moz-box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  position: relative;
+}
+
+.dc-full-shadow {
+  box-shadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
+}
+
+.dc-text-content {
+  max-width: 40rem;
+}
+
+.dc-full-width {
+  width: 100%;
+}
+
+.dc-list-option-title {
+  font-size: 1rem !important;
+}
+
+.dc-list-option-subtitle {
+  font-size: 0.9rem !important;
+}
+
+.dc-center-text {
+  text-align: center;
+}
+
+.dc-spacer {
+  height: 1rem;
+}
+
+.dc-half-spacer {
+  height: 0.5rem;
+}
+
+.dc-nowrap {
+  white-space: nowrap;
+  overflow: hidden;
+}

@@ -119,6 +119,15 @@ export class UnitService {
         factor: 31556952,
       },
     ],
+    [Unit.Type.Id.energy]: [
+      {
+        name: 'Calories',
+        type: Unit.Type.energy,
+        symbol: Unit.Symbol.kcal,
+        system: null,
+        factor: 1,
+      },
+    ],
   };
 
   constructor() {}

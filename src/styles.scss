@@ -2,6 +2,8 @@
 @include mat-core();
 
 @import './base-styles.scss';
+@import './dc-styles.scss';
+@import './override-mat-styles.scss';
 
 @import './themes/dietetic-theme.scss';
 @import './base-styles.theme.scss';
