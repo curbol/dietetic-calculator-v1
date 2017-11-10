@@ -80,7 +80,7 @@ export class ConverterToolComponent implements OnInit {
     this.sourceInput.unit = unitGroup[0];
 
     this.targetInput.group = unitGroup;
-    this.targetInput.unit = unitGroup[1];
+    this.targetInput.unit = unitGroup[1] || unitGroup[0];
 
     this.updateInputNames();
   }

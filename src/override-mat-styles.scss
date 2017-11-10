@@ -6,19 +6,13 @@
   padding: 0 !important;
 }
 
-.dc-input-value {
+.dc-input-value, .dc-input-unit {
   .mat-form-field-wrapper {
     padding-bottom: 0 !important;
   }
 
   .mat-form-field-underline {
     bottom: 0 !important;
-  }
-
-  .mat-form-field-subscript-wrapper {
-    visibility: collapse !important;
-    padding: 0 !important;
-    margin: 0 !important;
   }
 }
 
@@ -28,12 +22,6 @@
   }
 
   .mat-input-placeholder {
-    visibility: collapse !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  .mat-form-field-subscript-wrapper {
     visibility: collapse !important;
     padding: 0 !important;
     margin: 0 !important;

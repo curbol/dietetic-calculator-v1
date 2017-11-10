@@ -20,27 +20,36 @@
           </button>
         </div>
       </div>
-      <div class="dc-half-spacer"></div>
     </div>
   </div>
 
-  <div *ngFor="let selection of selections" class="dc-full-width">
-    <div *ngIf="selection.active" [@appearOnActive] fxLayout="column">
-      <div class="dc-half-spacer"></div>
-      <mat-form-field fxFlex color="accent">
-        <mat-select required [placeholder]="selection.name | capitalize" [(ngModel)]="selection.value">
-          <mat-option *ngFor="let option of selection.group" [value]="option">
-            {{option?.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+  <div class="dc-spacer"></div>
+
+  <div class="dc-full-width">
+    <div fxLayout="column" fxLayoutGap="1rem">
+      <div *ngFor="let selection of selections">
+        <div *ngIf="selection.active" [@appearOnActive] fxLayout="column">
+          <mat-form-field fxFlex color="accent">
+            <mat-select required [placeholder]="selection.name | capitalize" [(ngModel)]="selection.value">
+              <mat-option *ngFor="let option of selection.group" [value]="option">
+                {{option?.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div *ngFor="let input of inputs" class="dc-full-width">
-    <div *ngIf="input.active" [@appearOnActive] fxLayout="column">
-      <div class="dc-half-spacer"></div>
-      <dc-input fxFlex [input]="input" (unitChange)="onUnitChange()"></dc-input>
+  <div class="dc-spacer"></div>
+
+  <div class="dc-full-width">
+    <div fxLayout="column" fxLayoutGap="2rem">
+      <div fxFlex *ngFor="let input of inputs">
+        <div *ngIf="input.active" [@appearOnActive] fxLayout="column">
+          <dc-input fxFlex [input]="input" (unitChange)="onUnitChange()"></dc-input>
+        </div>
+      </div>
     </div>
   </div>
 
