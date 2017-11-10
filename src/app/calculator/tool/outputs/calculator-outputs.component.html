@@ -1,11 +1,34 @@
-<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="2rem">
-  <div *ngFor="let calc of calculators" class="dc-full-width">
-    <div *ngIf="calc.active" [@appearOnActive]>
-      <dc-result
-        [title]="calc.title"
-        [value]="getResult(calc)"
-        [unitText]="calc.outputSymbolText">
-      </dc-result>
+<div fxLayout="column" fxLayoutAlign="start center">
+
+  <div class="dc-full-width">
+    <div *ngIf="true" [@appearOnActive]
+         fxLayout="column" fxLayoutAlign="start center">
+      <mat-radio-group [(ngModel)]="systemString" (change)="onSystemChange($event.value)"
+                      matTooltip="Unit System" matTooltipPosition="left" matTooltipShowDelay="500"
+                      fxLayout fxLayoutGap="1rem">
+        <mat-radio-button value="metric">Metric</mat-radio-button>
+        <mat-radio-button value="imperial">Imperial</mat-radio-button>
+        <mat-radio-button value="mixed" disabled>Mixed</mat-radio-button>
+      </mat-radio-group>
     </div>
   </div>
+
+  <div class="dc-spacer"></div>
+
+  <div class="dc-full-width">
+    <div fxLayout="column" fxLayoutGap="2rem">
+      <div *ngFor="let calc of calculators">
+        <div *ngIf="calc.active" [@appearOnActive]>
+          <dc-result
+            [title]="calc.title"
+            [value]="getResult(calc)"
+            [symbolText]="calc.output.symbolText"
+            [symbol]="calc.output.symbol"
+            [(convertSymbol)]="calc.output.convertSymbol">
+          </dc-result>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

@@ -106,7 +106,14 @@ export class CalculationToolComponent implements OnInit, DoCheck {
     if (!dataSettings) { return; }
 
     if (dataSettings.calcs) {
-      dataSettings.calcs.map(id => this.calculators.find(c => c.id === id)).forEach(c => c.active = true);
+      dataSettings.calcs.forEach(data => {
+        const calc = this.calculators.find(s => s.id === data.id);
+        if (!calc) { return; }
+        calc.active = true;
+        if (data.outputSymbol !== null && data.outputSymbol !== undefined) {
+          calc.output.convertSymbol = data.outputSymbol;
+        }
+      });
     }
 
     if (dataSettings.selections) {
@@ -122,7 +129,7 @@ export class CalculationToolComponent implements OnInit, DoCheck {
         const input = this.inputs.find(i => i.id === data.id);
         if (!input) { return; }
         input.value = data.value;
-        input.unit = input.group.find(u => u.symbol === data.symbol);
+        input.unit = input.group.find(u => u.symbol === data.symbol) || input.group[0];
       });
     }
   }

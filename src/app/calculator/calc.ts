@@ -3,14 +3,14 @@ import { Unit } from '../unit/unit';
 
 export module Calc {
   export interface Calc {
-    id: Calc.Id;
-    title: string;
-    subTitle: string;
-    group: Group;
+    readonly id: Calc.Id;
+    readonly title: string;
+    readonly subTitle: string;
+    readonly group: Group;
+    readonly inputs: {id: Calc.Input.Id; targetSymbol: Unit.Symbol}[];
+    readonly selectionIds: Selection.Id[];
+    readonly output: Output;
     active: boolean;
-    inputs: {id: Calc.Input.Id; targetSymbol: Unit.Symbol}[];
-    selectionIds: Selection.Id[];
-    outputSymbolText: string;
   }
 
   export enum Id {
@@ -22,15 +22,15 @@ export module Calc {
   }
 
   export interface Data {
-    name: string;
+    readonly name: string;
     active: boolean;
     value: number;
   }
 
   export interface Input {
-    name: string;
-    id: Input.Id;
-    group: Unit.Unit[];
+    readonly name: string;
+    readonly id: Input.Id;
+    readonly group: Unit.Unit[];
     unit: Unit.Unit;
     active: boolean;
     value: number;
@@ -42,18 +42,18 @@ export module Calc {
     }
 
     export interface Settings {
-      name: string;
-      id: Id;
-      typeId: Unit.Type.Id;
-      symbolsFilter: Unit.Symbol[];
-      defaultSymbol: Unit.Symbol;
+      readonly name: string;
+      readonly id: Id;
+      readonly typeId: Unit.Type.Id;
+      readonly symbolsFilter: Unit.Symbol[];
+      readonly defaultSymbol: Unit.Symbol;
     }
   }
 
   export interface Selection {
-    id: Selection.Id;
-    name: string;
-    group: Option.Option[];
+    readonly id: Selection.Id;
+    readonly name: string;
+    readonly group: Option.Option[];
     value: Option.Option;
     active: boolean;
   }
@@ -65,8 +65,9 @@ export module Calc {
   }
 
   export interface Output {
-    unitText: string;
-    result: (inputs: Calc.Input[]) => (selections: Calc.Selection[]) => number;
+    readonly symbolText: string;
+    readonly symbol: Unit.Symbol;
+    convertSymbol: Unit.Symbol;
   }
 
   export const inputReadyToCalculate = (input: Calc.Input): boolean => (input != null && input.value != null);
@@ -91,6 +92,7 @@ export module Calc {
 
   export const inputConversion = (input: Calc.Input) => (targetSymbol: Unit.Symbol) => {
     const targetUnit = input.group.find(u => u.symbol === targetSymbol);
+    if (!input || !input.unit || !targetUnit) { return null; }
     return Unit.conversion(input.unit.factor)(targetUnit.factor)(input.value);
   };
 
@@ -107,7 +109,7 @@ export module Calc {
 
     const activeCalculators: Calc[] = calcs.filter(c => c.active);
     if (activeCalculators.length) {
-      const calcsStub = `c-${activeCalculators.map(c => Calc.Id[c.id]).join('-')}`;
+      const calcsStub = activeCalculators.map(c => `c-${Calc.Id[c.id]}-${Unit.Symbol[c.output.convertSymbol] || ''}`).join(',');
       stubs.push(calcsStub);
     }
 
@@ -117,16 +119,18 @@ export module Calc {
       stubs.push(selectionsStub);
     }
 
-    const activeFilledSelections: Input[] = inputs.filter(i => i.active && i.value);
-    if (activeFilledSelections.length) {
-      const inputsStub = activeFilledSelections.map(i => `i-${Calc.Input.Id[i.id]}-${i.value}-${Unit.Symbol[i.unit.symbol]}`).join(',');
+    const activeFilledInputs: Input[] = inputs.filter(i => i.active && i.value);
+    if (activeFilledInputs.length) {
+      const inputsStub = activeFilledInputs.map(i => `i-${Calc.Input.Id[i.id]}-${i.value}-${Unit.Symbol[i.unit.symbol]}`).join(',');
       stubs.push(inputsStub);
     }
 
     return stubs.join(',');
   };
 
-  const calcFromParts = (parts: string[]): Id[] => parts.map(p => Id[p]);
+  const calcFromParts = (parts: string[]): {id: Id, outputSymbol: Unit.Symbol} => {
+    return {id: Id[parts[0]], outputSymbol: Unit.Symbol[parts[1]]};
+  };
 
   const selectionFromParts = (parts: string[]): {id: Selection.Id, valueId: Option.Id} => {
     return {id: Selection.Id[parts[0]], valueId: Option.Id[parts[1]]};
@@ -136,11 +140,14 @@ export module Calc {
     return {id: Input.Id[parts[0]], value: +parts[1], symbol: Unit.Symbol[parts[2]]};
   };
 
-  export const fromPath = (path: string):
-  {calcs: Id[], selections: {id: Selection.Id, valueId: Option.Id}[], inputs: {id: Input.Id, value: number, symbol: Unit.Symbol}[]} => {
+  export const fromPath = (path: string): {
+    calcs: {id: Id, outputSymbol: Unit.Symbol}[],
+    selections: {id: Selection.Id, valueId: Option.Id}[],
+    inputs: {id: Input.Id, value: number, symbol: Unit.Symbol}[]
+  } => {
     if (!path) { return; }
 
-    let calcs: Id[];
+    const calcs: {id: Id, outputSymbol: Unit.Symbol}[] = [];
     const selections: {id: Selection.Id, valueId: Option.Id}[] = [];
     const inputs: {id: Input.Id, value: number, symbol: Unit.Symbol}[] = [];
 
@@ -152,7 +159,7 @@ export module Calc {
       const partsType: string = parts[0];
       const partsData: string[] = parts.slice(1);
       if (partsType === 'c') {
-        calcs = calcFromParts(partsData);
+        calcs.push(calcFromParts(partsData));
       } else if (partsType === 'o') {
         selections.push(selectionFromParts(partsData));
       } else if (partsType === 'i') {

@@ -3,7 +3,7 @@
     <input readonly matInput [placeholder]="title" [ngModel]="convertedValue | number:'1.1-1'"/>
     <mat-hint align="start" *ngIf="!showUnitOptions">
       <span *ngIf="selectedUnit">{{selectedUnit?.name}} ({{getUnitString(selectedUnit?.symbol)}})</span>
-      <span *ngIf="!selectedUnit">{{unitText}}</span>
+      <span *ngIf="!selectedUnit">{{symbolText}}</span>
     </mat-hint>
   </mat-form-field>
   <mat-form-field fxFlex class="dc-input-unit" color="accent" *ngIf="showUnitOptions">

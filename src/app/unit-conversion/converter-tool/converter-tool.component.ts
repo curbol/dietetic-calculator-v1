@@ -52,6 +52,16 @@ export class ConverterToolComponent implements OnInit {
     this.updateInputNames();
   }
 
+  updateTargetValue = () => {
+    const conversion: number = this.getConversion(this.sourceInput.unit)(this.targetInput.unit)(this.sourceInput.value);
+    this.targetInput.value = Num.round(conversion, 5);
+  }
+
+  updateSourceValue = () => {
+    const conversion: number = this.getConversion(this.targetInput.unit)(this.sourceInput.unit)(this.targetInput.value);
+    this.sourceInput.value = Num.round(conversion, 5);
+  }
+
   getConversion = (sourceUnit: Unit.Unit) => (targetUnit: Unit.Unit) => (sourceValue: number) => {
     if (!sourceUnit || !targetUnit || !sourceValue) { return; }
     return Unit.conversion(sourceUnit.factor)(targetUnit.factor)(sourceValue);
@@ -60,27 +70,17 @@ export class ConverterToolComponent implements OnInit {
   getTypeString = (typeId: Unit.Type.Id): string => Unit.Type.Id[typeId];
   getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
 
-  updateSourceValue = () => {
-    const conversion: number = this.getConversion(this.targetInput.unit)(this.sourceInput.unit)(this.targetInput.value);
-    this.sourceInput.value = Num.round(conversion, 5);
-  }
-
-  updateTargetValue = () => {
-    const conversion: number = this.getConversion(this.sourceInput.unit)(this.targetInput.unit)(this.sourceInput.value);
-    this.targetInput.value = Num.round(conversion, 5);
-  }
-
   updateInputNames = () => {
-    this.sourceInput.name = `${this.sourceInput.unit.name} Value`;
-    this.targetInput.name = `${this.targetInput.unit.name} Value`;
+    this.sourceInput = Object.assign({}, this.sourceInput, {name: `${this.sourceInput.unit.name} Value`});
+    this.targetInput = Object.assign({}, this.targetInput, {name: `${this.targetInput.unit.name} Value`});
   }
 
   private setUnitGroup = (unitGroup: Unit.Unit[]) => {
-    this.sourceInput.group = unitGroup;
-    this.sourceInput.unit = unitGroup[0];
+    const firstUnit = unitGroup  && unitGroup.length > 0 ? unitGroup[0] : null;
+    const secondUnit = unitGroup && unitGroup.length > 1 ? unitGroup[1] : null;
 
-    this.targetInput.group = unitGroup;
-    this.targetInput.unit = unitGroup[1] || unitGroup[0];
+    this.sourceInput = Object.assign({}, this.sourceInput, {group: unitGroup, unit: firstUnit});
+    this.targetInput = Object.assign({}, this.targetInput, {group: unitGroup, unit: secondUnit});
 
     this.updateInputNames();
   }
