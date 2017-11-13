@@ -7,6 +7,7 @@ import { CalculatorsResolver, InputsResolver, SelectionsResolver } from './servi
 import { CalculatorOptionsComponent } from './tool/calculators/calculator-options.component';
 import { CalculatorInputsComponent } from './tool/inputs/calculator-inputs.component';
 import { CalculatorOutputsComponent } from './tool/outputs/calculator-outputs.component';
+import { SystemSelectorComponent } from './tool/system-selector/system-selector.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { CalculatorOutputsComponent } from './tool/outputs/calculator-outputs.co
     CalculatorOptionsComponent,
     CalculatorInputsComponent,
     CalculatorOutputsComponent,
+    SystemSelectorComponent,
   ],
   providers: [
     CalculatorService,
