@@ -18,7 +18,8 @@
             [value]="getResult(calc)"
             [symbolText]="calc.output.symbolText"
             [symbol]="calc.output.symbol"
-            [(convertSymbol)]="calc.output.convertSymbol">
+            [(convertSymbol)]="calc.output.convertSymbol"
+            (convertSymbolChange)="updateSystem(calculators)">
           </dc-result>
         </div>
       </div>

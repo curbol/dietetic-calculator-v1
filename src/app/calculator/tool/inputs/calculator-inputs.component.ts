@@ -35,15 +35,15 @@ export class CalculatorInputsComponent implements OnInit {
 
   ngOnInit() {}
 
-  onUnitChange = (): void => this.updateSystem();
+  onUnitChange = () => this.system = this.updatedSystem(this.inputs);
   onSelectionChange = (selection: Calc.Selection, optionId: number) => selection.value = selection.group.find(o => o.id === optionId);
 
   getActiveDataCount = (): number => Calc.getAllActiveDataCount([this.inputs, this.selections]);
   getActiveFilledDataCount = (): number => Calc.getAllActiveFilledDataCount([this.inputs, this.selections]);
 
   clearDataValues = (): void => {
-    this.inputs.forEach(i => i.value = null);
-    this.selections.forEach(s => s.value = null);
+    this.inputs.filter(i => i).forEach(i => i.value = null);
+    this.selections.filter(s => s).forEach(s => s.value = null);
   }
 
   private setDefaultUnitSystem = (inputs: Calc.Input[], system: Unit.System): void => {
@@ -55,9 +55,8 @@ export class CalculatorInputsComponent implements OnInit {
     });
   }
 
-  private updateSystem = (): void => {
-    if (!this.inputs) { return; }
-    const commonSystem: Unit.System = Unit.commonSystem(this.inputs.map(i => i.unit));
-    this.system = commonSystem != null ? commonSystem : Unit.System.mixed;
+  private updatedSystem = (inputs: Calc.Input[]): Unit.System => {
+    if (!inputs) { return null; }
+    return Unit.commonSystem(inputs.map(i => i.unit));
   }
 }

@@ -30,6 +30,7 @@ export class ResultComponent implements OnInit {
   @Input() set convertSymbol(value: Unit.Symbol) {
     this._convertSymbol = value;
     this.convertSymbolChange.emit(value);
+    this.selectedUnit = this.getUpdatedSelectedUnit(value);
   }
   @Output() convertSymbolChange: EventEmitter<Unit.Symbol> = new EventEmitter<Unit.Symbol>();
 
@@ -44,6 +45,17 @@ export class ResultComponent implements OnInit {
 
   ngOnInit() {
     this.setDefaultValues(this.symbol);
+  }
+
+  getUpdatedSelectedUnit = (symbol: Unit.Symbol): Unit.Unit => {
+    if (symbol === null || symbol === undefined) { return; }
+
+    this.unitService.getUnit(symbol)
+    .then((unit: Unit.Unit) => {
+      return this.unitService.getUnitsOfType(unit.type.id);
+    }).then((unitsOfType: Unit.Unit[]) => {
+      this.selectedUnit = unitsOfType.find(u => u.symbol === symbol) || this.defaultUnit;
+    });
   }
 
   setDefaultValues = (symbol: Unit.Symbol): void => {

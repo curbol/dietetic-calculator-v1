@@ -132,17 +132,31 @@ export class UnitService {
 
   constructor() {}
 
-  getAllUnits = () => new Promise<{[type: number]: Unit.Unit[]}>((resolve, reject) => resolve(this.units));
+  getAllUnits = (): Promise<{ [type: number]: Unit.Unit[]; }> =>
+    new Promise<{[type: number]: Unit.Unit[]}>((resolve, reject) => resolve(this.units))
 
-  getUnitsOfType = (typeId: Unit.Type.Id) => new Promise<Unit.Unit[]>((resolve, reject) => resolve(this.units[typeId]));
+  getUnitsOfType = (typeId: Unit.Type.Id): Promise<Unit.Unit[]> =>
+    new Promise<Unit.Unit[]>((resolve, reject) => resolve(this.units[typeId]))
 
-  getUnitSet = (typeId: Unit.Type.Id) => (symbols: Unit.Symbol[]) =>
+  getUnitSet = (typeId: Unit.Type.Id) => (symbols: Unit.Symbol[]): Promise<Unit.Unit[]> =>
     this.getUnitsOfType(typeId).then(units => Unit.filterUnits(units)(symbols))
 
   getUnit = (symbol: Unit.Symbol): Promise<Unit.Unit> => {
     return this.getAllUnits().then((allUnits: {[type: number]: Unit.Unit[]}) => {
       const unit: Unit.Unit = Object.values<Unit.Unit[]>(allUnits).reduce((a, b) => [...a, ...b]).find(u => u.symbol === symbol);
       return unit;
+    });
+  }
+
+  getUnits = (symbols: Unit.Symbol[]): Promise<Unit.Unit[]> => {
+    return this.getAllUnits().then((allUnits: {[type: number]: Unit.Unit[]}) => {
+      const units: Unit.Unit[] = Object.values<Unit.Unit[]>(allUnits)
+        .reduce((a, b) => [...a, ...b])
+        .filter(u => {
+          const symbol = symbols.find(s => s === u.symbol);
+          return symbol !== null && symbol !== undefined;
+        });
+      return units;
     });
   }
 }

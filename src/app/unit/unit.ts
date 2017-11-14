@@ -61,7 +61,7 @@ export module Unit {
   export const conversion = (sourceFactor: number) => (targetFactor: number) => (sourceValue: number): number =>
     sourceValue * sourceFactor / targetFactor;
 
-  export const commonSystem = (units: Unit.Unit[]) => {
+  export const commonSystem = (units: Unit.Unit[]): Unit.System => {
     if (!units || units.length <= 0) {
       return null;
     }
@@ -70,6 +70,6 @@ export module Unit {
     const distinctSystems = systems.filter((v, i, a) => a.indexOf(v) === i);
     const allSame: boolean = distinctSystems.length === 1;
 
-    return allSame ? distinctSystems[0] : null;
+    return allSame ? distinctSystems[0] : Unit.System.mixed;
   };
 }
