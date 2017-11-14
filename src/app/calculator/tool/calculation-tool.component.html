@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <mat-horizontal-stepper fxShow fxHide.gt-sm>
+  <mat-horizontal-stepper fxHide fxShow.lt-md>
     <mat-step [completed]="false">
       <ng-template matStepLabel>
         <span fxHide fxShow.gt-xs>{{calculatorsTitle}}</span>
