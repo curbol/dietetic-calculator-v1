@@ -22,8 +22,4 @@ export class SystemSelectorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {}
-
-  log(test: any) {
-    console.log(test);
-  }
 }

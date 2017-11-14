@@ -1,13 +1,7 @@
-<!-- <mat-radio-group [(ngModel)]="systemString"
-                 matTooltip="Unit System" matTooltipPosition="left" matTooltipShowDelay="500"
-                 fxLayout fxLayoutGap="1rem">
-  <mat-radio-button value="metric">Metric</mat-radio-button>
-  <mat-radio-button value="imperial">Imperial</mat-radio-button>
-  <mat-radio-button value="mixed" disabled>Mixed</mat-radio-button>
-</mat-radio-group> -->
-<mat-chip-list (change)="log($event)"
-               matTooltip="Unit System" matTooltipPosition="below" matTooltipShowDelay="500">
-  <mat-chip class="pointer" color="accent" (selectionChange)="log($event)" [selectable]="true" [selected]="systemString === 'metric'">Metric</mat-chip>
-  <mat-chip class="pointer" color="accent" (selectionChange)="log($event)" [selectable]="true" [selected]="systemString === 'imperial'">Imperial</mat-chip>
-  <mat-chip class="pointer" color="accent" (selectionChange)="log($event)" [selectable]="true" [selected]="systemString === 'mixed'">Mixed</mat-chip>
-</mat-chip-list>
+<mat-form-field color="accent">
+  <mat-select placeholder="Unit System" [(ngModel)]="systemString">
+    <mat-option value="metric">Metric</mat-option>
+    <mat-option value="imperial">Imperial</mat-option>
+    <mat-option value="mixed" disabled>Mixed</mat-option>
+  </mat-select>
+</mat-form-field>

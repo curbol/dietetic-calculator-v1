@@ -1,10 +1,10 @@
 <div fxLayout="column" fxLayoutAlign="start center">
   <div fxLayout>
-    <button mat-button (click)="calcsList.selectAll()">
+    <button class="dc-small" mat-button (click)="calcsList.selectAll()">
       <mat-icon>check_box</mat-icon>
       <span>Select all</span>
     </button>
-    <button mat-button (click)="calcsList.deselectAll()">
+    <button class="dc-small" mat-button (click)="calcsList.deselectAll()">
       <mat-icon>check_box_outline_blank</mat-icon>
       <span>Deselect all</span>
     </button>
@@ -21,8 +21,8 @@
           <h3 mdLine class="dc-list-option-title">{{calc.title}}</h3>
           <h6 mdLine class="dc-list-option-subtitle dc-secondary-text">{{calc.subTitle}}</h6>
         </mat-list-option>
-        <mat-divider></mat-divider>
       </div>
+      <mat-divider></mat-divider>
     </div>
   </mat-selection-list>
 
