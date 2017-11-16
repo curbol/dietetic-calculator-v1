@@ -2,12 +2,9 @@
 
   <div class="dc-full-width">
     <div *ngIf="true" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
-      <div class="dc-spacer"></div>
       <dc-system-selector [(system)]="system"></dc-system-selector>
     </div>
   </div>
-
-  <div class="dc-spacer" *ngIf="!activeCalculators"></div>
 
   <div class="dc-full-width">
     <div fxLayout="column">

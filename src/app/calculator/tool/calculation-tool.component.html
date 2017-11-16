@@ -40,6 +40,7 @@
   </div>
 
   <mat-horizontal-stepper fxHide fxShow.lt-md>
+
     <mat-step [completed]="false">
       <ng-template matStepLabel>
         <span fxHide fxShow.gt-xs>{{calculatorsTitle}}</span>
@@ -61,6 +62,7 @@
         </div>
       </div>
     </mat-step>
+
     <mat-step [completed]="false">
       <ng-template matStepLabel>
         <span fxHide fxShow.gt-xs>{{inputsTitle}}</span>
@@ -89,6 +91,7 @@
         </div>
       </div>
     </mat-step>
+
     <mat-step [completed]="false">
       <ng-template matStepLabel>
         <span fxHide fxShow.gt-xs>{{outputsTitle}}</span>
@@ -120,6 +123,7 @@
         </div>
       </div>
     </mat-step>
+
   </mat-horizontal-stepper>
 
 </div>
