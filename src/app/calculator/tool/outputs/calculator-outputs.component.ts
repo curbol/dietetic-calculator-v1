@@ -48,6 +48,9 @@ export class CalculatorOutputsComponent implements OnInit {
     return this.calcService.getResult(calc)(this.inputs)(this.selections);
   }
 
+  getActiveCompletedResults = (): Calc.Calc[] =>
+    this.calculators.filter(c => c.active && (this.calcService.getResult(c)(this.inputs)(this.selections) || 0) !== 0)
+
   private setDefaultUnitSystem = (calcs: Calc.Calc[], system: Unit.System): void => {
     calcs.filter(c => c && c.output && c.output.symbol !== null && c.output.symbol !== undefined).forEach(calc => {
       this.unitService.getUnit(calc.output.symbol).then(unit => {

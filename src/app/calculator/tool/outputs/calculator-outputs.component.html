@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
   <div class="dc-full-width">
-    <div *ngIf="true" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
+    <div *ngIf="getActiveCompletedResults().length" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
       <dc-system-selector [(system)]="system"></dc-system-selector>
     </div>
   </div>

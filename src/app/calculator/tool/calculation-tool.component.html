@@ -73,6 +73,7 @@
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
         <div *ngIf="!getActiveCalculators().length">
           <dc-chip color="warn">{{noCalculatorsSelectedMessage}}</dc-chip>
+          <div class="dc-spacer"></div>
         </div>
         <dc-calculator-inputs
           [(system)]="system"
@@ -80,7 +81,6 @@
           [selections]="selections">
         </dc-calculator-inputs>
         <div>
-          <div class="dc-spacer"></div>
           <button mat-raised-button color="primary" matStepperPrevious>
             <mat-icon>arrow_back</mat-icon>
             <span>{{calculatorsShortTitle}}</span>
@@ -117,7 +117,6 @@
           [selections]="selections">
         </dc-calculator-outputs>
         <div>
-          <div class="dc-spacer"></div>
           <button mat-raised-button color="primary" matStepperPrevious>
             <mat-icon>arrow_back</mat-icon>
             <span>{{inputsTitle}}</span>
