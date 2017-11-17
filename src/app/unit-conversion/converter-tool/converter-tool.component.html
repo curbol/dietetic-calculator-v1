@@ -8,12 +8,12 @@
     </mat-select>
   </mat-form-field>
 
-  <div fxLayout fxLayout.lt-sm="column" fxLayoutGap.gt-xs="1rem">
-    <dc-input fxFlex [input]="sourceInput" (unitChange)="onUnitChange()" (valueChange)="updateTargetValue()"></dc-input>
-    <div id="dc-converter-equal" fxLayout fxLayoutAlign="center center">
+  <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" fxLayoutGap="1rem" fxLayoutGap.lt-sm="0">
+    <dc-input [input]="sourceInput" (unitChange)="onUnitChange()" (valueChange)="updateTargetValue()"></dc-input>
+    <div id="dc-converter-equal">
       <span class="dc-secondary-text">=</span>
     </div>
-    <dc-input fxFlex [input]="targetInput" (unitChange)="onUnitChange()" (valueChange)="updateSourceValue()"></dc-input>
+    <dc-input [input]="targetInput" (unitChange)="onUnitChange()" (valueChange)="updateSourceValue()"></dc-input>
   </div>
 
 </div>

@@ -40,6 +40,7 @@
   </div>
 
   <mat-horizontal-stepper fxHide fxShow.lt-md>
+
     <mat-step [completed]="false">
       <ng-template matStepLabel>
         <span fxHide fxShow.gt-xs>{{calculatorsTitle}}</span>
@@ -54,13 +55,14 @@
         </dc-calculator-options>
         <div>
           <div class="dc-spacer"></div>
-          <button mat-button matStepperNext type="button">
+          <button mat-raised-button [color]="getActiveCalculators().length > 0 ? 'primary' : ''" matStepperNext>
             <span>{{inputsTitle}}</span>
             <mat-icon>arrow_forward</mat-icon>
           </button>
         </div>
       </div>
     </mat-step>
+
     <mat-step [completed]="false">
       <ng-template matStepLabel>
         <span fxHide fxShow.gt-xs>{{inputsTitle}}</span>
@@ -79,17 +81,18 @@
         </dc-calculator-inputs>
         <div>
           <div class="dc-spacer"></div>
-          <button mat-button matStepperPrevious type="button">
+          <button mat-raised-button color="primary" matStepperPrevious>
             <mat-icon>arrow_back</mat-icon>
             <span>{{calculatorsShortTitle}}</span>
           </button>
-          <button mat-button matStepperNext type="button">
+          <button mat-raised-button [color]="getActiveCompletedResults().length > 0 ? 'primary' : ''" matStepperNext>
             <span>{{outputsShortTitle}}</span>
             <mat-icon>arrow_forward</mat-icon>
           </button>
         </div>
       </div>
     </mat-step>
+
     <mat-step [completed]="false">
       <ng-template matStepLabel>
         <span fxHide fxShow.gt-xs>{{outputsTitle}}</span>
@@ -115,13 +118,14 @@
         </dc-calculator-outputs>
         <div>
           <div class="dc-spacer"></div>
-          <button mat-button matStepperPrevious type="button">
+          <button mat-raised-button color="primary" matStepperPrevious>
             <mat-icon>arrow_back</mat-icon>
             <span>{{inputsTitle}}</span>
           </button>
         </div>
       </div>
     </mat-step>
+
   </mat-horizontal-stepper>
 
 </div>
