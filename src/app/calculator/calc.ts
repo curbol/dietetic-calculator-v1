@@ -14,11 +14,11 @@ export module Calc {
   }
 
   export enum Id {
-    bmi, mifflin, ibw, abw
+    bmi = 1, mifflin, ibw, abw
   }
 
   export enum Group {
-    anthropometric, nutritional_needs
+    anthropometric = 1, nutritional_needs
   }
 
   export interface Data {
@@ -38,7 +38,7 @@ export module Calc {
 
   export module Input {
     export enum Id {
-      weight, height, age,
+      weight = 1, height, age,
     }
 
     export interface Settings {
@@ -60,7 +60,7 @@ export module Calc {
 
   export module Selection {
     export enum Id {
-      gender
+      gender = 1
     }
   }
 
@@ -85,8 +85,8 @@ export module Calc {
   export const getInputIds = (calcs: Calc.Calc[]) => {
     if (!calcs || calcs.length <= 0) { return []; }
 
-    const mergedInputIds: Calc.Input.Id[] = [].concat.apply([], calcs.map<Calc.Input.Id[]>(c => Object.keys(c.inputs).map(s => +s)));
-    const distinctInputIds: Calc.Input.Id[] = mergedInputIds.filter((v, i, a) => a.indexOf(v) === i);
+    const mergedInputIds: Calc.Input.Id[] = calcs.map(c => c.inputs.map(i => i.id)).reduce((a, b) => [...a, ...b]);
+    const distinctInputIds: Calc.Input.Id[] = mergedInputIds.filter((id, index, ids) => ids.indexOf(id) === index);
     return distinctInputIds;
   };
 

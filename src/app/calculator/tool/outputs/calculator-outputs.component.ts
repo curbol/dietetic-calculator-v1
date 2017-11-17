@@ -29,6 +29,11 @@ export class CalculatorOutputsComponent implements OnInit {
   }
 
   @Input() calculators: Calc.Calc[];
+  get activeCalculators(): Calc.Calc[] {
+    if (!this.calculators) { return null; }
+    return this.calculators.filter(c => c.active);
+  }
+
   @Input() inputs: Calc.Input[];
   @Input() selections: Calc.Selection[];
 

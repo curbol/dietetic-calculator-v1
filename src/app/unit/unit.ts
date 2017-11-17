@@ -9,7 +9,7 @@ export module Unit {
 
   export enum Symbol {
     /* Weight */
-    st, lb, kg, g,
+    st = 1, lb, kg, g,
     /* Length */
     in, ft, yd, cm, m,
     /* Time */
@@ -25,7 +25,7 @@ export module Unit {
 
   export module Type {
     export enum Id {
-      weight, length, time, energy
+      weight = 1, length, time, energy
     }
 
     export const weight: Type = {
@@ -50,7 +50,7 @@ export module Unit {
   }
 
   export enum System {
-    metric, imperial, mixed
+    metric = 1, imperial, mixed
   }
 
   export const filterUnits = (units: Unit.Unit[]) => (symbols: Unit.Symbol[]) =>

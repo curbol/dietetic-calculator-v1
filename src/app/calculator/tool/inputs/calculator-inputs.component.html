@@ -1,8 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
   <div class="dc-full-width">
-    <div *ngIf="getActiveDataCount()" [@appearOnActive]
-         fxLayout="column" fxLayoutAlign="start center">
+    <div *ngIf="getActiveDataCount()" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
       <dc-system-selector [(system)]="system"></dc-system-selector>
       <div class="dc-full-width">
         <div *ngIf="getActiveFilledDataCount()" [@appearOnActive]
@@ -16,12 +15,11 @@
     </div>
   </div>
 
-  <div class="dc-spacer"></div>
-
   <div class="dc-full-width">
-    <div fxLayout="column" fxLayoutGap="1rem">
+    <div fxLayout="column">
       <div *ngFor="let selection of selections">
         <div *ngIf="selection.active" [@appearOnActive] fxLayout="column">
+          <div class="dc-spacer"></div>
           <mat-form-field fxFlex color="accent">
             <mat-select required [placeholder]="selection.name | capitalize" [(ngModel)]="selection.value">
               <mat-option *ngFor="let option of selection.group" [value]="option">
@@ -34,13 +32,13 @@
     </div>
   </div>
 
-  <div class="dc-spacer"></div>
-
   <div class="dc-full-width">
-    <div fxLayout="column" fxLayoutGap="2rem">
+    <div fxLayout="column">
       <div fxFlex *ngFor="let input of inputs">
         <div *ngIf="input.active" [@appearOnActive] fxLayout="column">
+          <div class="dc-spacer"></div>
           <dc-input fxFlex [input]="input" (unitChange)="onUnitChange()"></dc-input>
+          <div class="dc-spacer"></div>
         </div>
       </div>
     </div>

@@ -1,18 +1,16 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
   <div class="dc-full-width">
-    <div *ngIf="true" [@appearOnActive]
-         fxLayout="column" fxLayoutAlign="start center">
+    <div *ngIf="true" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
       <dc-system-selector [(system)]="system"></dc-system-selector>
     </div>
   </div>
 
-  <div class="dc-spacer"></div>
-
   <div class="dc-full-width">
-    <div fxLayout="column" fxLayoutGap="2rem">
+    <div fxLayout="column">
       <div *ngFor="let calc of calculators">
         <div *ngIf="calc.active" [@appearOnActive]>
+          <div class="dc-spacer"></div>
           <dc-result
             [title]="calc.title"
             [value]="getResult(calc)"
@@ -21,6 +19,7 @@
             [(convertSymbol)]="calc.output.convertSymbol"
             (convertSymbolChange)="updateSystem(calculators)">
           </dc-result>
+          <div class="dc-spacer"></div>
         </div>
       </div>
     </div>
