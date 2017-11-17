@@ -59,9 +59,7 @@ export module Unit {
   export const defaultUnit = (group: Unit.Unit[]) => (system: Unit.System) => group.find(u => u.system === system);
 
   export const conversion = (sourceFactor: number) => (targetFactor: number) => (sourceValue: number): number => {
-    if (sourceFactor === null || sourceFactor === undefined
-      || targetFactor === null || targetFactor === undefined
-      || sourceValue === null || sourceValue === undefined) { return null; }
+    if ([sourceFactor, targetFactor, sourceValue].some(v => v === null || v === undefined)) { return null; }
     if (targetFactor === 0) { return undefined; }
 
     return sourceValue * sourceFactor / targetFactor;
