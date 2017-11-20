@@ -1,9 +1,13 @@
-import { Course } from '../courses/course';
-import { IAppState } from ;
-import {
-  REQUEST_CALCS_SUCCESS,
-  CHOOSE_CALCS
-} from '../courses/course.actions';
+import { ICalcState } from '@app/calculator/state/ICalcState';
+
+const INITIAL_STATE: ICalcState = {
+  calcs: [],
+  activeCalcs: [],
+  inputs: [],
+  activeInputs: [],
+  loadingCalcs: false,
+  error: null,
+};
 
 const initialState: IAppState = {
   courses: <Course[]>[],

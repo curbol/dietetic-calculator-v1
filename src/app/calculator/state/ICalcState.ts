@@ -1,9 +1,13 @@
-import { Calc } from '@app/calculator/calc';
-import { Unit } from '@app/unit/unit';
+import { ICalc, Calc } from "@app/calculator/calc.model";
 
 export interface ICalcState {
-  readonly calcs: Calc.Calc[];
-  activeCalcs: Calc.Calc[];
-  readonly inputs: Calc.Input[];
-  activeInputs: Calc.Input[];
+  readonly calcs: ICalc[];
+  activeCalcs: ICalc[];
+  loadingCalcs: boolean;
+  readonly inputs: Calc.IInput[];
+  activeInputs: Calc.IInput[];
+  loadingInputs: boolean;
+  readonly selections: Calc.ISelection[];
+  activeSelections: Calc.ISelection[];
+  loadingSelections: boolean;
 }

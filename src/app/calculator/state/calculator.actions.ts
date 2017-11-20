@@ -17,7 +17,7 @@ export class CalculatorActions {
     private unitService: UnitService,
   ) {}
 
-  getCalculators = () => this.calcService.getCalculators().subscribe(calcs => this.ngRedux.dispatch({
+  getCalculators = () => this.calcService.getAllCalcs().subscribe(calcs => this.ngRedux.dispatch({
     type: REQUEST_CALCS_SUCCESS,
     calcs,
   }))

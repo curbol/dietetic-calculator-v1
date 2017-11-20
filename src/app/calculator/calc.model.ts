@@ -1,74 +1,73 @@
-import { Option } from './option';
-import { Unit } from '../unit/unit';
+import { Unit, IUnit } from '../unit/unit';
+
+export interface ICalc {
+  readonly id: string;
+  readonly type: string;
+  readonly title: string;
+  readonly subtitle: string;
+  readonly inputs: {id: string; unit: string}[];
+  readonly selections: string[];
+  readonly outputUnit: string;
+  active: boolean;
+}
 
 export module Calc {
-  export interface Calc {
-    readonly id: Calc.Id;
-    readonly title: string;
-    readonly subTitle: string;
-    readonly group: Group;
-    readonly inputs: {id: Calc.Input.Id; targetSymbol: Unit.Symbol}[];
-    readonly selectionIds: Selection.Id[];
-    readonly output: Output;
-    active: boolean;
-  }
-
-  export enum Id {
-    bmi = 1, mifflin, ibw, abw
-  }
-
-  export enum Group {
-    anthropometric = 1, nutritional_needs
-  }
-
-  export interface Data {
+  export interface IData {
     readonly name: string;
     active: boolean;
     value: number;
   }
 
-  export interface Input {
+  export interface IInput {
+    readonly id: string;
+    readonly type: string;
     readonly name: string;
-    readonly id: Input.Id;
-    readonly group: Unit.Unit[];
-    unit: Unit.Unit;
+    readonly defaultUnit: string;
+    selectedUnit: string;
     active: boolean;
     value: number;
   }
 
   export module Input {
-    export enum Id {
-      weight = 1, height, age,
-    }
-
-    export interface Settings {
-      readonly name: string;
-      readonly id: Id;
-      readonly typeId: Unit.Type.Id;
-      readonly symbolsFilter: Unit.Symbol[];
-      readonly defaultSymbol: Unit.Symbol;
-    }
+    export const fromServer = (serverInput: any): IInput => ({
+      id: serverInput.id,
+      type: serverInput.type,
+      name: serverInput.name,
+      defaultUnit: serverInput.defaultUnit,
+      selectedUnit: null,
+      active: false,
+      value: null,
+    });
   }
 
-  export interface Selection {
-    readonly id: Selection.Id;
+  export interface ISelection {
+    readonly id: string;
     readonly name: string;
-    readonly group: Option.Option[];
-    value: Option.Option;
+    readonly options: string[];
     active: boolean;
+    value: string;
   }
 
   export module Selection {
-    export enum Id {
-      gender = 1
-    }
+    export const fromServer = (serverSelection: any): ISelection => ({
+      id: serverSelection.id,
+      name: serverSelection.name,
+      options: serverSelection.options,
+      active: false,
+      value: null,
+    });
   }
 
-  export interface Output {
-    readonly symbolText: string;
-    readonly symbol: Unit.Symbol;
-    convertSymbol: Unit.Symbol;
-  }
+  export const fromServer = (serverCalc: any): ICalc => ({
+    id: serverCalc.id,
+    type: serverCalc.type,
+    title: serverCalc.title,
+    subtitle: serverCalc.subtitle,
+    inputs: serverCalc.inputs,
+    selections: serverCalc.selections,
+    outputUnit: serverCalc.outputUnit,
+    active: false,
+  });
 
   export const inputReadyToCalculate = (input: Calc.Input): boolean => (input != null && input.value != null);
   export const selectionReadyToCalculate = (selection: Calc.Selection): boolean => (selection != null && selection.value != null);
