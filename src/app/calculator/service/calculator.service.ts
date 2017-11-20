@@ -4,6 +4,7 @@ import { EquationService } from '@app/equation/equation.service';
 import { Unit } from '@app/unit/unit';
 import { Calc } from '@app/calculator/calc';
 import { Option } from '@app/calculator/option';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CalculatorService {
@@ -52,24 +53,6 @@ export class CalculatorService {
       }
     },
     {
-      id: Calc.Id.mifflin,
-      title: 'Mifflin St. Jeor',
-      subTitle: 'Daily calorie needs for adults',
-      group: Calc.Group.nutritional_needs,
-      active: false,
-      inputs: [
-        { id: Calc.Input.Id.height, targetSymbol: Unit.Symbol.cm },
-        { id: Calc.Input.Id.weight, targetSymbol: Unit.Symbol.kg },
-        { id: Calc.Input.Id.age, targetSymbol: Unit.Symbol.y },
-      ],
-      selectionIds: [Calc.Selection.Id.gender],
-      output: {
-        symbolText: Unit.Symbol[Unit.Symbol.kcal],
-        symbol: Unit.Symbol.kcal,
-        convertSymbol: Unit.Symbol.kcal,
-      }
-    },
-    {
       id: Calc.Id.ibw,
       title: 'Ideal Body Weight (IBW)',
       subTitle: 'Estimated ideal weight for adults',
@@ -100,6 +83,24 @@ export class CalculatorService {
         symbolText: Unit.Symbol[Unit.Symbol.kg],
         symbol: Unit.Symbol.kg,
         convertSymbol: Unit.Symbol.kg,
+      }
+    },
+    {
+      id: Calc.Id.mifflin,
+      title: 'Mifflin St. Jeor',
+      subTitle: 'Daily calorie needs for adults',
+      group: Calc.Group.nutritional_needs,
+      active: false,
+      inputs: [
+        { id: Calc.Input.Id.height, targetSymbol: Unit.Symbol.cm },
+        { id: Calc.Input.Id.weight, targetSymbol: Unit.Symbol.kg },
+        { id: Calc.Input.Id.age, targetSymbol: Unit.Symbol.y },
+      ],
+      selectionIds: [Calc.Selection.Id.gender],
+      output: {
+        symbolText: Unit.Symbol[Unit.Symbol.kcal],
+        symbol: Unit.Symbol.kcal,
+        convertSymbol: Unit.Symbol.kcal,
       }
     },
   ];
@@ -149,10 +150,11 @@ export class CalculatorService {
 
   constructor(private unitService: UnitService, private equationService: EquationService) { }
 
-  getCalculators = () => new Promise<Calc.Calc[]>((resolve, reject) => resolve(this.calcs));
-  getAllSelections = (): Promise<Calc.Selection[]> => new Promise<Calc.Selection[]>((resolve, reject) => resolve(this.Selections));
+  getCalculators = (): Observable<Calc.Calc[]> => Observable.of(this.calcs);
 
-  getAllInputs = (): Promise<Calc.Input[]> => {
+  getAllSelections = (): Observable<Calc.Selection[]> => Observable.of(this.Selections);
+
+  getAllInputs = (): Observable<Calc.Input[]> => {
     return Promise.all([this.getInputSettings(), this.unitService.getAllUnits()]).then(value => {
       const inputSettings: Calc.Input.Settings[] = value[0];
       const units: {[type: number]: Unit.Unit[]} = value[1];
@@ -172,8 +174,8 @@ export class CalculatorService {
     });
   }
 
-  getInputs = (inputIds: Calc.Input.Id[]) =>
-    this.getAllInputs().then((inputs: Calc.Input[]) => inputs.filter(input => inputIds.find(id => id === input.id)))
+  getInputs = (inputIds: Calc.Input.Id[]): Observable<Calc.Input[]> =>
+    this.getAllInputs().map((inputs: Calc.Input[]) => inputs.filter(input => inputIds.find(id => id === input.id)))
 
   getResult = (calc: Calc.Calc) => (inputs: Calc.Input[]) => (selections: Calc.Selection[]): number => {
     const inputConversions: {[key: string]: number} = this.getInputConversions(calc.inputs)(inputs);

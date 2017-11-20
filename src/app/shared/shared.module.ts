@@ -26,7 +26,7 @@ import 'rxjs/add/operator/max';
 import 'rxjs/add/operator/min';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/take';
-
+import 'rxjs/add/observable/of';
 
 @NgModule({
   declarations: [

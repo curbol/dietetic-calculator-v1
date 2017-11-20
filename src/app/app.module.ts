@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
+import { NgReduxModule, NgRedux } from 'ng2-redux';
+
+import { IAppState } from '@app/store/IAppState';
+import { store } from '@app/store/store';
 
 import { AppRoutingModule } from './routing/app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,6 +40,7 @@ import {
     HeaderComponent,
     ToolbarComponent,
     AboutComponent,
+    NgReduxModule,
   ],
   providers: [
     EquationService,
@@ -50,4 +55,8 @@ import {
     AppComponent
   ]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(ngRedux: NgRedux<IAppState>) {
+    ngRedux.provideStore(store);
+  }
+}
