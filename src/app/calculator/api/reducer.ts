@@ -1,8 +1,8 @@
 
 import { indexBy, prop } from 'ramda';
 import { Action } from 'redux';
-import { ICalcState } from '@app/calculator/calc.models';
-import { LoadCalcsAction, LoadInputsAction, LoadSelectionsAction, CalcApiActions } from '@app/calculator/api/actions';
+import { ICalcState } from '@app/calculator/models';
+import { LoadCalcsAction, LoadInputsAction, LoadSelectsAction, CalcAPIActions } from '@app/calculator/api/actions';
 
 const INITIAL_STATE: ICalcState = {
   calcs: {},
@@ -11,56 +11,56 @@ const INITIAL_STATE: ICalcState = {
   inputs: {},
   loadingInputs: false,
   inputsLoadError: null,
-  selections: {},
-  loadingSelections: false,
-  selectionsLoadError: null,
+  selects: {},
+  loadingSelects: false,
+  selectsLoadError: null,
 };
 
 export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalcState => {
-  const action = a as LoadCalcsAction|LoadInputsAction|LoadSelectionsAction;
+  const action = a as LoadCalcsAction|LoadInputsAction|LoadSelectsAction;
 
   switch (action.type) {
-    case CalcApiActions.LOAD_CALCS_STARTED:
+    case CalcAPIActions.LOAD_CALCS_STARTED:
       return {
         ...state,
         calcs: {},
         loadingCalcs: true,
         calcsLoadError: null,
       };
-    case CalcApiActions.LOAD_CALCS_FINISHED:
+    case CalcAPIActions.LOAD_CALCS_FINISHED:
       return {
         ...state,
         calcs: action.payload ? indexBy(prop('id'), action.payload) : null,
         loadingCalcs: false,
         calcsLoadError: action.error,
       };
-    case CalcApiActions.LOAD_INPUTS_STARTED:
+    case CalcAPIActions.LOAD_INPUTS_STARTED:
       return {
         ...state,
         inputs: {},
         loadingInputs: true,
         inputsLoadError: null,
       };
-    case CalcApiActions.LOAD_INPUTS_FINISHED:
+    case CalcAPIActions.LOAD_INPUTS_FINISHED:
       return {
         ...state,
         inputs: action.payload ? indexBy(prop('id'), action.payload) : null,
         loadingInputs: false,
         inputsLoadError: action.error,
       };
-    case CalcApiActions.LOAD_SELECTIONS_STARTED:
+    case CalcAPIActions.LOAD_SELECTS_STARTED:
       return {
         ...state,
-        selections: {},
-        loadingSelections: true,
-        selectionsLoadError: null,
+        selects: {},
+        loadingSelects: true,
+        selectsLoadError: null,
       };
-    case CalcApiActions.LOAD_SELECTIONS_FINISHED:
+    case CalcAPIActions.LOAD_SELECTS_FINISHED:
       return {
         ...state,
-        selections: action.payload ? indexBy(prop('id'), action.payload) : null,
-        loadingSelections: false,
-        selectionsLoadError: action.error,
+        selects: action.payload ? indexBy(prop('id'), action.payload) : null,
+        loadingSelects: false,
+        selectsLoadError: action.error,
       };
     default:
       return state;

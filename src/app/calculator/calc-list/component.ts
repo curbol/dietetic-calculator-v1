@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatListOptionChange } from '@angular/material';
-import { ICalc } from '@app/calculator/calc.model';
 
+import { ICalc } from '@app/calculator/models';
 
 @Component({
   selector: 'dc-calc-list',
-  templateUrl: './calc-list.component.html',
-  styleUrls: ['./calc-list.component.css'],
+  templateUrl: './component.html',
+  styleUrls: ['./component.css'],
 })
 export class CalcListComponent implements OnInit {
   @Input() calculators: ICalc[];
@@ -29,6 +29,4 @@ export class CalcListComponent implements OnInit {
     const activeCalcs: ICalc[] = this.calculators.filter(c => c.active);
     this.activeCalculatorsChanged.emit(activeCalcs);
   }
-
-  getCalcGroupString = (group: Calc.Group): string => Calc.Group[group].replace('_', ' ');
 }

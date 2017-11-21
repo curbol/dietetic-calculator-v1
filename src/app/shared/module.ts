@@ -4,19 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { MaterialModule } from './material/material.module';
-
-import { ResultComponent } from './result/result.component';
-import { ChipComponent } from './chip/chip.component';
-import { InputComponent } from './input/input.component';
-
-import { CapitalizePipe } from './pipes/capitalize.pipe';
-import { GroupByPipe } from './pipes/group-by.pipe';
-
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/every';
@@ -28,10 +21,15 @@ import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/observable/of';
 
+import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { GroupByPipe } from './pipes/group-by.pipe';
+import { ResultComponent } from '@app/shared/result/component';
+import { InputComponent } from '@app/shared/input/component';
+import { MaterialModule } from '@app/shared/material/module';
+
 @NgModule({
   declarations: [
     ResultComponent,
-    ChipComponent,
     CapitalizePipe,
     GroupByPipe,
     InputComponent,
@@ -52,7 +50,6 @@ import 'rxjs/add/observable/of';
     FlexLayoutModule,
     RouterModule,
     ResultComponent,
-    ChipComponent,
     CapitalizePipe,
     GroupByPipe,
     InputComponent,

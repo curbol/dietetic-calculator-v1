@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
-import { AboutProfile } from './about-profile';
+import { AboutProfile } from '@app/about/models';
 
 @Component({
   selector: 'dc-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css']
+  templateUrl: './component.html',
+  styleUrls: ['./component.css']
 })
 export class AboutComponent implements OnInit {
   profiles: AboutProfile[] = [

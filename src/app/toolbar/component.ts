@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'dc-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  templateUrl: './component.html',
+  styleUrls: ['./component.scss']
 })
 export class ToolbarComponent implements OnInit {
 

@@ -1,12 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
   <div class="dc-full-width">
-    <div *ngIf="getActiveCompletedResults().length" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
-      <dc-system-selector [(system)]="system"></dc-system-selector>
-    </div>
-  </div>
-
-  <div class="dc-full-width">
     <div fxLayout="column">
       <div *ngFor="let calc of calculators">
         <div *ngIf="calc.active" [@appearOnActive]>

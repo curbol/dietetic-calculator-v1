@@ -1,13 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { CalculationToolComponent } from "@app/calculator/component";
+import { ConverterToolComponent } from "@app/unit-conversion/converter-tool/converter-tool.component";
 
-import { AboutComponent } from '../about/about.component';
-import { CalculationToolComponent } from '../calculator/tool/calculation-tool.component';
-import { CalculatorsResolver, InputsResolver, SelectionsResolver } from '../calculator/service/calc-resolvers';
-import { ConverterToolComponent } from '../unit-conversion/converter-tool/converter-tool.component';
-import { AllUnitsResolver } from '../unit/unit-resolvers';
-
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'calc',
     component: CalculationToolComponent,
@@ -41,9 +35,3 @@ const routes: Routes = [
     pathMatch: 'full'
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule {}

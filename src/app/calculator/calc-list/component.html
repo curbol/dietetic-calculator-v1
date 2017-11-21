@@ -11,8 +11,8 @@
   </div>
 
   <mat-selection-list #calcsList fxLayout="column" fxLayoutGap="1rem">
-    <div *ngFor="let group of calculators | groupBy:'group'">
-      <h3 matSubheader>{{getCalcGroupString(group.key) | capitalize}}</h3>
+    <div *ngFor="let group of calculators | groupBy:'type'">
+      <h3 matSubheader>{{group.key | capitalize}}</h3>
       <div *ngFor="let calc of group.value">
         <mat-divider></mat-divider>
         <mat-list-option checkboxPosition="before"

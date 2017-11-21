@@ -1,14 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { CalcApiActions } from '@app/calculator/api/actions';
+import { CalcAPIActions } from '@app/calculator/api/actions';
 
-describe('CalcApiActions', () => {
+describe('CalcAPIActions', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CalcApiActions]
+      providers: [CalcAPIActions]
     });
   });
 
-  it('should be created', inject([CalcApiActions], (service: CalcApiActions) => {
+  it('should be created', inject([CalcAPIActions], (service: CalcAPIActions) => {
     expect(service).toBeTruthy();
   }));
 });

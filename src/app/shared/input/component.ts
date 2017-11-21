@@ -7,18 +7,18 @@ import {
   Output
 } from '@angular/core';
 
-import { Calc } from '@app/calculator/calc';
-import { Unit } from '@app/unit/unit';
+import { Calc } from '@app/calculator/models';
+import { IUnit } from '@app/unit/unit.models';
 
 @Component({
   selector: 'dc-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
+  templateUrl: './component.html',
+  styleUrls: ['./component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class InputComponent implements OnInit {
-  @Input() input: Calc.Input;
-  @Output() unitChange: EventEmitter<Unit.Unit> = new EventEmitter<Unit.Unit>();
+  @Input() input: Calc.IInput;
+  @Output() unitChange: EventEmitter<IUnit> = new EventEmitter<IUnit>();
   @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();
 
   get showUnitOptions(): boolean { return this.input && this.input.group.length > 1; }
@@ -28,6 +28,6 @@ export class InputComponent implements OnInit {
   ngOnInit() { }
 
   getUnitString = (symbol: Unit.Symbol): string => Unit.Symbol[symbol];
-  onUnitChange = (unit: Unit.Unit): void => this.unitChange.emit(unit);
+  onUnitChange = (unit: IUnit): void => this.unitChange.emit(unit);
   onValueChange = (value: number): void => this.valueChange.emit(value);
 }

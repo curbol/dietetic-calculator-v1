@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { dispatch } from '@angular-redux/store';
-import { IAction } from '@app/shared/models/action.models';
-import { ICalc, Calc } from '@app/calculator/calc.models';
+
+import { ICalc, Calc, IInput, ISelect } from '@app/calculator/models';
+import { IAction } from '@app/store/models';
 
 export type LoadCalcsAction = IAction<ICalc[]>;
-export type LoadInputsAction = IAction<Calc.IInput[]>;
-export type LoadSelectionsAction = IAction<Calc.ISelection[]>;
+export type LoadInputsAction = IAction<IInput[]>;
+export type LoadSelectsAction = IAction<ISelect[]>;
 
 @Injectable()
-export class CalcApiActions {
+export class CalcAPIActions {
   static readonly LOAD_CALCS = 'LOAD_CALCS';
   static readonly LOAD_CALCS_STARTED = 'LOAD_CALCS_STARTED';
   static readonly LOAD_CALCS_FINISHED = 'LOAD_CALCS_FINISHED';
@@ -17,51 +18,51 @@ export class CalcApiActions {
   static readonly LOAD_INPUTS_STARTED = 'LOAD_INPUTS_STARTED';
   static readonly LOAD_INPUTS_FINISHED = 'LOAD_INPUTS_FINISHED';
 
-  static readonly LOAD_SELECTIONS = 'LOAD_SELECTIONS';
-  static readonly LOAD_SELECTIONS_STARTED = 'LOAD_SELECTIONS_STARTED';
-  static readonly LOAD_SELECTIONS_FINISHED = 'LOAD_SELECTIONS_FINISHED';
+  static readonly LOAD_SELECTS = 'LOAD_SELECTS';
+  static readonly LOAD_SELECTS_STARTED = 'LOAD_SELECTS_STARTED';
+  static readonly LOAD_SELECTS_FINISHED = 'LOAD_SELECTS_FINISHED';
 
   @dispatch()
   loadCalcs = (): LoadCalcsAction => ({
-    type: CalcApiActions.LOAD_CALCS,
+    type: CalcAPIActions.LOAD_CALCS,
   })
 
   loadCalcsStarted = (): LoadCalcsAction => ({
-    type: CalcApiActions.LOAD_CALCS_STARTED,
+    type: CalcAPIActions.LOAD_CALCS_STARTED,
   })
 
-  loadCalcsFinished = (payload: ICalc[], error = null): LoadCalcsAction => ({
-    type: CalcApiActions.LOAD_CALCS_FINISHED,
+  loadCalcsFinished = (payload: ICalc[], error: Error = null): LoadCalcsAction => ({
+    type: CalcAPIActions.LOAD_CALCS_FINISHED,
     payload,
     error
   })
 
   @dispatch()
   loadInputs = (): LoadInputsAction => ({
-    type: CalcApiActions.LOAD_INPUTS,
+    type: CalcAPIActions.LOAD_INPUTS,
   })
 
   loadInputsStarted = (): LoadInputsAction => ({
-    type: CalcApiActions.LOAD_INPUTS_STARTED,
+    type: CalcAPIActions.LOAD_INPUTS_STARTED,
   })
 
-  loadInputsFinished = (payload: Calc.IInput[], error = null): LoadInputsAction => ({
-    type: CalcApiActions.LOAD_INPUTS_FINISHED,
+  loadInputsFinished = (payload: IInput[], error: Error = null): LoadInputsAction => ({
+    type: CalcAPIActions.LOAD_INPUTS_FINISHED,
     payload,
     error
   })
 
   @dispatch()
-  loadSelections = (): LoadSelectionsAction => ({
-    type: CalcApiActions.LOAD_SELECTIONS,
+  loadSelects = (): LoadSelectsAction => ({
+    type: CalcAPIActions.LOAD_SELECTS,
   })
 
-  loadSelectionsStarted = (): LoadSelectionsAction => ({
-    type: CalcApiActions.LOAD_SELECTIONS_STARTED,
+  loadSelectsStarted = (): LoadSelectsAction => ({
+    type: CalcAPIActions.LOAD_SELECTS_STARTED,
   })
 
-  loadSelectionsFinished = (payload: Calc.ISelection[], error = null): LoadSelectionsAction => ({
-    type: CalcApiActions.LOAD_SELECTIONS_FINISHED,
+  loadSelectsFinished = (payload: ISelect[], error: Error = null): LoadSelectsAction => ({
+    type: CalcAPIActions.LOAD_SELECTS_FINISHED,
     payload,
     error
   })

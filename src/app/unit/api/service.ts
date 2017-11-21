@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { Unit, IUnit } from './unit.model';
 import { Observable } from 'rxjs/Observable';
+import { IUnit } from '@app/unit/models';
 
 const URL = {
   units: 'http://www.dieteticcalc.com/api/units.json',
@@ -16,5 +16,5 @@ export class UnitService {
   getAll = (): Observable<IUnit[]> =>
     this.http.get(URL.units)
       .map(response => response.json())
-      .map(units => units.map(Unit.fromServer))
+      .map(units => units.map(units.fromServer))
 }

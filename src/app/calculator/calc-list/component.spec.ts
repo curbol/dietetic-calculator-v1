@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CalcListComponent } from './calc-list.component';
+import { CalcListComponent } from './component';
 
 describe('CalcListComponent', () => {
   let component: CalcListComponent;

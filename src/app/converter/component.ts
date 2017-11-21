@@ -1,22 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Calc } from '../../calculator/calc';
-import { Unit } from '../../unit/unit';
-import { UnitService } from '../../unit/unit.service';
-import { Enum } from '../../shared/enum';
-import { Num } from '../../shared/num';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'dc-converter-tool',
-  templateUrl: './converter-tool.component.html',
-  styleUrls: ['./converter-tool.component.css'],
+  selector: 'dc-converter',
+  templateUrl: './component.html',
+  styleUrls: ['./component.css'],
 })
-export class ConverterToolComponent implements OnInit {
+export class ConverterComponent implements OnInit {
   selectedTypeId: Unit.Type.Id;
   unitTypeIds: Unit.Type.Id[];
   allUnits: {[type: number]: Unit.Unit[]};
-  sourceInput: Calc.Input;
-  targetInput: Calc.Input;
+  sourceInput: Calc.IInput;
+  targetInput: Calc.IInput;
 
   constructor(private activatedRoute: ActivatedRoute) {
     this.sourceInput = {
@@ -62,7 +57,7 @@ export class ConverterToolComponent implements OnInit {
     this.sourceInput.value = Num.round(conversion, 5);
   }
 
-  getConversion = (sourceUnit: Unit.Unit) => (targetUnit: Unit.Unit) => (sourceValue: number) => {
+  getConversion = (sourceUnit: IUnit) => (targetUnit: IUnit) => (sourceValue: number) => {
     if (!sourceUnit || !targetUnit || !sourceValue) { return; }
     return Unit.conversion(sourceUnit.factor)(targetUnit.factor)(sourceValue);
   }
@@ -75,7 +70,7 @@ export class ConverterToolComponent implements OnInit {
     this.targetInput = Object.assign({}, this.targetInput, {name: `${this.targetInput.unit.name} Value`});
   }
 
-  private setUnitGroup = (unitGroup: Unit.Unit[]) => {
+  private setUnitGroup = (unitGroup: IUnit[]) => {
     const firstUnit = unitGroup  && unitGroup.length > 0 ? unitGroup[0] : null;
     const secondUnit = unitGroup && unitGroup.length > 1 ? unitGroup[1] : null;
 
