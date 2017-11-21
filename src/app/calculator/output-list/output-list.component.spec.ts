@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CalculatorInputsComponent } from './calculator-inputs.component';
+import { OutputListComponent } from '@app/calculator/output-list/output-list.component';
 
-describe('CalculatorInputsComponent', () => {
-  let component: CalculatorInputsComponent;
-  let fixture: ComponentFixture<CalculatorInputsComponent>;
+describe('OutputListComponent', () => {
+  let component: OutputListComponent;
+  let fixture: ComponentFixture<OutputListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalculatorInputsComponent ]
+      declarations: [ OutputListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CalculatorInputsComponent);
+    fixture = TestBed.createComponent(OutputListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

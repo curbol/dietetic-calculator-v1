@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SystemSelectorComponent } from './system-selector.component';
+import { CalcListComponent } from './calc-list.component';
 
-describe('SystemSelectorComponent', () => {
-  let component: SystemSelectorComponent;
-  let fixture: ComponentFixture<SystemSelectorComponent>;
+describe('CalcListComponent', () => {
+  let component: CalcListComponent;
+  let fixture: ComponentFixture<CalcListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SystemSelectorComponent ]
+      declarations: [ CalcListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SystemSelectorComponent);
+    fixture = TestBed.createComponent(CalcListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

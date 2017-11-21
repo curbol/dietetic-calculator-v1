@@ -1,16 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatListOptionChange } from '@angular/material';
+import { ICalc } from '@app/calculator/calc.model';
 
-import { Calc } from '@app/calculator/calc';
 
 @Component({
-  selector: 'dc-calculator-options',
-  templateUrl: './calculator-options.component.html',
-  styleUrls: ['./calculator-options.component.css'],
+  selector: 'dc-calc-list',
+  templateUrl: './calc-list.component.html',
+  styleUrls: ['./calc-list.component.css'],
 })
-export class CalculatorOptionsComponent implements OnInit {
-  @Input() calculators: Calc.Calc[];
-  @Output() activeCalculatorsChanged = new EventEmitter<Calc.Calc[]>();
+export class CalcListComponent implements OnInit {
+  @Input() calculators: ICalc[];
+  @Output() activeCalculatorsChanged = new EventEmitter<ICalc[]>();
 
   constructor() { }
 
@@ -19,14 +19,14 @@ export class CalculatorOptionsComponent implements OnInit {
   }
 
   onSelectionChange(event: MatListOptionChange) {
-    const calc: Calc.Calc = event.source.value;
+    const calc: ICalc = event.source.value;
     calc.active = event.selected;
 
     this.updateActiveCalculators();
   }
 
   updateActiveCalculators = (): void => {
-    const activeCalcs: Calc.Calc[] = this.calculators.filter(c => c.active);
+    const activeCalcs: ICalc[] = this.calculators.filter(c => c.active);
     this.activeCalculatorsChanged.emit(activeCalcs);
   }
 

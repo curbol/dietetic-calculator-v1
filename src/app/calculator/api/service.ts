@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Calc, ICalc } from '@app/calculator/calc.model';
+import { Calc, ICalc } from '@app/calculator/calc.models';
 import { Observable } from 'rxjs/Observable';
 import { EquationService } from '@app/equation/equation.service';
 

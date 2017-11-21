@@ -1,5 +1,3 @@
-import { Unit, IUnit } from '../unit/unit';
-
 export interface ICalc {
   readonly id: string;
   readonly type: string;
@@ -9,6 +7,20 @@ export interface ICalc {
   readonly selections: string[];
   readonly outputUnit: string;
   active: boolean;
+}
+
+export interface ICalcState {
+  calcs: {[id: string]: ICalc};
+  loadingCalcs: boolean;
+  calcsLoadError: Error;
+
+  inputs: {[id: string]: Calc.IInput};
+  loadingInputs: boolean;
+  inputsLoadError: Error;
+
+  selections: {[id: string]: Calc.ISelection};
+  loadingSelections: boolean;
+  selectionsLoadError: Error;
 }
 
 export module Calc {
