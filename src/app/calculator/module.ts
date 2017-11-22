@@ -1,32 +1,28 @@
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from '@app/shared/shared.module';
-import { CalculationToolComponent } from './tool/calculation-tool.component';
-import { CalculatorService } from './service/calculator.service';
-import { CalculatorsResolver, InputsResolver, SelectionsResolver } from './service/calc-resolvers';
-import { CalculatorOptionsComponent } from './tool/calculators/calculator-options.component';
-import { CalculatorInputsComponent } from './tool/inputs/calculator-inputs.component';
-import { CalculatorOutputsComponent } from './tool/outputs/calculator-outputs.component';
-import { SystemSelectorComponent } from './tool/system-selector/system-selector.component';
-import { CalculatorActions } from '@app/calculator/state/calculator.actions';
+import { SharedModule } from '@app/shared/module';
+import { CalculatorComponent } from '@app/calculator/component';
+import { CalcListComponent } from '@app/calculator/calc-list/component';
+import { InputListComponent } from '@app/calculator/input-list/component';
+import { OutputListComponent } from '@app/calculator/output-list/component';
+import { CalcAPIService } from '@app/calculator/api/service';
+import { CalcAPIActions } from '@app/calculator/api/actions';
+import { CalcAPIEpics } from '@app/calculator/api/epics';
 
 @NgModule({
   imports: [
     SharedModule
   ],
   declarations: [
-    CalculationToolComponent,
-    CalculatorOptionsComponent,
-    CalculatorInputsComponent,
-    CalculatorOutputsComponent,
-    SystemSelectorComponent,
+    CalculatorComponent,
+    CalcListComponent,
+    InputListComponent,
+    OutputListComponent,
   ],
   providers: [
-    CalculatorService,
-    CalculatorsResolver,
-    InputsResolver,
-    SelectionsResolver,
-    CalculatorActions,
+    CalcAPIService,
+    CalcAPIActions,
+    CalcAPIEpics,
   ]
 })
 export class CalculatorModule { }

@@ -7,7 +7,7 @@ import { IAppState } from '@app/store/models';
 
 
 const calcsNotAlreadyFetched = (state: IAppState): boolean =>
-  !(state.calc && state.calc.calcs && Object.keys(state.calc.calcs).length);
+  !(state.calculator && state.calculator.calcs && Object.keys(state.calculator.calcs).length);
 
 @Injectable()
 export class CalcAPIEpics {

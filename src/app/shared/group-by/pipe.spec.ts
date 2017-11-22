@@ -1,4 +1,4 @@
-import { GroupByPipe } from './group-by.pipe';
+import { GroupByPipe } from './pipe';
 
 describe('GroupByPipe', () => {
   it('create an instance', () => {

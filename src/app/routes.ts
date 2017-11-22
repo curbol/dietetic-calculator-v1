@@ -1,28 +1,33 @@
-import { CalculationToolComponent } from "@app/calculator/component";
-import { ConverterToolComponent } from "@app/unit-conversion/converter-tool/converter-tool.component";
+import { Routes } from '@angular/router';
+import { CalculatorComponent } from '@app/calculator/component';
+import { ConverterComponent } from '@app/converter/component';
+import { AboutComponent } from '@app/about/component';
+
+interface RouteData {
+  title: string;
+  subtitle?: string;
+  isHome?: boolean;
+}
 
 export const routes: Routes = [
   {
     path: 'calc',
-    component: CalculationToolComponent,
-    data: { title: 'Calculators', isHome: true },
-    resolve: { calculators: CalculatorsResolver, inputs: InputsResolver, selections: SelectionsResolver }
+    component: CalculatorComponent,
+    data: <RouteData>{ title: 'Calculators', isHome: true },
   },
   {
     path: 'calc/:settings',
-    component: CalculationToolComponent,
-    data: { title: 'Calculators', isHome: true },
-    resolve: { calculators: CalculatorsResolver, inputs: InputsResolver, selections: SelectionsResolver }
+    component: CalculatorComponent,
+    data: <RouteData>{ title: 'Calculators', isHome: true },
   },
   {
     path: 'convert',
-    component: ConverterToolComponent,
-    data: { title: 'Unit Converter', subtitle: 'Convert a Value From One Unit to Another' },
-    resolve: { allUnits: AllUnitsResolver }
+    component: ConverterComponent,
+    data: <RouteData>{ title: 'Unit Converter', subtitle: 'Convert a Value From One Unit to Another' },
   },
   { path: 'about',
     component: AboutComponent,
-    data: { title: 'About', subtitle: 'Information About This Site' }
+    data: <RouteData>{ title: 'About', subtitle: 'Information About This Site' }
   },
   {
     path: '',

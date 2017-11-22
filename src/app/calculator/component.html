@@ -3,13 +3,12 @@
   <div fxLayout fxLayoutGap="1rem" fxHide fxShow.gt-sm>
     <div fxFlex="none">
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{calculatorsTitle}}</h3>
-      <dc-calculator-options
-        [calculators]="calculators"
-        (activeCalculatorsChanged)="onActiveCalculatorsChanged($event)">
-      </dc-calculator-options>
+      <dc-calc-list
+        [calculators]="calculators$ | async">
+      </dc-calc-list>
     </div>
 
-    <div fxFlex="none">
+    <!-- <div fxFlex="none">
       <div *ngIf="getActiveDataCount()" [@appearOnActive]>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
         <dc-calculator-inputs
@@ -18,9 +17,9 @@
           [selections]="selections">
         </dc-calculator-inputs>
       </div>
-    </div>
+    </div> -->
 
-    <div fxFlex="none">
+    <!-- <div fxFlex="none">
       <div *ngIf="getActiveCompletedResults().length" [@appearOnActive]>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{outputsTitle}}</h3>
         <div class="dc-full-width">
@@ -36,7 +35,7 @@
           [selections]="selections">
         </dc-calculator-outputs>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <mat-horizontal-stepper fxHide fxShow.lt-md>
@@ -49,10 +48,9 @@
       <div fxLayout="column" fxLayoutAlign="start center">
         <div class="dc-spacer"></div>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{calculatorsTitle}}</h3>
-        <dc-calculator-options
-          [calculators]="calculators"
-          (activeCalculatorsChanged)="onActiveCalculatorsChanged($event)">
-        </dc-calculator-options>
+        <dc-calc-list
+          [calculators]="calculators$ | async">
+        </dc-calc-list>
         <div>
           <div class="dc-spacer"></div>
           <button mat-raised-button [color]="getActiveCalculators().length > 0 ? 'primary' : ''" matStepperNext>
@@ -63,7 +61,7 @@
       </div>
     </mat-step>
 
-    <mat-step [completed]="false">
+    <!-- <mat-step [completed]="false">
       <ng-template matStepLabel>
         <span fxHide fxShow.gt-xs>{{inputsTitle}}</span>
         <span fxShow fxHide.gt-xs>{{inputsShortTitle}}</span>
@@ -91,9 +89,9 @@
           </button>
         </div>
       </div>
-    </mat-step>
+    </mat-step> -->
 
-    <mat-step [completed]="false">
+    <!-- <mat-step [completed]="false">
       <ng-template matStepLabel>
         <span fxHide fxShow.gt-xs>{{outputsTitle}}</span>
         <span fxShow fxHide.gt-xs>{{outputsShortTitle}}</span>
@@ -123,7 +121,7 @@
           </button>
         </div>
       </div>
-    </mat-step>
+    </mat-step> -->
 
   </mat-horizontal-stepper>
 

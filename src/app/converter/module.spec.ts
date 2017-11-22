@@ -1,5 +1,4 @@
-import { ConverterModule } from "./module";
-
+import { ConverterModule } from '@app/converter/module';
 
 describe('ConverterModule', () => {
   let converterModule: ConverterModule;

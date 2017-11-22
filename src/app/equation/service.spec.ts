@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { EquationService } from './equation.service';
+import { EquationService } from '@app/equation/service';
 
 describe('EquationService', () => {
   beforeEach(() => {

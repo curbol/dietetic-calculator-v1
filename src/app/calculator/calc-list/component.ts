@@ -15,18 +15,18 @@ export class CalcListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.updateActiveCalculators();
+    // this.updateActiveCalculators();
   }
 
   onSelectionChange(event: MatListOptionChange) {
-    const calc: ICalc = event.source.value;
-    calc.active = event.selected;
+    // const calc: ICalc = event.source.value;
+    // calc.active = event.selected;
 
-    this.updateActiveCalculators();
+    // this.updateActiveCalculators();
   }
 
   updateActiveCalculators = (): void => {
-    const activeCalcs: ICalc[] = this.calculators.filter(c => c.active);
-    this.activeCalculatorsChanged.emit(activeCalcs);
+    // const activeCalcs: ICalc[] = this.calculators.filter(c => c.active);
+    // this.activeCalculatorsChanged.emit(activeCalcs);
   }
 }

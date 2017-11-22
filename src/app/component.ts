@@ -4,8 +4,8 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'dc-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  templateUrl: './component.html',
+  styleUrls: ['./component.css'],
   animations: [
     slideInOnRouteChange()
   ]

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 import { appearOnActive } from '@app/animation/animations';
-import { Calc } from '@app/calculator/models';
+import { Calc, IInput, ISelect } from '@app/calculator/models';
 import { IUnit } from '@app/unit/models';
 
 @Component({
@@ -19,14 +19,14 @@ import { IUnit } from '@app/unit/models';
   ]
 })
 export class InputListComponent implements OnInit {
-  @Input() inputs: Calc.IInput[];
-  get activeInputs(): Calc.IInput[] {
+  @Input() inputs: IInput[];
+  get activeInputs(): IInput[] {
     if (!this.inputs) { return null; }
     return this.inputs.filter(i => i.active);
   }
 
-  @Input() selections: Calc.ISelection[];
-  get activeSelections(): Calc.ISelection[] {
+  @Input() selections: ISelect[];
+  get activeSelections(): ISelect[] {
     if (!this.selections) { return null; }
     return this.selections.filter(s => s.active);
   }

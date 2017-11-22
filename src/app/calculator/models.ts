@@ -18,9 +18,9 @@ export interface ICalcState {
   loadingInputs: boolean;
   inputsLoadError: Error;
 
-  selections: {[id: string]: ISelect};
-  loadingSelections: boolean;
-  selectionsLoadError: Error;
+  selects: {[id: string]: ISelect};
+  loadingSelects: boolean;
+  selectsLoadError: Error;
 }
 
 export interface IData {

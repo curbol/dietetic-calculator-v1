@@ -6,8 +6,8 @@ import { slideInOnRouteChange } from '../animation/animations';
 
 @Component({
   selector: 'dc-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  templateUrl: './component.html',
+  styleUrls: ['./component.css'],
   animations: [
     slideInOnRouteChange()
   ]

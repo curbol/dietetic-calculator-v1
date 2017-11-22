@@ -1,4 +1,5 @@
-import { CapitalizePipe } from './capitalize.pipe';
+import { CapitalizePipe } from './pipe';
+
 
 describe('CapitalizePipe', () => {
   it('create an instance', () => {

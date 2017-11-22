@@ -1,15 +1,16 @@
 @import '~@angular/material/theming';
 @include mat-core();
 
-@import './base-styles.scss';
-@import './dc-styles.scss';
-@import './override-mat-styles.scss';
+@import './base.styles.scss';
+@import './dc.styles.scss';
+@import './override-mat.styles.scss';
 
-@import './themes/dietetic-theme.scss';
-@import './base-styles.theme.scss';
-@import './app/app.component.theme.scss';
-@import './app/header/header.component.theme.scss';
-@import './app/shared/result/result.component.theme.scss';
+@import './base.theme.scss';
+@import './themes/dietetic.theme.scss';
+
+@import './app/component.theme.scss';
+@import './app/header/component.theme.scss';
+@import './app/shared/result/component.theme.scss';
 
 @mixin custom-components-theme($theme) {
   @include dc-toolbar-component-theme($theme);

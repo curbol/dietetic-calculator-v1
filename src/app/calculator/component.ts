@@ -1,10 +1,13 @@
 import { Component, OnInit, DoCheck, OnChanges } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { Location } from '@angular/common';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 
 import { appearOnActive, appearOnTrue } from '@app/animation/animations';
-import { ICalc, Calc } from '@app/calculator/models';
+import { ICalc, Calc, IInput, ISelect } from '@app/calculator/models';
 import { CalcAPIService } from '@app/calculator/api/service';
+import { CalcAPIActions } from '@app/calculator/api/actions';
 
 @Component({
   selector: 'dc-calculator',
@@ -16,9 +19,13 @@ import { CalcAPIService } from '@app/calculator/api/service';
   ]
 })
 export class CalculatorComponent implements OnInit, DoCheck {
+
+  @select(['calculator', 'calcs'])
+  readonly calculators$: Observable<ICalc[]>;
+
   calculators: ICalc[] = [];
-  inputs: Calc.IInput[] = [];
-  selections: Calc.ISelection[] = [];
+  inputs: IInput[] = [];
+  selections: ISelect[] = [];
   baseUrl: string;
   settingsPath: string;
   previousPath: string;
@@ -37,17 +44,19 @@ export class CalculatorComponent implements OnInit, DoCheck {
     private activatedRoute: ActivatedRoute,
     private calcService: CalcAPIService,
     private location: Location,
+    private actions: CalcAPIActions,
   ) {
-    this.settingsPath = activatedRoute.snapshot.params['settings'];
+    actions.loadCalcs();
+    // this.settingsPath = activatedRoute.snapshot.params['settings'];
 
-    const url: UrlSegment[] = activatedRoute.snapshot.url;
-    this.baseUrl = (this.settingsPath ? url.slice(0, -1) : url).join('/');
+    // const url: UrlSegment[] = activatedRoute.snapshot.url;
+    // this.baseUrl = (this.settingsPath ? url.slice(0, -1) : url).join('/');
 
-    this.calculators = activatedRoute.snapshot.data['calculators'];
-    this.inputs = activatedRoute.snapshot.data['inputs'];
-    this.selections = activatedRoute.snapshot.data['selections'];
+    // this.calculators = activatedRoute.snapshot.data['calculators'];
+    // this.inputs = activatedRoute.snapshot.data['inputs'];
+    // this.selections = activatedRoute.snapshot.data['selections'];
 
-    this.calculators.forEach(c => c.active = false);
+    // this.calculators.forEach(c => c.active = false);
   }
 
   ngOnInit() {
@@ -68,10 +77,10 @@ export class CalculatorComponent implements OnInit, DoCheck {
   allActiveDataFilled = (): boolean => this.getActiveDataCount() === this.getActiveFilledDataCount();
   notAllActiveDataFilled = (): boolean => !this.allActiveDataFilled();
 
-  getActiveCompletedResults = (): ICalc[] =>
-    this.calculators.filter(c => c.active && (this.calcService.getResult(c)(this.inputs)(this.selections) || 0) !== 0)
+  // getActiveCompletedResults = (): ICalc[] =>
+  //   this.calculators.filter(c => c.active && (this.calcService.getResult(c)(this.inputs)(this.selections) || 0) !== 0)
 
-  allActiveResultsCompleted = (): boolean => this.getActiveCompletedResults().length === this.getActiveCalculators().length;
+  // allActiveResultsCompleted = (): boolean => this.getActiveCompletedResults().length === this.getActiveCalculators().length;
 
   // onActiveCalculatorsChanged = (activeCalculators: ICalc[]): void => {
   //   const inputIdsToActivate: Calc.Input.Id[] = Calc.getInputIds(activeCalculators);
