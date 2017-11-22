@@ -1,17 +1,18 @@
 
 import { indexBy, prop } from 'ramda';
 import { Action } from 'redux';
-import { ICalcState } from '@app/calculator/models';
+import { ICalcState, ICalc, IInput, ISelect } from '@app/calculator/models';
 import { LoadCalcsAction, LoadInputsAction, LoadSelectsAction, CalcAPIActions } from '@app/calculator/api/actions';
+import { IAction } from '@app/store/models';
 
 const INITIAL_STATE: ICalcState = {
-  calcs: {},
+  calcs: null,
   loadingCalcs: false,
   calcsLoadError: null,
-  inputs: {},
+  inputs: null,
   loadingInputs: false,
   inputsLoadError: null,
-  selects: {},
+  selects: null,
   loadingSelects: false,
   selectsLoadError: null,
 };
@@ -30,7 +31,7 @@ export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalc
     case CalcAPIActions.LOAD_CALCS_FINISHED:
       return {
         ...state,
-        calcs: action.payload ? indexBy(prop('id'), action.payload) : null,
+        calcs: indexBy(prop('id'), action.payload),
         loadingCalcs: false,
         calcsLoadError: action.error,
       };
@@ -44,7 +45,7 @@ export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalc
     case CalcAPIActions.LOAD_INPUTS_FINISHED:
       return {
         ...state,
-        inputs: action.payload ? indexBy(prop('id'), action.payload) : null,
+        inputs: indexBy(prop('id'), action.payload),
         loadingInputs: false,
         inputsLoadError: action.error,
       };
@@ -58,7 +59,7 @@ export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalc
     case CalcAPIActions.LOAD_SELECTS_FINISHED:
       return {
         ...state,
-        selects: action.payload ? indexBy(prop('id'), action.payload) : null,
+        selects: indexBy(prop('id'), action.payload),
         loadingSelects: false,
         selectsLoadError: action.error,
       };

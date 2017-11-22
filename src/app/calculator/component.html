@@ -4,7 +4,7 @@
     <div fxFlex="none">
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{calculatorsTitle}}</h3>
       <dc-calc-list
-        [calculators]="calculators$ | async">
+        [calculators$]="calculators$">
       </dc-calc-list>
     </div>
 
@@ -49,7 +49,7 @@
         <div class="dc-spacer"></div>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{calculatorsTitle}}</h3>
         <dc-calc-list
-          [calculators]="calculators$ | async">
+          [calculators$]="calculators$">
         </dc-calc-list>
         <div>
           <div class="dc-spacer"></div>

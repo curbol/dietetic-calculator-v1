@@ -23,30 +23,30 @@ export class CalcAPIActions {
   static readonly LOAD_SELECTS_FINISHED = 'LOAD_SELECTS_FINISHED';
 
   @dispatch()
-  loadCalcs = (): LoadCalcsAction => ({
+  loadCalcs = (): IAction<ICalc[]> => ({
     type: CalcAPIActions.LOAD_CALCS,
   })
 
-  loadCalcsStarted = (): LoadCalcsAction => ({
+  loadCalcsStarted = (): IAction<ICalc[]> => ({
     type: CalcAPIActions.LOAD_CALCS_STARTED,
   })
 
-  loadCalcsFinished = (payload: ICalc[], error: Error = null): LoadCalcsAction => ({
+  loadCalcsFinished = (payload: ICalc[], error: Error = null): IAction<ICalc[]> => ({
     type: CalcAPIActions.LOAD_CALCS_FINISHED,
     payload,
     error
   })
 
   @dispatch()
-  loadInputs = (): LoadInputsAction => ({
+  loadInputs = (): IAction<IInput[]> => ({
     type: CalcAPIActions.LOAD_INPUTS,
   })
 
-  loadInputsStarted = (): LoadInputsAction => ({
+  loadInputsStarted = (): IAction<IInput[]> => ({
     type: CalcAPIActions.LOAD_INPUTS_STARTED,
   })
 
-  loadInputsFinished = (payload: IInput[], error: Error = null): LoadInputsAction => ({
+  loadInputsFinished = (payload: IInput[], error: Error = null): IAction<IInput[]> => ({
     type: CalcAPIActions.LOAD_INPUTS_FINISHED,
     payload,
     error

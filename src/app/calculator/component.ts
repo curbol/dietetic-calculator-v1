@@ -1,13 +1,17 @@
 import { Component, OnInit, DoCheck, OnChanges } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { Location } from '@angular/common';
-import { select } from '@angular-redux/store';
+import { select, select$ } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
+import { pipe, values, sortBy, prop, groupBy } from 'ramda';
 
 import { appearOnActive, appearOnTrue } from '@app/animation/animations';
 import { ICalc, Calc, IInput, ISelect } from '@app/calculator/models';
 import { CalcAPIService } from '@app/calculator/api/service';
 import { CalcAPIActions } from '@app/calculator/api/actions';
+
+export const groupCalcs = (calcDictionary$: Observable<{[id: string]: ICalc}>) =>
+  calcDictionary$.map(pipe(values, groupBy(prop('type')))).do(a => console.log(a));
 
 @Component({
   selector: 'dc-calculator',
@@ -19,11 +23,9 @@ import { CalcAPIActions } from '@app/calculator/api/actions';
   ]
 })
 export class CalculatorComponent implements OnInit, DoCheck {
-
-  @select(['calculator', 'calcs'])
+  @select$(['calculator', 'calcs'], groupCalcs)
   readonly calculators$: Observable<ICalc[]>;
 
-  calculators: ICalc[] = [];
   inputs: IInput[] = [];
   selections: ISelect[] = [];
   baseUrl: string;
@@ -72,7 +74,7 @@ export class CalculatorComponent implements OnInit, DoCheck {
 
   getActiveDataCount = (): number => Calc.getAllActiveDataCount([this.inputs, this.selections]);
   getActiveFilledDataCount = (): number => Calc.getAllActiveFilledDataCount([this.inputs, this.selections]);
-  getActiveCalculators = (): ICalc[] => this.calculators.filter(c => c.active);
+  getActiveCalculators = (): ICalc[] => []; // this.calculators.filter(c => c.active);
 
   allActiveDataFilled = (): boolean => this.getActiveDataCount() === this.getActiveFilledDataCount();
   notAllActiveDataFilled = (): boolean => !this.allActiveDataFilled();

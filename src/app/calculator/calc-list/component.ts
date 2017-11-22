@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatListOptionChange } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
 
 import { ICalc } from '@app/calculator/models';
 
@@ -9,7 +10,7 @@ import { ICalc } from '@app/calculator/models';
   styleUrls: ['./component.css'],
 })
 export class CalcListComponent implements OnInit {
-  @Input() calculators: ICalc[];
+  @Input() calculators$: Observable<ICalc[]>;
   @Output() activeCalculatorsChanged = new EventEmitter<ICalc[]>();
 
   constructor() { }
@@ -28,5 +29,9 @@ export class CalcListComponent implements OnInit {
   updateActiveCalculators = (): void => {
     // const activeCalcs: ICalc[] = this.calculators.filter(c => c.active);
     // this.activeCalculatorsChanged.emit(activeCalcs);
+  }
+
+  getKey(_, calc: ICalc) {
+    return calc.id;
   }
 }
