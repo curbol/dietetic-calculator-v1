@@ -10,8 +10,8 @@ import { ICalc, Calc, IInput, ISelect } from '@app/calculator/models';
 import { CalcAPIService } from '@app/calculator/api/service';
 import { CalcAPIActions } from '@app/calculator/api/actions';
 
-export const groupCalcs = (calcDictionary$: Observable<{[id: string]: ICalc}>) =>
-  calcDictionary$.map(pipe(values, groupBy(prop('type')))).do(a => console.log(a));
+export const calcValues = (calcDictionary$: Observable<{[id: string]: ICalc}>) =>
+  calcDictionary$.map(values).do(a => console.log('test' + a));
 
 @Component({
   selector: 'dc-calculator',
@@ -23,7 +23,7 @@ export const groupCalcs = (calcDictionary$: Observable<{[id: string]: ICalc}>) =
   ]
 })
 export class CalculatorComponent implements OnInit, DoCheck {
-  @select$(['calculator', 'calcs'], groupCalcs)
+  @select$(['calculator', 'calcs'], calcValues)
   readonly calculators$: Observable<ICalc[]>;
 
   inputs: IInput[] = [];
