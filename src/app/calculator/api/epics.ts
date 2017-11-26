@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Epic, createEpicMiddleware } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
 import { CalcAPIService } from '@app/calculator/api/service';
-import { CalcAPIActions, LoadCalcsAction } from '@app/calculator/api/actions';
-import { IAppState } from '@app/store/models';
+import { CalcAPIActions } from '@app/calculator/api/actions';
+import { IAppState, IAction } from '@app/store/models';
 
 
 const calcsNotAlreadyFetched = (state: IAppState): boolean =>
@@ -20,7 +20,7 @@ export class CalcAPIEpics {
     return createEpicMiddleware(this.createLoadCalcsEpic());
   }
 
-  private createLoadCalcsEpic(): Epic<LoadCalcsAction, IAppState> {
+  private createLoadCalcsEpic(): Epic<IAction, IAppState> {
     return (action$, store) => action$
       .ofType(CalcAPIActions.LOAD_CALCS)
       .filter(() => calcsNotAlreadyFetched(store.getState()))

@@ -2,18 +2,18 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: 'groupBy'})
 export class GroupByPipe implements PipeTransform {
-  transform(value: Array<any>, field: string): Array<any> {
+  transform(value: Array<any>, propName: string): Array<any> {
     if (!value || !value.length) { return value; }
 
-    console.log(value);
-    const groupedObj = value.reduce((prev, cur) => {
-      if (!prev[cur[field]]) {
-        prev[cur[field]] = [cur];
+    const groupedObj = value.reduce((acc, cur) => {
+      if (!acc[cur[propName]]) {
+        acc[cur[propName]] = [cur];
       } else {
-        prev[cur[field]].push(cur);
+        acc[cur[propName]].push(cur);
       }
-      return prev;
+      return acc;
     }, {});
+
     return Object.keys(groupedObj).map(key => ({ key, value: groupedObj[key] }));
   }
 }

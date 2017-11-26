@@ -2,7 +2,7 @@
 import { indexBy, prop } from 'ramda';
 import { Action } from 'redux';
 import { ICalcState, ICalc, IInput, ISelect } from '@app/calculator/models';
-import { LoadCalcsAction, LoadInputsAction, LoadSelectsAction, CalcAPIActions } from '@app/calculator/api/actions';
+import { CalcAPIActions } from '@app/calculator/api/actions';
 import { IAction } from '@app/store/models';
 
 const INITIAL_STATE: ICalcState = {
@@ -17,8 +17,8 @@ const INITIAL_STATE: ICalcState = {
   selectsLoadError: null,
 };
 
-export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalcState => {
-  const action = a as LoadCalcsAction|LoadInputsAction|LoadSelectsAction;
+export const calcAPIReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalcState => {
+  const action = a as IAction;
 
   switch (action.type) {
     case CalcAPIActions.LOAD_CALCS_STARTED:

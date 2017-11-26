@@ -3,6 +3,8 @@ import { MatListOptionChange } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
 import { ICalc } from '@app/calculator/models';
+import { dispatch } from '@angular-redux/store';
+import { CalcActions } from '@app/calculator/actions';
 
 @Component({
   selector: 'dc-calc-list',
@@ -13,25 +15,13 @@ export class CalcListComponent implements OnInit {
   @Input() calculators$: Observable<ICalc[]>;
   @Output() activeCalculatorsChanged = new EventEmitter<ICalc[]>();
 
-  constructor() { }
+  constructor(
+    private actions: CalcActions,
+  ) { }
 
-  ngOnInit() {
-    // this.updateActiveCalculators();
-  }
+  ngOnInit() {}
 
-  onSelectionChange(event: MatListOptionChange) {
-    // const calc: ICalc = event.source.value;
-    // calc.active = event.selected;
-
-    // this.updateActiveCalculators();
-  }
-
-  updateActiveCalculators = (): void => {
-    // const activeCalcs: ICalc[] = this.calculators.filter(c => c.active);
-    // this.activeCalculatorsChanged.emit(activeCalcs);
-  }
-
-  getKey(_, calc: ICalc) {
-    return calc.id;
-  }
+  setCalcActive = (calcId: string, active: boolean) => active ?
+    this.actions.activateCalc(calcId) :
+    this.actions.deactivateCalc(calcId)
 }

@@ -11,7 +11,7 @@ import { CalcAPIService } from '@app/calculator/api/service';
 import { CalcAPIActions } from '@app/calculator/api/actions';
 
 export const calcValues = (calcDictionary$: Observable<{[id: string]: ICalc}>) =>
-  calcDictionary$.map(values).do(a => console.log('test' + a));
+  calcDictionary$.map(values);
 
 @Component({
   selector: 'dc-calculator',

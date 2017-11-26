@@ -7,9 +7,9 @@ export interface IAppState {
   converter?: { };
 }
 
-export interface IAction<T> {
+export interface IAction {
   type: string;
   meta?: any;
-  payload?: T;
+  payload?: any;
   error?: Error;
 }
