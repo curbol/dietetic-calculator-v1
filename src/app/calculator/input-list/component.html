@@ -1,9 +1,9 @@
-<!-- <div fxLayout="column" fxLayoutAlign="start center">
+<div fxLayout="column" fxLayoutAlign="start center">
 
   <div class="dc-full-width">
-    <div *ngIf="getActiveDataCount()" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
+    <div *ngIf="activeDataCount" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
       <div class="dc-full-width">
-        <div *ngIf="getActiveFilledDataCount()" [@appearOnActive]
+        <div *ngIf="activeFilledDataCount" [@appearOnActive]
              fxLayout="column" fxLayoutAlign="start center">
           <button mat-button (click)="clearDataValues()">
             <mat-icon>clear</mat-icon>
@@ -16,13 +16,13 @@
 
   <div class="dc-full-width">
     <div fxLayout="column">
-      <div *ngFor="let selection of selections">
-        <div *ngIf="selection.active" [@appearOnActive] fxLayout="column">
+      <div *ngFor="let select of selects">
+        <div *ngIf="select.active" [@appearOnActive] fxLayout="column">
           <div class="dc-spacer"></div>
           <mat-form-field fxFlex color="accent">
-            <mat-select required [placeholder]="selection.name | capitalize" [(ngModel)]="selection.value">
-              <mat-option *ngFor="let option of selection.group" [value]="option">
-                {{option?.name}}
+            <mat-select required [placeholder]="select.name" [(ngModel)]="select.value">
+              <mat-option *ngFor="let option of select.options" [value]="option">
+                {{option}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -36,11 +36,14 @@
       <div fxFlex *ngFor="let input of inputs">
         <div *ngIf="input.active" [@appearOnActive] fxLayout="column">
           <div class="dc-spacer"></div>
-          <dc-input fxFlex [input]="input" (unitChange)="onUnitChange()"></dc-input>
+          <dc-input fxFlex
+            [input]="input"
+            (unitChange)="onUnitChange()">
+          </dc-input>
           <div class="dc-spacer"></div>
         </div>
       </div>
     </div>
   </div>
 
-</div> -->
+</div>

@@ -4,20 +4,20 @@
     <div fxFlex="none">
       <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{calculatorsTitle}}</h3>
       <dc-calc-list
-        [calculators$]="calculators$">
+        [calcs]="calcs$ | async"
+        (calcActiveChanged)="onCalcActiveChanged($event)">
       </dc-calc-list>
     </div>
 
-    <!-- <div fxFlex="none">
-      <div *ngIf="getActiveDataCount()" [@appearOnActive]>
+    <div fxFlex="none">
+      <div *ngIf="activeDataCount" [@appearOnActive]>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
-        <dc-calculator-inputs
-          [(system)]="system"
-          [inputs]="inputs"
-          [selections]="selections">
-        </dc-calculator-inputs>
+        <dc-input-list
+          [inputs]="inputs$ | async"
+          [selects]="selects$ | async">
+        </dc-input-list>
       </div>
-    </div> -->
+    </div>
 
     <!-- <div fxFlex="none">
       <div *ngIf="getActiveCompletedResults().length" [@appearOnActive]>
@@ -49,11 +49,12 @@
         <div class="dc-spacer"></div>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{calculatorsTitle}}</h3>
         <dc-calc-list
-          [calculators$]="calculators$">
+          [calcs]="calcs$ | async"
+          (calcActiveChanged)="onCalcActiveChanged($event)">
         </dc-calc-list>
         <div>
           <div class="dc-spacer"></div>
-          <button mat-raised-button [color]="getActiveCalculators().length > 0 ? 'primary' : ''" matStepperNext>
+          <button mat-raised-button [color]="activeCalcsCount > 0 ? 'primary' : ''" matStepperNext>
             <span>{{inputsTitle}}</span>
             <mat-icon>arrow_forward</mat-icon>
           </button>

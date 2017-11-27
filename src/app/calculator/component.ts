@@ -18,14 +18,16 @@ import { appearOnActive, appearOnTrue } from '@app/animation/animations';
   ]
 })
 export class CalculatorComponent implements OnInit {
-  @select(['calculator', 'calcs'])
-  readonly calculators$: Observable<ICalc[]>;
+  @select(['calculator', 'calcs']) readonly calcs$: Observable<ICalc[]>;
+  @select(['calculator', 'inputs']) readonly inputs$: Observable<IInput[]>;
+  @select(['calculator', 'selects']) readonly selects$: Observable<ISelect[]>;
 
-  inputs: IInput[] = [];
-  selections: ISelect[] = [];
-  baseUrl: string;
-  settingsPath: string;
-  previousPath: string;
+  activeCalcs: ICalc[];
+  activeInputs: IInput[];
+  activeSelects: ISelect[];
+
+  get activeCalcsCount(): number { return this.activeCalcs.length; }
+  get activeDataCount(): number { return this.activeInputs.length + this.activeSelects.length; }
 
   readonly calculatorsTitle = 'Select Calculators';
   readonly calculatorsShortTitle = 'Calculators';
@@ -43,84 +45,14 @@ export class CalculatorComponent implements OnInit {
     private actions: CalcActions,
   ) {
     actions.loadCalcData();
-    // this.settingsPath = activatedRoute.snapshot.params['settings'];
-
-    // const url: UrlSegment[] = activatedRoute.snapshot.url;
-    // this.baseUrl = (this.settingsPath ? url.slice(0, -1) : url).join('/');
-
-    // this.calculators = activatedRoute.snapshot.data['calculators'];
-    // this.inputs = activatedRoute.snapshot.data['inputs'];
-    // this.selections = activatedRoute.snapshot.data['selections'];
-
-    // this.calculators.forEach(c => c.active = false);
   }
+
+  onCalcActiveChanged = (event: {id: string, active: boolean}) =>
+      this.actions.setCalcsActive([event])
 
   ngOnInit() {
-    if (this.settingsPath) {
-      // this.updateFromSettings(this.settingsPath);
-    }
+    this.calcs$.subscribe(calcs => this.activeCalcs = calcs.filter(c => c.active));
+    this.inputs$.subscribe(inputs => this.activeInputs = inputs.filter(i => i.active));
+    this.selects$.subscribe(selects => this.activeSelects = selects.filter(i => i.active));
   }
-
-  getActiveDataCount = (): number => Calc.getAllActiveDataCount([this.inputs, this.selections]);
-  getActiveFilledDataCount = (): number => Calc.getAllActiveFilledDataCount([this.inputs, this.selections]);
-  getActiveCalculators = (): ICalc[] => []; // this.calculators.filter(c => c.active);
-
-  allActiveDataFilled = (): boolean => this.getActiveDataCount() === this.getActiveFilledDataCount();
-  notAllActiveDataFilled = (): boolean => !this.allActiveDataFilled();
-
-  // getActiveCompletedResults = (): ICalc[] =>
-  //   this.calculators.filter(c => c.active && (this.calcService.getResult(c)(this.inputs)(this.selections) || 0) !== 0)
-
-  // allActiveResultsCompleted = (): boolean => this.getActiveCompletedResults().length === this.getActiveCalculators().length;
-
-  // onActiveCalculatorsChanged = (activeCalculators: ICalc[]): void => {
-  //   const inputIdsToActivate: Calc.Input.Id[] = Calc.getInputIds(activeCalculators);
-  //   const selectionIdsToActivate: Calc.Selection.Id[] = Calc.getSelectionIds(activeCalculators);
-
-  //   this.inputs.forEach(input => input.active = inputIdsToActivate.includes(input.id));
-  //   this.selections.forEach(selection => selection.active = selectionIdsToActivate.includes(selection.id));
-  // }
-
-  // private updatePathSettings = (): void => {
-  //   const path: string = Calc.toPath(this.calculators)(this.selections)(this.inputs);
-  //   if (path === this.previousPath) { return; }
-  //   this.previousPath = path;
-
-  //   const url: string = this.location.normalize(`${this.baseUrl}/${path}`);
-  //   this.location.replaceState(url);
-  // }
-
-  // private updateFromSettings = (settingsString): void => {
-  //   if (!settingsString) { return; }
-  //   const dataSettings = Calc.fromPath(settingsString);
-  //   if (!dataSettings) { return; }
-
-  //   if (dataSettings.calcs) {
-  //     dataSettings.calcs.forEach(data => {
-  //       const calc = this.calculators.find(s => s.id === data.id);
-  //       if (!calc) { return; }
-  //       calc.active = true;
-  //       if (data.outputSymbol !== null && data.outputSymbol !== undefined) {
-  //         calc.output.convertSymbol = data.outputSymbol;
-  //       }
-  //     });
-  //   }
-
-  //   if (dataSettings.selections) {
-  //     dataSettings.selections.forEach(data => {
-  //       const selection = this.selections.find(s => s.id === data.id);
-  //       if (!selection) { return; }
-  //       selection.value = selection.group.find(o => o.id === data.valueId);
-  //     });
-  //   }
-
-  //   if (dataSettings.inputs) {
-  //     dataSettings.inputs.forEach(data => {
-  //       const input = this.inputs.find(i => i.id === data.id);
-  //       if (!input) { return; }
-  //       input.value = data.value;
-  //       input.unit = input.group.find(u => u.symbol === data.symbol) || input.group[0];
-  //     });
-  //   }
-  // }
 }

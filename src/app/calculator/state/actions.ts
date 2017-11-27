@@ -14,8 +14,9 @@ export class CalcActions {
   static readonly LOAD_SELECTS_STARTED = 'LOAD_SELECTS_STARTED';
   static readonly LOAD_SELECTS_FINISHED = 'LOAD_SELECTS_FINISHED';
 
-  static readonly SET_CALC_ACTIVE = 'SET_CALC_ACTIVE';
+  static readonly SET_CALCS_ACTIVE = 'SET_CALCS_ACTIVE';
   static readonly SET_INPUTS_ACTIVE = 'SET_INPUTS_ACTIVE';
+  static readonly SET_SELECTS_ACTIVE = 'SET_SELECTS_ACTIVE';
 
   @dispatch()
   loadCalcData = (): IAction => ({
@@ -53,13 +54,18 @@ export class CalcActions {
   })
 
   @dispatch()
-  setCalcActive = (id: string, active: boolean): IAction => ({
-    type: CalcActions.SET_CALC_ACTIVE,
-    payload: { id, active },
+  setCalcsActive = (payload: {id: string, active: boolean}[]): IAction => ({
+    type: CalcActions.SET_CALCS_ACTIVE,
+    payload: payload,
   })
 
-  setInputsActive = (ids: string[], active: boolean): IAction => ({
+  setInputsActive = (payload: {id: string, active: boolean}[]): IAction => ({
     type: CalcActions.SET_INPUTS_ACTIVE,
-    payload: { ids, active },
+    payload,
+  })
+
+  setSelectsActive = (payload: {id: string, active: boolean}[]): IAction => ({
+    type: CalcActions.SET_SELECTS_ACTIVE,
+    payload,
   })
 }

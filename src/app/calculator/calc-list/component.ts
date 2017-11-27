@@ -12,8 +12,8 @@ import { CalcActions } from '@app/calculator/state/actions';
   styleUrls: ['./component.css'],
 })
 export class CalcListComponent implements OnInit {
-  @Input() calculators$: Observable<ICalc[]>;
-  @Output() activeCalculatorsChanged = new EventEmitter<ICalc[]>();
+  @Input() calcs: ICalc[];
+  @Output() calcActiveChanged = new EventEmitter<{id: string, active: boolean}>();
 
   constructor(
     private actions: CalcActions,
@@ -26,7 +26,7 @@ export class CalcListComponent implements OnInit {
     const active = event.selected;
 
     if (calc.active !== active) {
-      this.actions.setCalcActive(calc.id, active);
+      this.calcActiveChanged.emit({id: calc.id, active});
     }
   }
 }

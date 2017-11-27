@@ -63,12 +63,13 @@ export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalc
         loadingSelects: false,
         selectsLoadError: action.error,
       };
-    case CalcActions.SET_CALC_ACTIVE:
+    case CalcActions.SET_CALCS_ACTIVE:
       return {
         ...state,
         calcs: state.calcs.map(calc => {
-          if (calc.id === action.payload.id) {
-            return {...calc, active: action.payload.active };
+          const data = action.payload.find(i => i.id === calc.id);
+          if (data) {
+            return {...calc, active: data.active };
           }
           return calc;
         })
@@ -77,10 +78,22 @@ export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalc
       return {
         ...state,
         inputs: state.inputs.map(input => {
-          if (action.payload.ids.find(id => id === input.id)) {
-            return {...input, active: action.payload.active };
+          const data = action.payload.find(i => i.id === input.id);
+          if (data) {
+            return {...input, active: data.active };
           }
           return input;
+        })
+      };
+    case CalcActions.SET_SELECTS_ACTIVE:
+      return {
+        ...state,
+        selects: state.selects.map(select => {
+          const data = action.payload.find(i => i.id === select.id);
+          if (data) {
+            return {...select, active: data.active };
+          }
+          return select;
         })
       };
     default:

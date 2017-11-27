@@ -7,10 +7,7 @@ export class RootEpics {
 
   public createEpics() {
     return [
-      this.calcEpics.createLoadCalcsEpicMiddleware(),
-      this.calcEpics.createLoadInputsEpicMiddleware(),
-      this.calcEpics.createLoadSelectsEpicMiddleware(),
-      this.calcEpics.createSetActiveInputsEpicMiddleware(),
+      ...this.calcEpics.createCalcEpicsMiddleware(),
     ];
   }
 }

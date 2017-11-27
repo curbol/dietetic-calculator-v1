@@ -9,6 +9,7 @@ import {
 import { appearOnActive } from '@app/animation/animations';
 import { Calc, IInput, ISelect } from '@app/calculator/models';
 import { IUnit } from '@app/unit/models';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'dc-input-list',
@@ -20,16 +21,16 @@ import { IUnit } from '@app/unit/models';
 })
 export class InputListComponent implements OnInit {
   @Input() inputs: IInput[];
-  get activeInputs(): IInput[] {
-    if (!this.inputs) { return null; }
-    return this.inputs.filter(i => i.active);
-  }
+  @Input() selects: ISelect[];
 
-  @Input() selections: ISelect[];
-  get activeSelections(): ISelect[] {
-    if (!this.selections) { return null; }
-    return this.selections.filter(s => s.active);
-  }
+  get activeInputs(): IInput[] { return this.inputs.filter(i => i.active); }
+  get activeFilledInputs(): IInput[] { return this.activeInputs.filter(i => ![null, undefined].includes(i.value)); }
+
+  get activeSelects(): ISelect[] { return this.selects.filter(s => s.active); }
+  get activeFilledSelects(): ISelect[] { return this.activeSelects.filter(s => ![null, undefined].includes(s.value)); }
+
+  get activeDataCount(): number { return this.activeInputs.length + this.activeSelects.length; }
+  get activeFilledDataCount(): number { return this.activeFilledInputs.length + this.activeFilledSelects.length; }
 
   constructor() {}
 

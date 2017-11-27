@@ -4,7 +4,7 @@ export interface ICalc {
   readonly title: string;
   readonly subtitle: string;
   readonly inputs: {id: string; unit: string}[];
-  readonly selections: string[];
+  readonly selects: string[];
   readonly outputUnit: string;
   active: boolean;
 }
@@ -54,7 +54,7 @@ export module Calc {
     title: serverCalc.title,
     subtitle: serverCalc.subtitle,
     inputs: serverCalc.inputs,
-    selections: serverCalc.selections,
+    selects: serverCalc.selections,
     outputUnit: serverCalc.outputUnit,
     active: false,
   });
@@ -69,10 +69,10 @@ export module Calc {
     value: null,
   });
 
-  export const selectFromServer = (serverSelection: any): ISelect => ({
-    id: serverSelection.id,
-    name: serverSelection.name,
-    options: serverSelection.options,
+  export const selectFromServer = (serverSelect: any): ISelect => ({
+    id: serverSelect.id,
+    name: serverSelect.name,
+    options: serverSelect.options,
     active: false,
     value: null,
   });

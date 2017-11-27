@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { CalcAPIService } from '@app/calculator/api/service';
 import { CalcActions } from '@app/calculator/state/actions';
 import { IAppState, IAction } from '@app/store/models';
-import { IInput } from '@app/calculator/models';
+import { IInput, ICalc } from '@app/calculator/models';
 import { difference } from 'ramda';
 
 const calcsNotAlreadyFetched = (state: IAppState): boolean =>
@@ -17,20 +17,14 @@ export class CalcEpics {
     private actions: CalcActions,
   ) {}
 
-  public createLoadCalcsEpicMiddleware() {
-    return createEpicMiddleware(this.createLoadCalcsEpic());
-  }
-
-  public createLoadInputsEpicMiddleware() {
-    return createEpicMiddleware(this.createLoadInputsEpic());
-  }
-
-  public createLoadSelectsEpicMiddleware() {
-    return createEpicMiddleware(this.createLoadSelectsEpic());
-  }
-
-  public createSetActiveInputsEpicMiddleware() {
-    return createEpicMiddleware(this.createSetActiveInputsEpic());
+  public createCalcEpicsMiddleware() {
+    return [
+      createEpicMiddleware(this.createLoadCalcsEpic()),
+      createEpicMiddleware(this.createLoadInputsEpic()),
+      createEpicMiddleware(this.createLoadSelectsEpic()),
+      createEpicMiddleware(this.createSetActiveInputsEpic()),
+      createEpicMiddleware(this.createSetActiveSelectsEpic()),
+    ];
   }
 
   private createLoadCalcsEpic(): Epic<IAction, IAppState> {
@@ -71,17 +65,35 @@ export class CalcEpics {
 
   private createSetActiveInputsEpic(): Epic<IAction, IAppState> {
     return (action$, store) => action$
-      .ofType(CalcActions.SET_CALC_ACTIVE)
+      .ofType(CalcActions.SET_CALCS_ACTIVE)
       .map(action => {
-        const calc = store.getState().calculator.calcs.find(c => c.id === action.payload.id);
-        if (!calc) { return null; }
+        const state = store.getState();
+        const activeInputIds: string[] = state.calculator.calcs
+          .filter(c => c.active)
+          .map(c => c.inputs.map(i => i.id))
+          .reduce((acc, cur) => [...acc, ...difference(cur, acc)], []);
 
-        return {
-          inputs: calc.inputs.map(i => i.id),
-          active: action.payload.active,
-        };
+        return state.calculator.inputs
+          .filter(i => i.active !== activeInputIds.includes(i.id))
+          .map(i => ({ id: i.id, active: !i.active }));
       })
-      .filter(data => data !== null)
-      .map(data => this.actions.setInputsActive(data.inputs, data.active));
+      .map(data => this.actions.setInputsActive(data));
+  }
+
+  private createSetActiveSelectsEpic(): Epic<IAction, IAppState> {
+    return (action$, store) => action$
+      .ofType(CalcActions.SET_CALCS_ACTIVE)
+      .map(action => {
+        const state = store.getState();
+        const activeInputIds: string[] = state.calculator.calcs
+          .filter(c => c.active)
+          .map(c => c.selects)
+          .reduce((acc, cur) => [...acc, ...difference(cur, acc)], []);
+
+        return state.calculator.selects
+          .filter(s => s.active !== activeInputIds.includes(s.id))
+          .map(s => ({ id: s.id, active: !s.active }));
+      })
+      .map(data => this.actions.setSelectsActive(data));
   }
 }
