@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { ICalc } from '@app/calculator/models';
 import { dispatch } from '@angular-redux/store';
-import { CalcActions } from '@app/calculator/actions';
+import { CalcActions } from '@app/calculator/state/actions';
 
 @Component({
   selector: 'dc-calc-list',
@@ -21,7 +21,12 @@ export class CalcListComponent implements OnInit {
 
   ngOnInit() {}
 
-  setCalcActive = (calcId: string, active: boolean) => active ?
-    this.actions.activateCalc(calcId) :
-    this.actions.deactivateCalc(calcId)
+  onSelectionChange = (event: MatListOptionChange) => {
+    const calc = event.source.value;
+    const active = event.selected;
+
+    if (calc.active !== active) {
+      this.actions.setCalcActive(calc.id, active);
+    }
+  }
 }

@@ -10,15 +10,15 @@ export interface ICalc {
 }
 
 export interface ICalcState {
-  calcs: {[id: string]: ICalc};
+  calcs: ICalc[];
   loadingCalcs: boolean;
   calcsLoadError: Error;
 
-  inputs: {[id: string]: IInput};
+  inputs: IInput[];
   loadingInputs: boolean;
   inputsLoadError: Error;
 
-  selects: {[id: string]: ISelect};
+  selects: ISelect[];
   loadingSelects: boolean;
   selectsLoadError: Error;
 }

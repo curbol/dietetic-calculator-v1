@@ -1,17 +1,12 @@
-import { Component, OnInit, DoCheck, OnChanges } from '@angular/core';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
-import { Location } from '@angular/common';
-import { select, select$ } from '@angular-redux/store';
+import { OnInit, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { pipe, values, sortBy, prop, groupBy } from 'ramda';
 
-import { appearOnActive, appearOnTrue } from '@app/animation/animations';
-import { ICalc, Calc, IInput, ISelect } from '@app/calculator/models';
+import { ICalc, IInput, ISelect, Calc } from '@app/calculator/models';
 import { CalcAPIService } from '@app/calculator/api/service';
-import { CalcAPIActions } from '@app/calculator/api/actions';
-
-export const calcValues = (calcDictionary$: Observable<{[id: string]: ICalc}>) =>
-  calcDictionary$.map(values);
+import { CalcActions } from '@app/calculator/state/actions';
+import { appearOnActive, appearOnTrue } from '@app/animation/animations';
 
 @Component({
   selector: 'dc-calculator',
@@ -22,8 +17,8 @@ export const calcValues = (calcDictionary$: Observable<{[id: string]: ICalc}>) =
     appearOnTrue(),
   ]
 })
-export class CalculatorComponent implements OnInit, DoCheck {
-  @select$(['calculator', 'calcs'], calcValues)
+export class CalculatorComponent implements OnInit {
+  @select(['calculator', 'calcs'])
   readonly calculators$: Observable<ICalc[]>;
 
   inputs: IInput[] = [];
@@ -45,10 +40,9 @@ export class CalculatorComponent implements OnInit, DoCheck {
   constructor(
     private activatedRoute: ActivatedRoute,
     private calcService: CalcAPIService,
-    private location: Location,
-    private actions: CalcAPIActions,
+    private actions: CalcActions,
   ) {
-    actions.loadCalcs();
+    actions.loadCalcData();
     // this.settingsPath = activatedRoute.snapshot.params['settings'];
 
     // const url: UrlSegment[] = activatedRoute.snapshot.url;
@@ -65,11 +59,6 @@ export class CalculatorComponent implements OnInit, DoCheck {
     if (this.settingsPath) {
       // this.updateFromSettings(this.settingsPath);
     }
-  }
-
-  ngDoCheck() {
-    // console.log('calc-tool do-check');
-    // this.updatePathSettings();
   }
 
   getActiveDataCount = (): number => Calc.getAllActiveDataCount([this.inputs, this.selections]);

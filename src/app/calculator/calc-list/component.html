@@ -17,7 +17,7 @@
         <mat-divider></mat-divider>
         <mat-list-option checkboxPosition="before"
                          [value]="calc" [selected]="calc.active"
-                         (selectionChange)="setCalcActive($event.source.value.Id, $event.selected)">
+                         (selectionChange)="onSelectionChange($event)">
           <h3 mdLine class="dc-list-option-title">{{calc.title}}</h3>
           <h6 mdLine class="dc-list-option-subtitle dc-secondary-text">{{calc.subtitle}}</h6>
         </mat-list-option>

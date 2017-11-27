@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import { CalcAPIEpics } from '@app/calculator/api/epics';
+import { CalcEpics } from '@app/calculator/state/epics';
 
 @Injectable()
 export class RootEpics {
-  constructor(private calcEpics: CalcAPIEpics) {}
+  constructor(private calcEpics: CalcEpics) {}
 
   public createEpics() {
     return [
       this.calcEpics.createLoadCalcsEpicMiddleware(),
+      this.calcEpics.createLoadInputsEpicMiddleware(),
+      this.calcEpics.createLoadSelectsEpicMiddleware(),
+      this.calcEpics.createSetActiveInputsEpicMiddleware(),
     ];
   }
 }

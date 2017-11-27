@@ -2,7 +2,7 @@
 import { indexBy, prop } from 'ramda';
 import { Action } from 'redux';
 import { ICalcState, ICalc, IInput, ISelect } from '@app/calculator/models';
-import { CalcAPIActions } from '@app/calculator/api/actions';
+import { CalcActions } from '@app/calculator/state/actions';
 import { IAction } from '@app/store/models';
 
 const INITIAL_STATE: ICalcState = {
@@ -17,51 +17,71 @@ const INITIAL_STATE: ICalcState = {
   selectsLoadError: null,
 };
 
-export const calcAPIReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalcState => {
+export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalcState => {
   const action = a as IAction;
 
   switch (action.type) {
-    case CalcAPIActions.LOAD_CALCS_STARTED:
+    case CalcActions.LOAD_CALCS_STARTED:
       return {
         ...state,
-        calcs: {},
+        calcs: [],
         loadingCalcs: true,
         calcsLoadError: null,
       };
-    case CalcAPIActions.LOAD_CALCS_FINISHED:
+    case CalcActions.LOAD_CALCS_FINISHED:
       return {
         ...state,
-        calcs: indexBy(prop('id'), action.payload),
+        calcs: action.payload,
         loadingCalcs: false,
         calcsLoadError: action.error,
       };
-    case CalcAPIActions.LOAD_INPUTS_STARTED:
+    case CalcActions.LOAD_INPUTS_STARTED:
       return {
         ...state,
-        inputs: {},
+        inputs: [],
         loadingInputs: true,
         inputsLoadError: null,
       };
-    case CalcAPIActions.LOAD_INPUTS_FINISHED:
+    case CalcActions.LOAD_INPUTS_FINISHED:
       return {
         ...state,
-        inputs: indexBy(prop('id'), action.payload),
+        inputs: action.payload,
         loadingInputs: false,
         inputsLoadError: action.error,
       };
-    case CalcAPIActions.LOAD_SELECTS_STARTED:
+    case CalcActions.LOAD_SELECTS_STARTED:
       return {
         ...state,
-        selects: {},
+        selects: [],
         loadingSelects: true,
         selectsLoadError: null,
       };
-    case CalcAPIActions.LOAD_SELECTS_FINISHED:
+    case CalcActions.LOAD_SELECTS_FINISHED:
       return {
         ...state,
-        selects: indexBy(prop('id'), action.payload),
+        selects: action.payload,
         loadingSelects: false,
         selectsLoadError: action.error,
+      };
+    case CalcActions.SET_CALC_ACTIVE:
+      return {
+        ...state,
+        calcs: state.calcs.map(calc => {
+          if (calc.id === action.payload.id) {
+            return {...calc, active: action.payload.active };
+          }
+          return calc;
+        })
+      };
+    case CalcActions.SET_INPUTS_ACTIVE:
+      return {
+        ...state,
+        inputs: state.inputs.map(input => {
+          if (action.payload.ids.find(id => id === input.id)) {
+            return {...input, active: action.payload.active };
+          }
+          return input;
+        })
       };
     default:
       return state;
