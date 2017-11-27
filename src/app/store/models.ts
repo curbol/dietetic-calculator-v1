@@ -3,6 +3,7 @@ import { Unit, IUnit } from '@app/unit/models';
 
 export interface IAppState {
   routes?: any;
+  unit?: IUnit[];
   calculator?: ICalcState;
   converter?: { };
 }

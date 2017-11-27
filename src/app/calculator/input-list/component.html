@@ -1,22 +1,17 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
   <div class="dc-full-width">
-    <div *ngIf="activeDataCount" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
-      <div class="dc-full-width">
-        <div *ngIf="activeFilledDataCount" [@appearOnActive]
-             fxLayout="column" fxLayoutAlign="start center">
-          <button mat-button (click)="clearDataValues()">
-            <mat-icon>clear</mat-icon>
-            <span>Clear Values</span>
-          </button>
-        </div>
-      </div>
+    <div *ngIf="activeFilledDataCount" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
+      <button mat-button (click)="clearDataValues()">
+        <mat-icon>clear</mat-icon>
+        <span>Clear Values</span>
+      </button>
     </div>
   </div>
 
   <div class="dc-full-width">
     <div fxLayout="column">
-      <div *ngFor="let select of selects">
+      <div *ngFor="let select of selects; trackBy:getSelectKey">
         <div *ngIf="select.active" [@appearOnActive] fxLayout="column">
           <div class="dc-spacer"></div>
           <mat-form-field fxFlex color="accent">
@@ -33,7 +28,7 @@
 
   <div class="dc-full-width">
     <div fxLayout="column">
-      <div fxFlex *ngFor="let input of inputs">
+      <div fxFlex *ngFor="let input of inputs; trackBy:getInputKey">
         <div *ngIf="input.active" [@appearOnActive] fxLayout="column">
           <div class="dc-spacer"></div>
           <dc-input fxFlex

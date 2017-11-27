@@ -8,7 +8,7 @@ import {
 
 import { Num } from '@app/shared/num';
 import { IUnit } from '@app/unit/models';
-import { UnitService } from '@app/unit/api/service';
+import { UnitAPIService } from '@app/unit/api/service';
 
 @Component({
   selector: 'dc-result',
@@ -41,7 +41,7 @@ export class ResultComponent implements OnInit {
 
   // get showUnitOptions(): boolean { return this.selectedUnit && this.unitGroup.length > 1; }
 
-  constructor(private unitService: UnitService) { }
+  constructor(private unitService: UnitAPIService) { }
 
   ngOnInit() {
     // this.setDefaultValues(this.symbol);

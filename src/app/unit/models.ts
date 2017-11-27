@@ -5,6 +5,12 @@ export interface IUnit {
   readonly factor: number;
 }
 
+export interface IUnitState {
+  units: IUnit[];
+  loadingUnits: boolean;
+  unitsLoadError: Error;
+}
+
 export module Unit {
   export const fromServer = (serverUnit: any): IUnit => ({
     symbol: serverUnit.symbol,

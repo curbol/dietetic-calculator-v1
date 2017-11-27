@@ -8,7 +8,7 @@ import { IInput, ICalc } from '@app/calculator/models';
 import { difference } from 'ramda';
 
 const calcsNotAlreadyFetched = (state: IAppState): boolean =>
-  !(state.calculator && state.calculator.calcs && Object.keys(state.calculator.calcs).length);
+  !(state.calculator && state.calculator.calcs && state.calculator.calcs.length);
 
 @Injectable()
 export class CalcEpics {

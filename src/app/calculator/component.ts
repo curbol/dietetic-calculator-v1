@@ -1,4 +1,4 @@
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { ICalc, IInput, ISelect, Calc } from '@app/calculator/models';
 import { CalcAPIService } from '@app/calculator/api/service';
 import { CalcActions } from '@app/calculator/state/actions';
+import { UnitActions } from '@app/unit/state/actions';
 import { appearOnActive, appearOnTrue } from '@app/animation/animations';
 
 @Component({
@@ -15,7 +16,8 @@ import { appearOnActive, appearOnTrue } from '@app/animation/animations';
   animations: [
     appearOnActive(),
     appearOnTrue(),
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CalculatorComponent implements OnInit {
   @select(['calculator', 'calcs']) readonly calcs$: Observable<ICalc[]>;
@@ -40,15 +42,15 @@ export class CalculatorComponent implements OnInit {
   readonly noCalculatorsSelectedMessage = 'No calculators are selected.';
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private calcService: CalcAPIService,
-    private actions: CalcActions,
+    private calcActions: CalcActions,
+    private unitActions: UnitActions,
   ) {
-    actions.loadCalcData();
+    calcActions.loadCalcData();
+    unitActions.loadUnitData();
   }
 
   onCalcActiveChanged = (event: {id: string, active: boolean}) =>
-      this.actions.setCalcsActive([event])
+      this.calcActions.setCalcsActive([event])
 
   ngOnInit() {
     this.calcs$.subscribe(calcs => this.activeCalcs = calcs.filter(c => c.active));

@@ -11,32 +11,6 @@ const URL = {
 
 @Injectable()
 export class CalcAPIService {
-  // private resultMap: {[key: string]: (inputs: {[key: string]: number}) => (selections: {[key: string]: string}) => number} = {
-  //   'bmi': (inputs: {[key: string]: number}) => (selections: {[key: string]: string}): number => {
-  //     const weight = inputs['weight'];
-  //     const height = inputs['height'];
-  //     return this.equationService.bodyMassIndex(weight)(height);
-  //   },
-  //   'ibw': (inputs: {[key: string]: number}) => (selections: {[key: string]: string}): number => {
-  //     const gender = selections['gender'];
-  //     const height = inputs['height'];
-  //     return this.equationService.idealBodyWeight(gender)(height);
-  //   },
-  //   'abw': (inputs: {[key: string]: number}) => (selections: {[key: string]: string}): number => {
-  //     const gender = selections['gender'];
-  //     const weight = inputs['weight'];
-  //     const height = inputs['height'];
-  //     return this.equationService.adjustedBodyWeight(gender)(weight)(height);
-  //   },
-  //   'mifflin': (inputs: {[key: string]: number}) => (selections: {[key: string]: string}): number => {
-  //     const gender = selections['gender'];
-  //     const weight = inputs['weight'];
-  //     const height = inputs['height'];
-  //     const age = inputs['age'];
-  //     return this.equationService.mifflinStJeor(gender)(weight)(height)(age);
-  //   },
-  // };
-
   constructor(
     private http: Http,
   ) { }

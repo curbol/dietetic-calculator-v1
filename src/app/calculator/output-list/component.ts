@@ -9,7 +9,7 @@ import {
 import { appearOnActive } from '@app/animation/animations';
 import { ICalc, Calc, IInput, ISelect } from '@app/calculator/models';
 import { CalcAPIService } from '@app/calculator/api/service';
-import { UnitService } from '@app/unit/api/service';
+import { UnitAPIService } from '@app/unit/api/service';
 
 @Component({
   selector: 'dc-output-list',
@@ -31,7 +31,7 @@ export class OutputListComponent implements OnInit {
 
   constructor(
     private calcService: CalcAPIService,
-    private unitService: UnitService,
+    private unitService: UnitAPIService,
   ) { }
 
   ngOnInit() {}
