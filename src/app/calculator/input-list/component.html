@@ -15,7 +15,8 @@
         <div *ngIf="select.active" [@appearOnActive] fxLayout="column">
           <div class="dc-spacer"></div>
           <mat-form-field fxFlex color="accent">
-            <mat-select required [placeholder]="select.name" [(ngModel)]="select.value">
+            <mat-select required [placeholder]="select.name" [ngModel]="select.value"
+                        (ngModelChange)="onSelectValueChange(select.id, $event)">
               <mat-option *ngFor="let option of select.options" [value]="option">
                 {{option}}
               </mat-option>
@@ -32,8 +33,12 @@
         <div *ngIf="input.active" [@appearOnActive] fxLayout="column">
           <div class="dc-spacer"></div>
           <dc-input fxFlex
-            [input]="input"
-            (unitChange)="onUnitChange()">
+            [name]="input.name"
+            [value]="input.value"
+            (valueChange)="onInputValueChange(input.id, $event)"
+            [units]="getInputUnits(input.type)"
+            [unitSymbol]="input.unit"
+            (unitSymbolChange)="onInputUnitChange(input.id, $event)">
           </dc-input>
           <div class="dc-spacer"></div>
         </div>

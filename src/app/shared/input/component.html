@@ -1,15 +1,16 @@
 <div fxLayout="column">
   <mat-form-field fxFlex [ngClass]="{'dc-input-value': showUnitOptions}" color="accent">
-    <input matInput required type="number" [placeholder]="input.name" [(ngModel)]="input.value"
-           (ngModelChange)="onValueChange($event.value)" (click)="$event.target.select()" />
-    <mat-hint align="start" *ngIf="!showUnitOptions">
-      {{input?.unit?.name}} ({{getUnitString(input?.unit?.symbol)}})
+    <input [readonly]="readonly" matInput required type="number" [placeholder]="name" (click)="$event.target.select()"
+           [ngModel]="value" (ngModelChange)="onValueChange($event)"/>
+    <mat-hint align="start" *ngIf="!showUnitOptions()">
+      <span *ngIf="selectedUnit">{{selectedUnit?.name}} ({{selectedUnit?.symbol}})</span>
+      <span *ngIf="!selectedUnit">{{unitSymbol}}</span>
     </mat-hint>
   </mat-form-field>
-  <mat-form-field fxFlex class="dc-input-unit" color="accent" *ngIf="showUnitOptions">
-    <mat-select (change)="onUnitChange($event.value)" [(ngModel)]="input.unit">
-      <mat-option *ngFor="let unit of input.group" [value]="unit">
-        {{unit?.name}} ({{getUnitString(unit?.symbol)}})
+  <mat-form-field fxFlex class="dc-input-unit" color="accent" *ngIf="showUnitOptions()">
+    <mat-select [ngModel]="unitSymbol" (ngModelChange)="onSelectedUnitChange($event)">
+      <mat-option *ngFor="let unit of units" [value]="unit.symbol">
+        {{unit?.name}} ({{unit?.symbol}})
       </mat-option>
     </mat-select>
   </mat-form-field>

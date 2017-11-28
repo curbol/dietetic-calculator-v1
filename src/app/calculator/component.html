@@ -2,19 +2,19 @@
 
   <div fxLayout fxLayoutGap="1rem" fxHide fxShow.gt-sm>
     <div fxFlex="none">
-      <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{calculatorsTitle}}</h3>
+      <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{titles.calc.long}}</h3>
       <dc-calc-list
-        [calcs]="calcs$ | async"
-        (calcActiveChanged)="onCalcActiveChanged($event)">
+        [calcs]="calcs$ | async">
       </dc-calc-list>
     </div>
 
     <div fxFlex="none">
       <div *ngIf="activeDataCount" [@appearOnActive]>
-        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{inputsTitle}}</h3>
+        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{titles.input.long}}</h3>
         <dc-input-list
           [inputs]="inputs$ | async"
-          [selects]="selects$ | async">
+          [selects]="selects$ | async"
+          [units]="units$ | async">
         </dc-input-list>
       </div>
     </div>
@@ -42,20 +42,19 @@
 
     <mat-step [completed]="false">
       <ng-template matStepLabel>
-        <span fxHide fxShow.gt-xs>{{calculatorsTitle}}</span>
-        <span fxShow fxHide.gt-xs>{{calculatorsShortTitle}}</span>
+        <span fxHide fxShow.gt-xs>{{titles.calc.long}}</span>
+        <span fxShow fxHide.gt-xs>{{titles.calc.short}}</span>
       </ng-template>
       <div fxLayout="column" fxLayoutAlign="start center">
         <div class="dc-spacer"></div>
-        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{calculatorsTitle}}</h3>
+        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{titles.calc.long}}</h3>
         <dc-calc-list
-          [calcs]="calcs$ | async"
-          (calcActiveChanged)="onCalcActiveChanged($event)">
+          [calcs]="calcs$ | async">
         </dc-calc-list>
         <div>
           <div class="dc-spacer"></div>
           <button mat-raised-button [color]="activeCalcsCount > 0 ? 'primary' : ''" matStepperNext>
-            <span>{{inputsTitle}}</span>
+            <span>{{titles.input.long}}</span>
             <mat-icon>arrow_forward</mat-icon>
           </button>
         </div>

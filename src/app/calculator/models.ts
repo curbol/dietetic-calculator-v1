@@ -6,27 +6,27 @@ export interface ICalc {
   readonly inputs: {id: string; unit: string}[];
   readonly selects: string[];
   readonly outputUnit: string;
-  active: boolean;
+  readonly active: boolean;
 }
 
 export interface ICalcState {
-  calcs: ICalc[];
-  loadingCalcs: boolean;
-  calcsLoadError: Error;
+  readonly calcs: ICalc[];
+  readonly loadingCalcs: boolean;
+  readonly calcsLoadError: Error;
 
-  inputs: IInput[];
-  loadingInputs: boolean;
-  inputsLoadError: Error;
+  readonly inputs: IInput[];
+  readonly loadingInputs: boolean;
+  readonly inputsLoadError: Error;
 
-  selects: ISelect[];
-  loadingSelects: boolean;
-  selectsLoadError: Error;
+  readonly selects: ISelect[];
+  readonly loadingSelects: boolean;
+  readonly selectsLoadError: Error;
 }
 
 export interface IData {
   readonly name: string;
-  active: boolean;
-  value: number;
+  readonly value: number;
+  readonly active: boolean;
 }
 
 export interface IInput {
@@ -34,17 +34,17 @@ export interface IInput {
   readonly type: string;
   readonly name: string;
   readonly defaultUnit: string;
-  selectedUnit: string;
-  active: boolean;
-  value: number;
+  readonly unit: string;
+  readonly value: number;
+  readonly active: boolean;
 }
 
 export interface ISelect {
   readonly id: string;
   readonly name: string;
   readonly options: string[];
-  active: boolean;
-  value: string;
+  readonly value: string;
+  readonly active: boolean;
 }
 
 export module Calc {
@@ -64,17 +64,17 @@ export module Calc {
     type: serverInput.type,
     name: serverInput.name,
     defaultUnit: serverInput.defaultUnit,
-    selectedUnit: null,
-    active: false,
+    unit: serverInput.defaultUnit,
     value: null,
+    active: false,
   });
 
   export const selectFromServer = (serverSelect: any): ISelect => ({
     id: serverSelect.id,
     name: serverSelect.name,
     options: serverSelect.options,
-    active: false,
     value: null,
+    active: false,
   });
 
   export const inputReadyToCalculate = (input: IInput): boolean => (input != null && input.value != null);

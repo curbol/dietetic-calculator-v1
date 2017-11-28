@@ -6,9 +6,9 @@ export interface IUnit {
 }
 
 export interface IUnitState {
-  units: IUnit[];
-  loadingUnits: boolean;
-  unitsLoadError: Error;
+  readonly units: IUnit[];
+  readonly loadingUnits: boolean;
+  readonly unitsLoadError: Error;
 }
 
 export module Unit {

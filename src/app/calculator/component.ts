@@ -4,6 +4,7 @@ import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
 import { ICalc, IInput, ISelect, Calc } from '@app/calculator/models';
+import { IUnit } from '@app/unit/models';
 import { CalcAPIService } from '@app/calculator/api/service';
 import { CalcActions } from '@app/calculator/state/actions';
 import { UnitActions } from '@app/unit/state/actions';
@@ -23,6 +24,7 @@ export class CalculatorComponent implements OnInit {
   @select(['calculator', 'calcs']) readonly calcs$: Observable<ICalc[]>;
   @select(['calculator', 'inputs']) readonly inputs$: Observable<IInput[]>;
   @select(['calculator', 'selects']) readonly selects$: Observable<ISelect[]>;
+  @select(['unit', 'units']) readonly units$: Observable<IUnit[]>;
 
   activeCalcs: ICalc[];
   activeInputs: IInput[];
@@ -31,15 +33,13 @@ export class CalculatorComponent implements OnInit {
   get activeCalcsCount(): number { return this.activeCalcs.length; }
   get activeDataCount(): number { return this.activeInputs.length + this.activeSelects.length; }
 
-  readonly calculatorsTitle = 'Select Calculators';
-  readonly calculatorsShortTitle = 'Calculators';
-  readonly inputsTitle = 'Input Data';
-  readonly inputsShortTitle = 'Data';
-  readonly outputsTitle = 'View Results';
-  readonly outputsShortTitle = 'Results';
-
   readonly missingInputsMessage = 'Some inputs are missing values.';
   readonly noCalculatorsSelectedMessage = 'No calculators are selected.';
+  readonly titles = {
+    calc: { long: 'Select Calculators', short: 'Calculators' },
+    input: { long: 'Input Data', short: 'Data' },
+    output: { long: 'View Results', short: 'Results' },
+  };
 
   constructor(
     private calcActions: CalcActions,
@@ -48,9 +48,6 @@ export class CalculatorComponent implements OnInit {
     calcActions.loadCalcData();
     unitActions.loadUnitData();
   }
-
-  onCalcActiveChanged = (event: {id: string, active: boolean}) =>
-      this.calcActions.setCalcsActive([event])
 
   ngOnInit() {
     this.calcs$.subscribe(calcs => this.activeCalcs = calcs.filter(c => c.active));

@@ -68,10 +68,7 @@ export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalc
         ...state,
         calcs: state.calcs.map(calc => {
           const data = action.payload.find(i => i.id === calc.id);
-          if (data) {
-            return {...calc, active: data.active };
-          }
-          return calc;
+          return data ? {...calc, active: data.active } : calc;
         })
       };
     case CalcActions.SET_INPUTS_ACTIVE:
@@ -79,10 +76,7 @@ export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalc
         ...state,
         inputs: state.inputs.map(input => {
           const data = action.payload.find(i => i.id === input.id);
-          if (data) {
-            return {...input, active: data.active };
-          }
-          return input;
+          return data ? {...input, active: data.active } : input;
         })
       };
     case CalcActions.SET_SELECTS_ACTIVE:
@@ -90,10 +84,31 @@ export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalc
         ...state,
         selects: state.selects.map(select => {
           const data = action.payload.find(i => i.id === select.id);
-          if (data) {
-            return {...select, active: data.active };
-          }
-          return select;
+          return data ? {...select, active: data.active } : select;
+        })
+      };
+    case CalcActions.SET_INPUTS_UNIT:
+      return {
+        ...state,
+        inputs: state.inputs.map(input => {
+          const data = action.payload.find(i => i.id === input.id);
+          return data ? {...input, unit: data.symbol } : input;
+        })
+      };
+    case CalcActions.SET_INPUTS_VALUE:
+      return {
+        ...state,
+        inputs: state.inputs.map(input => {
+          const data = action.payload.find(i => i.id === input.id);
+          return data ? {...input, value: data.value } : input;
+        })
+      };
+    case CalcActions.SET_SELECTS_VALUE:
+      return {
+        ...state,
+        selects: state.selects.map(select => {
+          const data = action.payload.find(i => i.id === select.id);
+          return data ? {...select, value: data.value } : select;
         })
       };
     default:

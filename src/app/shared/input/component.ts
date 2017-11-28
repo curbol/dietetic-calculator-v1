@@ -17,16 +17,24 @@ import { IUnit } from '@app/unit/models';
   encapsulation: ViewEncapsulation.None
 })
 export class InputComponent implements OnInit {
-  @Input() input: IInput;
-  @Output() unitChange: EventEmitter<IUnit> = new EventEmitter<IUnit>();
+  @Input() readonly: boolean;
+  @Input() name: string;
+  @Input() units: IUnit[];
+  @Input() unitSymbol: string;
+  @Output() unitSymbolChange: EventEmitter<string> = new EventEmitter<string>();
+  @Input() value: number;
   @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();
 
-  get showUnitOptions(): boolean { return true; }
+  get selectedUnit(): IUnit { return this.units ? this.units.find(u => u.symbol === this.unitSymbol) : null; }
 
   constructor() { }
 
   ngOnInit() { }
 
-  onUnitChange = (unit: IUnit): void => this.unitChange.emit(unit);
-  onValueChange = (value: number): void => this.valueChange.emit(value);
+  showUnitOptions = () => this.units && this.units.length;
+
+  onSelectedUnitChange = (symbol: string): void => this.unitSymbolChange.emit(symbol);
+  onValueChange = (value: number): void => {
+    if (this.value !== value) { this.valueChange.emit(value); }
+  }
 }

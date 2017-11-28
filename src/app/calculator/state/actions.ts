@@ -18,35 +18,28 @@ export class CalcActions {
   static readonly SET_INPUTS_ACTIVE = 'SET_INPUTS_ACTIVE';
   static readonly SET_SELECTS_ACTIVE = 'SET_SELECTS_ACTIVE';
 
+  static readonly SET_INPUTS_UNIT = 'SET_INPUTS_UNIT';
+  static readonly SET_INPUTS_VALUE = 'SET_INPUTS_VALUE';
+  static readonly SET_SELECTS_VALUE = 'SET_SELECTS_VALUE';
+
   @dispatch()
-  loadCalcData = (): IAction => ({
-    type: CalcActions.LOAD_CALC_DATA,
-  })
+  loadCalcData = (): IAction => ({ type: CalcActions.LOAD_CALC_DATA })
 
-  loadCalcsStarted = (): IAction => ({
-    type: CalcActions.LOAD_CALCS_STARTED,
-  })
-
+  loadCalcsStarted = (): IAction => ({ type: CalcActions.LOAD_CALCS_STARTED });
   loadCalcsFinished = (payload: ICalc[], error: Error = null): IAction => ({
     type: CalcActions.LOAD_CALCS_FINISHED,
     payload,
     error
   })
 
-  loadInputsStarted = (): IAction => ({
-    type: CalcActions.LOAD_INPUTS_STARTED,
-  })
-
+  loadInputsStarted = (): IAction => ({ type: CalcActions.LOAD_INPUTS_STARTED });
   loadInputsFinished = (payload: IInput[], error: Error = null): IAction => ({
     type: CalcActions.LOAD_INPUTS_FINISHED,
     payload,
     error
   })
 
-  loadSelectsStarted = (): IAction => ({
-    type: CalcActions.LOAD_SELECTS_STARTED,
-  })
-
+  loadSelectsStarted = (): IAction => ({ type: CalcActions.LOAD_SELECTS_STARTED });
   loadSelectsFinished = (payload: ISelect[], error: Error = null): IAction => ({
     type: CalcActions.LOAD_SELECTS_FINISHED,
     payload,
@@ -67,5 +60,23 @@ export class CalcActions {
   setSelectsActive = (payload: {id: string, active: boolean}[]): IAction => ({
     type: CalcActions.SET_SELECTS_ACTIVE,
     payload,
+  })
+
+  @dispatch()
+  setInputsUnit = (payload: {id: string, symbol: string}[]): IAction => ({
+    type: CalcActions.SET_INPUTS_UNIT,
+    payload: payload,
+  })
+
+  @dispatch()
+  setInputsValue = (payload: {id: string, value: number}[]): IAction => ({
+    type: CalcActions.SET_INPUTS_VALUE,
+    payload: payload,
+  })
+
+  @dispatch()
+  setSelectsValue = (payload: {id: string, value: string}[]): IAction => ({
+    type: CalcActions.SET_SELECTS_VALUE,
+    payload: payload,
   })
 }

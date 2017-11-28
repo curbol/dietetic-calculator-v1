@@ -1,15 +1,10 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter
-} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 import { appearOnActive } from '@app/animation/animations';
 import { Calc, IInput, ISelect } from '@app/calculator/models';
+import { CalcActions } from '@app/calculator/state/actions';
 import { IUnit } from '@app/unit/models';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'dc-input-list',
@@ -32,17 +27,23 @@ export class InputListComponent implements OnInit {
   get activeFilledSelects(): ISelect[] { return this.activeSelects.filter(s => ![null, undefined].includes(s.value)); }
   get activeFilledDataCount(): number { return this.activeFilledInputs.length + this.activeFilledSelects.length; }
 
-  constructor() {}
+  constructor(
+    private calcActions: CalcActions,
+  ) {}
 
   ngOnInit() {}
 
-  // onSelectionChange = (selection: Calc.ISelection, optionId: number) => selection.value = selection.group.find(o => o.id === optionId);
+  getSelectKey = (index: number, selection: ISelect) => selection.id;
+  getInputKey = (index: number, input: IInput) => input.id;
 
-  // clearDataValues = (): void => {
-  //   this.inputs.filter(i => i).forEach(i => i.value = null);
-  //   this.selections.filter(s => s).forEach(s => s.value = null);
-  // }
+  getInputUnits = (type: string): IUnit[] => this.units ? this.units.filter(u => u.type === type) : null;
 
-  getSelectKey(index: number, selection: ISelect) { return selection.id; }
-  getInputKey(index: number, input: IInput) { return input.id; }
+  onSelectValueChange = (id: string, value: string) => this.calcActions.setSelectsValue([{id, value}]);
+  onInputValueChange = (id: string, value: number) => this.calcActions.setInputsValue([{id, value}]);
+  onInputUnitChange = (id: string, symbol: string) => this.calcActions.setInputsUnit([{id, symbol}]);
+
+  clearDataValues = () => {
+    this.calcActions.setSelectsValue(this.selects.map(s => ({id: s.id, value: null})));
+    this.calcActions.setInputsValue(this.inputs.map(i => ({id: i.id, value: null})));
+  }
 }
