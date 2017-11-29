@@ -19,23 +19,22 @@
       </div>
     </div>
 
-    <!-- <div fxFlex="none">
-      <div *ngIf="getActiveCompletedResults().length" [@appearOnActive]>
-        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{outputsTitle}}</h3>
+    <div fxFlex="none">
+      <div *ngIf="activeCalcsCount" [@appearOnActive]>
+        <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{titles.output.long}}</h3>
         <div class="dc-full-width">
-          <div *ngIf="notAllActiveDataFilled()" [@appearOnActive]
+          <div *ngIf="activeFilledDataCount !== activeCalcsCount" [@appearOnActive]
                fxLayout="column" fxLayoutAlign="start center">
             <dc-chip color="warn">{{missingInputsMessage}}</dc-chip>
             <div class="dc-spacer"></div>
           </div>
         </div>
-        <dc-calculator-outputs
-          [calculators]="calculators"
-          [inputs]="inputs"
-          [selections]="selections">
-        </dc-calculator-outputs>
+        <dc-output-list
+          [calcs]="calcs$ | async"
+          [units]="units$ | async">
+        </dc-output-list>
       </div>
-    </div> -->
+    </div>
   </div>
 
   <mat-horizontal-stepper fxHide fxShow.lt-md>

@@ -22,15 +22,15 @@ import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/observable/of';
 
-import { ResultComponent } from '@app/shared/result/component';
 import { InputComponent } from '@app/shared/input/component';
 import { MaterialModule } from '@app/shared/material/module';
 import { CapitalizePipe } from '@app/shared/capitalize/pipe';
 import { GroupByPipe } from '@app/shared/group-by/pipe';
+import { ChipComponent } from '@app/shared/chip/component';
 
 @NgModule({
   declarations: [
-    ResultComponent,
+    ChipComponent,
     CapitalizePipe,
     GroupByPipe,
     InputComponent,
@@ -50,7 +50,7 @@ import { GroupByPipe } from '@app/shared/group-by/pipe';
     MaterialModule,
     FlexLayoutModule,
     RouterModule,
-    ResultComponent,
+    ChipComponent,
     CapitalizePipe,
     GroupByPipe,
     InputComponent,

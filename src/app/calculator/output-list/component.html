@@ -1,22 +1,22 @@
-<!-- <div fxLayout="column" fxLayoutAlign="start center">
+<div fxLayout="column" fxLayoutAlign="start center">
 
   <div class="dc-full-width">
     <div fxLayout="column">
-      <div *ngFor="let calc of calculators">
-        <div *ngIf="calc.active" [@appearOnActive]>
+      <div *ngFor="let calc of calcs; trackBy:getCalcKey">
+        <div *ngIf="calc.active" [@appearOnActive] fxLayout="column">
           <div class="dc-spacer"></div>
-          <dc-result
-            [title]="calc.title"
-            [value]="getResult(calc)"
-            [symbolText]="calc.output.symbolText"
-            [symbol]="calc.output.symbol"
-            [(convertSymbol)]="calc.output.convertSymbol"
-            (convertSymbolChange)="updateSystem(calculators)">
-          </dc-result>
+          <dc-input fxFlex
+            [readonly]="true"
+            [name]="calc.title"
+            [value]="0"
+            [units]="null"
+            [unitSymbol]="calc.outputUnit"
+            (unitSymbolChange)="1 === 1">
+          </dc-input>
           <div class="dc-spacer"></div>
         </div>
       </div>
     </div>
   </div>
 
-</div> -->
+</div>

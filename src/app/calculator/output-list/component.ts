@@ -8,6 +8,7 @@ import {
 
 import { appearOnActive } from '@app/animation/animations';
 import { ICalc, Calc, IInput, ISelect } from '@app/calculator/models';
+import { IUnit } from '@app/unit/models';
 import { CalcAPIService } from '@app/calculator/api/service';
 import { UnitAPIService } from '@app/unit/api/service';
 
@@ -20,14 +21,8 @@ import { UnitAPIService } from '@app/unit/api/service';
   ]
 })
 export class OutputListComponent implements OnInit {
-  @Input() calculators: ICalc[];
-  get activeCalculators(): ICalc[] {
-    if (!this.calculators) { return null; }
-    return this.calculators.filter(c => c.active);
-  }
-
-  @Input() inputs: IInput[];
-  @Input() selections: ISelect[];
+  @Input() calcs: ICalc[];
+  @Input() units: IUnit[];
 
   constructor(
     private calcService: CalcAPIService,
@@ -36,10 +31,7 @@ export class OutputListComponent implements OnInit {
 
   ngOnInit() {}
 
-  // getResult = (calc: ICalc): number => {
-  //   return this.calcService.getResult(calc)(this.inputs)(this.selections);
-  // }
+  getCalcKey = (index: number, calc: ICalc) => calc.id;
 
-  // getActiveCompletedResults = (): ICalc[] =>
-  //   this.calculators.filter(c => c.active && (this.calcService.getResult(c)(this.inputs)(this.selections) || 0) !== 0)
+  getInputUnits = (type: string): IUnit[] => this.units ? this.units.filter(u => u.type === type) : null;
 }

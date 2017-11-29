@@ -32,6 +32,9 @@ export class CalculatorComponent implements OnInit {
 
   get activeCalcsCount(): number { return this.activeCalcs.length; }
   get activeDataCount(): number { return this.activeInputs.length + this.activeSelects.length; }
+  get activeFilledDataCount(): number {
+    return this.activeInputs.filter(i => i.value).length + this.activeSelects.filter(s => s.value).length;
+  }
 
   readonly missingInputsMessage = 'Some inputs are missing values.';
   readonly noCalculatorsSelectedMessage = 'No calculators are selected.';
