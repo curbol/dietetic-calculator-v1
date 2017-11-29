@@ -9,7 +9,7 @@
             [readonly]="true"
             [name]="calc.title"
             [value]="0"
-            [units]="null"
+            [units]="getOutputUnits(getOutputUnitType(calc.calc.outputUnit))"
             [unitSymbol]="calc.outputUnit"
             (unitSymbolChange)="1 === 1">
           </dc-input>

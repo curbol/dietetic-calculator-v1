@@ -33,5 +33,10 @@ export class OutputListComponent implements OnInit {
 
   getCalcKey = (index: number, calc: ICalc) => calc.id;
 
-  getInputUnits = (type: string): IUnit[] => this.units ? this.units.filter(u => u.type === type) : null;
+  getOutputUnits = (type: string): IUnit[] => this.units && type ? this.units.filter(u => u.type === type) : null;
+  getOutputUnit = (symbol: string): IUnit => this.units && symbol ? this.units.find(u => u.symbol === symbol) : null;
+  getOutputUnitType = (symbol: string): string => {
+    const unit: IUnit = this.getOutputUnit(symbol);
+    return unit ? unit.type : null;
+  }
 }
