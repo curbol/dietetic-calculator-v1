@@ -3,9 +3,8 @@ export interface ICalc {
   readonly type: string;
   readonly title: string;
   readonly subtitle: string;
-  readonly inputs: {id: string; unit: string}[];
+  readonly inputs: string[];
   readonly selects: string[];
-  readonly outputUnit: string;
   readonly output: IOutput;
   readonly active: boolean;
 }
@@ -46,6 +45,7 @@ export interface IOutput {
   readonly unit: string;
   readonly convertToUnit: string;
   readonly value: number;
+  readonly convertedValue: number;
 }
 
 export module Calc {
@@ -58,8 +58,9 @@ export module Calc {
     selects: serverCalc.selections,
     output: {
       unit: serverCalc.outputUnit,
-      convertToUnit: serverCalc.outputUnit,
       value: null,
+      convertToUnit: serverCalc.outputUnit,
+      convertedValue: null,
     },
     active: false,
   });

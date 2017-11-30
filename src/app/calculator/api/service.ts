@@ -29,33 +29,4 @@ export class CalcAPIService {
     this.http.get(URL.selects)
       .map(response => response.json())
       .map(serverSelects => serverSelects.map(Calc.selectFromServer))
-
-  // getResult = (calc: ICalc) => (inputs: IInput[]) => (selections: ISelect[]): number => {
-  //   const inputConversions: {[key: string]: number} = this.getInputConversions(calc.inputs)(inputs);
-  //   const selectedValues: {[key: string]: string} = this.getSelectedValues(calc.selections)(selections);
-
-  //   if (Object.values(inputConversions).some(a => a === null) ||
-  //       Object.values(selectedValues).some(a => a === null)) { return null; }
-
-  //   return this.resultMap[calc.id](inputConversions)(selectedValues);
-  // }
-
-  // private getInputConversions = (requests: {id: string; unit: string}[]) => (inputs: IInput[]) => {
-  //   const result: {[key: string]: number} = {};
-  //   requests.forEach(request => {
-  //     const input: IInput = inputs.find(s => s.id === request.id);
-  //     const conversion: number = input && input.value ? Calc.inputConversion(input)(request.unit) : null;
-  //     result[request.id] = conversion;
-  //   });
-  //   return result;
-  // }
-
-  // private getSelectedValues = (selectionIds: string[]) => (selections: ISelect[]) => {
-  //   const result: {[key: string]: string} = {};
-  //   selectionIds.forEach(id => {
-  //     const selection: ISelect = selections.find(s => s.id === id);
-  //     result[id] = selection ? selection.value : null;
-  //   });
-  //   return result;
-  // }
 }

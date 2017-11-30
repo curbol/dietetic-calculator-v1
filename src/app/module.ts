@@ -8,7 +8,6 @@ import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { routes } from '@app/routes';
 import { AppComponent } from '@app/component';
 import { UnitAPIService } from '@app/unit/api/service';
-import { EquationService } from '@app/equation/service';
 import { UnitActions } from '@app/unit/state/actions';
 import { UnitEpics } from '@app/unit/state/epics';
 import { HeaderComponent } from '@app/header/component';
@@ -38,11 +37,9 @@ import { StoreModule } from '@app/store/module';
     AboutComponent,
   ],
   providers: [
-    EquationService,
     UnitAPIService,
     UnitActions,
     UnitEpics,
-
   ],
   bootstrap: [
     AppComponent
