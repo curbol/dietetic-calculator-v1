@@ -21,7 +21,8 @@ export class EquationService {
     [key: string]: (inputs: {id: string, unit: string, value: number}[], selects: {id: string, value: string}[]) => number
   } = {
     [EquationService.BODY_MASS_INDEX]: (inputs, selects) => {
-      const weight_kg = inputs.find(i => i.id === EquationService.Weight).map(data => this.converter.conversion(data.value, data.unit, 'kg'));
+      const weight = this.getInputById(inputs, 'weight');
+      const weight_kg = this.converter.convert(weight.value, weight.unit, 'kg');
       const height_m = 0;
       return this.bodyMassIndex(weight_kg)(height_m);
     },
@@ -44,6 +45,9 @@ export class EquationService {
       return this.mifflinStJeor(gender)(weight_kg)(height_cm)(age_y);
     },
   };
+
+  private getInputById = (inputs: {id: string, unit: string, value: number}[], id: string): {id: string, unit: string, value: number} =>
+    (inputs || []).find(i => i && i.id ? i.id.toLowerCase() === id.toLowerCase() : false)
 
   getEquation = (id: string) => this.equationFromData[id];
 
