@@ -58,8 +58,8 @@ export class CalculatorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.calcs$.subscribe(calcs => this.activeCalcs = calcs.filter(c => c.active));
-    this.inputs$.subscribe(inputs => this.activeInputs = inputs.filter(i => i.active));
-    this.selects$.subscribe(selects => this.activeSelects = selects.filter(i => i.active));
+    this.calcs$.subscribe(calcs => this.activeCalcs = (calcs || []).filter(c => c.active));
+    this.inputs$.subscribe(inputs => this.activeInputs = (inputs || []).filter(i => i.active));
+    this.selects$.subscribe(selects => this.activeSelects = (selects || []).filter(i => i.active));
   }
 }

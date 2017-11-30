@@ -19,12 +19,12 @@ export class InputListComponent implements OnInit {
   @Input() selects: ISelect[];
   @Input() units: IUnit[];
 
-  get activeInputs(): IInput[] { return this.inputs.filter(i => i.active); }
-  get activeSelects(): ISelect[] { return this.selects.filter(s => s.active); }
+  get activeInputs(): IInput[] { return (this.inputs || []).filter(i => i.active); }
+  get activeSelects(): ISelect[] { return (this.selects || []).filter(s => s.active); }
   get activeDataCount(): number { return this.activeInputs.length + this.activeSelects.length; }
 
-  get activeFilledInputs(): IInput[] { return this.activeInputs.filter(i => ![null, undefined].includes(i.value)); }
-  get activeFilledSelects(): ISelect[] { return this.activeSelects.filter(s => ![null, undefined].includes(s.value)); }
+  get activeFilledInputs(): IInput[] { return (this.activeInputs || []).filter(i => ![null, undefined].includes(i.value)); }
+  get activeFilledSelects(): ISelect[] { return (this.activeSelects || []).filter(s => ![null, undefined].includes(s.value)); }
   get activeFilledDataCount(): number { return this.activeFilledInputs.length + this.activeFilledSelects.length; }
 
   constructor(
@@ -36,7 +36,7 @@ export class InputListComponent implements OnInit {
   getSelectKey = (index: number, selection: ISelect) => selection.id;
   getInputKey = (index: number, input: IInput) => input.id;
 
-  getInputUnits = (type: string): IUnit[] => this.units ? this.units.filter(u => u.type === type) : null;
+  getInputUnits = (type: string): IUnit[] => (this.units || []).filter(u => u.type === type);
 
   onSelectValueChange = (id: string, value: string) => this.calcActions.setSelectsValue([{id, value}]);
   onInputValueChange = (id: string, value: number) => this.calcActions.setInputsValue([{id, value}]);

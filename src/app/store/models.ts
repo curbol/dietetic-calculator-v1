@@ -2,15 +2,15 @@ import { ICalcState } from '@app/calculator/models';
 import { Unit, IUnit } from '@app/unit/models';
 
 export interface IAppState {
-  routes?: any;
-  unit?: IUnit[];
+  readonly routes?: any;
+  readonly unit?: IUnit[];
   calculator?: ICalcState;
-  converter?: { };
+  readonly converter?: { };
 }
 
 export interface IAction {
-  type: string;
-  meta?: any;
-  payload?: any;
-  error?: Error;
+  readonly type: string;
+  readonly meta?: any;
+  readonly payload?: any;
+  readonly error?: Error;
 }
