@@ -2,18 +2,18 @@
 
   <div class="dc-full-width">
     <div fxLayout="column">
-      <div *ngFor="let calc of calcs; trackBy:getCalcKey">
+      <div *ngFor="let calc of calcs; trackBy:getCalcKey; let isFirst = first; let isLast = last">
         <div *ngIf="calc.active" [@appearOnActive] fxLayout="column">
-          <div class="dc-spacer"></div>
+          <div *ngIf="!isFirst" class="dc-spacer"></div>
           <dc-input fxFlex
             [readonly]="true"
             [name]="calc.title"
             [value]="0"
-            [units]="getOutputUnits(getOutputUnitType(calc.outputUnit))"
-            [unitSymbol]="calc.outputUnit"
-            (unitSymbolChange)="1 === 1">
+            [units]="getOutputUnits(calc)"
+            [unitSymbol]="getOutputConvertToUnit(calc)"
+            (unitSymbolChange)="onOutputUnitChange(calc.id, $event)">
           </dc-input>
-          <div class="dc-spacer"></div>
+          <div *ngIf="!isLast" class="dc-spacer"></div>
         </div>
       </div>
     </div>

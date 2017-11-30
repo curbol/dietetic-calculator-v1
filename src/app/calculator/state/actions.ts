@@ -21,6 +21,8 @@ export class CalcActions {
   static readonly SET_INPUTS_UNIT = 'SET_INPUTS_UNIT';
   static readonly SET_INPUTS_VALUE = 'SET_INPUTS_VALUE';
   static readonly SET_SELECTS_VALUE = 'SET_SELECTS_VALUE';
+  static readonly SET_OUTPUTS_UNIT = 'SET_OUTPUTS_UNIT';
+  static readonly SET_OUTPUTS_VALUE = 'SET_OUTPUTS_VALUE';
 
   @dispatch()
   loadCalcData = (): IAction => ({ type: CalcActions.LOAD_CALC_DATA })
@@ -77,6 +79,18 @@ export class CalcActions {
   @dispatch()
   setSelectsValue = (payload: {id: string, value: string}[]): IAction => ({
     type: CalcActions.SET_SELECTS_VALUE,
+    payload: payload,
+  })
+
+  @dispatch()
+  setOutputsUnit = (payload: {id: string, symbol: string}[]): IAction => ({
+    type: CalcActions.SET_OUTPUTS_UNIT,
+    payload: payload,
+  })
+
+  @dispatch()
+  setOutputsValue = (payload: {id: string, value: number}[]): IAction => ({
+    type: CalcActions.SET_OUTPUTS_VALUE,
     payload: payload,
   })
 }

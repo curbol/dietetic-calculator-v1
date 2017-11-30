@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { appearOnActive } from '@app/animation/animations';
-import { Calc, IInput, ISelect } from '@app/calculator/models';
-import { CalcActions } from '@app/calculator/state/actions';
+import { IInput, ISelect } from '@app/calculator/models';
 import { IUnit } from '@app/unit/models';
+import { CalcActions } from '@app/calculator/state/actions';
+
 
 @Component({
   selector: 'dc-input-list',

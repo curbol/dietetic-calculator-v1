@@ -1,16 +1,10 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { appearOnActive } from '@app/animation/animations';
-import { ICalc, Calc, IInput, ISelect } from '@app/calculator/models';
+import { ICalc } from '@app/calculator/models';
 import { IUnit } from '@app/unit/models';
-import { CalcAPIService } from '@app/calculator/api/service';
-import { UnitAPIService } from '@app/unit/api/service';
+import { CalcActions } from '@app/calculator/state/actions';
+import { compose } from 'ramda';
 
 @Component({
   selector: 'dc-output-list',
@@ -25,18 +19,19 @@ export class OutputListComponent implements OnInit {
   @Input() units: IUnit[];
 
   constructor(
-    private calcService: CalcAPIService,
-    private unitService: UnitAPIService,
+    private calcActions: CalcActions,
   ) { }
 
   ngOnInit() {}
 
   getCalcKey = (index: number, calc: ICalc) => calc.id;
 
-  getOutputUnits = (type: string): IUnit[] => this.units && type ? this.units.filter(u => u.type === type) : null;
-  getOutputUnit = (symbol: string): IUnit => this.units && symbol ? this.units.find(u => u.symbol === symbol) : null;
-  getOutputUnitType = (symbol: string): string => {
-    const unit: IUnit = this.getOutputUnit(symbol);
-    return unit ? unit.type : null;
-  }
+  getUnitFromSymbol = (symbol: string): IUnit => this.units && symbol ? this.units.find(u => u.symbol === symbol) : null;
+  getUnitTypeFromSymbol = (symbol: string): string => (this.getUnitFromSymbol(symbol) || {type: null}).type;
+  getUnitsOfType = (type: string): IUnit[] => this.units && type ? this.units.filter(u => u.type === type) : null;
+  getOutputDefaultUnit = (calc: ICalc): string => calc && calc.output ? calc.output.unit : null;
+  getOutputConvertToUnit = (calc: ICalc): string => calc && calc.output ? calc.output.convertToUnit : this.getOutputDefaultUnit(calc);
+  getOutputUnits = (calc: ICalc): IUnit[] => compose(this.getUnitsOfType, this.getUnitTypeFromSymbol, this.getOutputDefaultUnit)(calc);
+
+  onOutputUnitChange = (id: string, symbol: string) => this.calcActions.setOutputsUnit([{id, symbol}]);
 }

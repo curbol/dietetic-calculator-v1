@@ -36,8 +36,13 @@ export class CalculatorComponent implements OnInit {
     return this.activeInputs.filter(i => i.value).length + this.activeSelects.filter(s => s.value).length;
   }
 
-  readonly missingInputsMessage = 'Some inputs are missing values.';
-  readonly noCalculatorsSelectedMessage = 'No calculators are selected.';
+  get activeFilledResults(): number { return 1; }
+
+  readonly messages = {
+    missingInputs: 'Some inputs are missing values.',
+    noCalcsSelected: 'No calculators are selected.',
+  };
+
   readonly titles = {
     calc: { long: 'Select Calculators', short: 'Calculators' },
     input: { long: 'Input Data', short: 'Data' },

@@ -6,14 +6,15 @@
         <mat-icon>clear</mat-icon>
         <span>Clear Values</span>
       </button>
+      <div class="dc-spacer"></div>
     </div>
   </div>
 
   <div class="dc-full-width">
     <div fxLayout="column">
-      <div *ngFor="let select of selects; trackBy:getSelectKey">
+      <div *ngFor="let select of selects; trackBy:getSelectKey; let isFirst = first;">
         <div *ngIf="select.active" [@appearOnActive] fxLayout="column">
-          <div class="dc-spacer"></div>
+          <div *ngIf="!isFirst" class="dc-spacer"></div>
           <mat-form-field fxFlex color="accent">
             <mat-select required [placeholder]="select.name" [ngModel]="select.value"
                         (ngModelChange)="onSelectValueChange(select.id, $event)">
@@ -29,9 +30,9 @@
 
   <div class="dc-full-width">
     <div fxLayout="column">
-      <div fxFlex *ngFor="let input of inputs; trackBy:getInputKey">
+      <div fxFlex *ngFor="let input of inputs; trackBy:getInputKey; let isFirst = first; let isLast = last">
         <div *ngIf="input.active" [@appearOnActive] fxLayout="column">
-          <div class="dc-spacer"></div>
+          <div *ngIf="!isFirst" class="dc-spacer"></div>
           <dc-input fxFlex
             [name]="input.name"
             [value]="input.value"
@@ -40,7 +41,7 @@
             [unitSymbol]="input.unit"
             (unitSymbolChange)="onInputUnitChange(input.id, $event)">
           </dc-input>
-          <div class="dc-spacer"></div>
+          <div *ngIf="!isLast" class="dc-spacer"></div>
         </div>
       </div>
     </div>

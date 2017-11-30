@@ -111,6 +111,28 @@ export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalc
           return data ? {...select, value: data.value } : select;
         })
       };
+    case CalcActions.SET_OUTPUTS_UNIT:
+      return {
+        ...state,
+        calcs: state.calcs.map(calc => {
+          const data = action.payload.find(i => i.id === calc.id);
+          return data ? {
+            ...calc,
+            output: { ...calc.output, convertToUnit: data.symbol }
+          } : calc;
+        })
+      };
+    case CalcActions.SET_OUTPUTS_UNIT:
+      return {
+        ...state,
+        calcs: state.calcs.map(calc => {
+          const data = action.payload.find(i => i.id === calc.id);
+          return data ? {
+            ...calc,
+            output: { ...calc.output, value: data.value }
+          } : calc;
+        })
+      };
     default:
       return state;
   }

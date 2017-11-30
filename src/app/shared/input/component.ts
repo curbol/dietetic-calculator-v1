@@ -31,7 +31,7 @@ export class InputComponent implements OnInit {
 
   ngOnInit() { }
 
-  showUnitOptions = () => this.units && this.units.length;
+  showUnitOptions = () => this.units && this.units.length > 1;
 
   onSelectedUnitChange = (symbol: string): void => this.unitSymbolChange.emit(symbol);
   onValueChange = (value: number): void => {

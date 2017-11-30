@@ -6,6 +6,7 @@ export interface ICalc {
   readonly inputs: {id: string; unit: string}[];
   readonly selects: string[];
   readonly outputUnit: string;
+  readonly output: IOutput;
   readonly active: boolean;
 }
 
@@ -21,12 +22,6 @@ export interface ICalcState {
   readonly selects: ISelect[];
   readonly loadingSelects: boolean;
   readonly selectsLoadError: Error;
-}
-
-export interface IData {
-  readonly name: string;
-  readonly value: number;
-  readonly active: boolean;
 }
 
 export interface IInput {
@@ -47,15 +42,25 @@ export interface ISelect {
   readonly active: boolean;
 }
 
+export interface IOutput {
+  readonly unit: string;
+  readonly convertToUnit: string;
+  readonly value: number;
+}
+
 export module Calc {
-  export const calcFromServer = (serverCalc: any): ICalc => ({
+  export const calcFromServer = (serverCalc: any): ICalc => <ICalc>({
     id: serverCalc.id,
     type: serverCalc.type,
     title: serverCalc.title,
     subtitle: serverCalc.subtitle,
     inputs: serverCalc.inputs,
     selects: serverCalc.selections,
-    outputUnit: serverCalc.outputUnit,
+    output: {
+      unit: serverCalc.outputUnit,
+      convertToUnit: serverCalc.outputUnit,
+      value: null,
+    },
     active: false,
   });
 
@@ -77,39 +82,11 @@ export module Calc {
     active: false,
   });
 
-  export const inputReadyToCalculate = (input: IInput): boolean => (input != null && input.value != null);
-  export const selectionReadyToCalculate = (selection: ISelect): boolean => (selection != null && selection.value != null);
-
-  // export const getSelectionIds = (calcs: ICalc[]) => {
-  //   if (!calcs || calcs.length <= 0) { return []; }
-
-  //   const mergedSelectionIds: Calc.Selection.Id[] = [].concat.apply([], calcs.map(c => c.selectionIds));
-  //   const distinctSelectionIds: Calc.Selection.Id[] = mergedSelectionIds.filter((v, i, a) => a.indexOf(v) === i);
-
-  //   return distinctSelectionIds;
-  // };
-
-  // export const getInputIds = (calcs: ICalc[]) => {
-  //   if (!calcs || calcs.length <= 0) { return []; }
-
-  //   const mergedInputIds: Calc.Input.Id[] = calcs.map(c => c.inputs.map(i => i.id)).reduce((a, b) => [...a, ...b]);
-  //   const distinctInputIds: Calc.Input.Id[] = mergedInputIds.filter((id, index, ids) => ids.indexOf(id) === index);
-  //   return distinctInputIds;
-  // };
-
   // export const inputConversion = (input: IInput) => (unit: string) => {
   //   const targetUnit = input.group.find(u => u.symbol === targetSymbol);
   //   if (!input || !input.unit || !targetUnit) { return null; }
   //   return Unit.conversion(input.unit.factor)(targetUnit.factor)(input.value);
   // };
-
-  export const getActiveDataCount = (data: IData[]): number => data.filter(d => d.active).length;
-  export const getAllActiveDataCount = (data: (IInput[]|ISelect[]|IData[])[]): number =>
-    getActiveDataCount([].concat.apply([], data));
-
-  export const getActiveFilledDataCount = (data: IData[]): number => data.filter(d => d.active && d.value).length;
-  export const getAllActiveFilledDataCount = (data: (IInput[]|ISelect[]|IData[])[]): number =>
-    getActiveFilledDataCount([].concat.apply([], data));
 
 //   export const toPath = (calcs: ICalc[]) => (selections: Selection[]) => (inputs: IInput[]): string => {
 //     const stubs: string[] = [];
