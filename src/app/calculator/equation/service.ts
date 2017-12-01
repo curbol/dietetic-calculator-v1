@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 
+import { Equations as Eq } from './service';
+import { ConversionService } from '@app/conversion/service';
+
 @Injectable()
-export class EquationService {
+export class Equations {
 
   static readonly BODY_MASS_INDEX = 'bmi';
   static readonly IDEAL_BODY_WEIGHT = 'ibw';
@@ -9,9 +12,9 @@ export class EquationService {
   static readonly MIFFLIN_ST_JEOR = 'mifflin';
 
   static readonly GENDER = 'gender';
-  static readonly Weight = 'weight';
-  static readonly Height = 'height';
-  static readonly Age = 'age';
+  static readonly WEIGHT = 'weight';
+  static readonly HEIGHT = 'height';
+  static readonly AGE = 'age';
 
   constructor(
     private converter: ConversionService
@@ -20,41 +23,45 @@ export class EquationService {
   private equationFromData: {
     [key: string]: (inputs: {id: string, unit: string, value: number}[], selects: {id: string, value: string}[]) => number
   } = {
-    [EquationService.BODY_MASS_INDEX]: (inputs, selects) => {
-      const weight = this.getInputById(inputs, 'weight');
-      const weight_kg = this.converter.convert(weight.value, weight.unit, 'kg');
-      const height_m = 0;
-      return this.bodyMassIndex(weight_kg)(height_m);
+    [Eq.BODY_MASS_INDEX]: (inputs, selects) => {
+      const targetUnits: {[key: string]: string} = {weight: 'kg', height: 'm'};
+      const converted = this.getConvertedInputs(inputs)(targetUnits);
+      return this.bodyMassIndex(converted[Eq.WEIGHT])(converted[Eq.HEIGHT]);
     },
-    [EquationService.IDEAL_BODY_WEIGHT]: (inputs, selects) => {
-      const gender = '';
-      const height_in = 0;
-      return this.idealBodyWeight(gender)(height_in);
+    [Eq.IDEAL_BODY_WEIGHT]: (inputs, selects) => {
+      const targetUnits: {[key: string]: string} = {height: 'in'};
+      const converted = this.getConvertedInputs(inputs)(targetUnits);
+      const indexedSelects = this.getIndexedSelects(selects);
+      return this.idealBodyWeight(indexedSelects[Eq.GENDER])(converted[Eq.HEIGHT]);
     },
-    [EquationService.ADJUSTED_BODY_WEIGHT]: (inputs, selects) => {
-      const gender = '';
-      const weight_kg = 0;
-      const height_in = 0;
-      return this.adjustedBodyWeight(gender)(weight_kg)(height_in);
+    [Eq.ADJUSTED_BODY_WEIGHT]: (inputs, selects) => {
+      const targetUnits: {[key: string]: string} = {weight: 'kg', height: 'in'};
+      const converted = this.getConvertedInputs(inputs)(targetUnits);
+      const indexedSelects = this.getIndexedSelects(selects);
+      return this.adjustedBodyWeight(indexedSelects[Eq.GENDER])(converted[Eq.WEIGHT])(converted[Eq.HEIGHT]);
     },
-    [EquationService.MIFFLIN_ST_JEOR]: (inputs, selects) => {
-      const gender = '';
-      const weight_kg = 0;
-      const height_cm = 0;
-      const age_y = 0;
-      return this.mifflinStJeor(gender)(weight_kg)(height_cm)(age_y);
+    [Eq.MIFFLIN_ST_JEOR]: (inputs, selects) => {
+      const targetUnits: {[key: string]: string} = {weight: 'kg', height: 'cm', age: 'y'};
+      const converted = this.getConvertedInputs(inputs)(targetUnits);
+      const indexedSelects = this.getIndexedSelects(selects);
+      return this.mifflinStJeor(indexedSelects[Eq.GENDER])(converted[Eq.WEIGHT])(converted[Eq.HEIGHT])(converted[Eq.AGE]);
     },
   };
 
-  private getInputById = (inputs: {id: string, unit: string, value: number}[], id: string): {id: string, unit: string, value: number} =>
-    (inputs || []).find(i => i && i.id ? i.id.toLowerCase() === id.toLowerCase() : false)
+  private getIndexedSelects = (selects: {id: string, value: string}[]): {[key: string]: string} =>
+    (selects || []).reduce((acc, cur) => ({...acc, [cur.id]: cur.value}), {})
 
-  getEquation = (id: string) => this.equationFromData[id];
+  private getConvertedInputs = (inputs: {id: string, unit: string, value: number}[]) =>
+  (targetUnits: {[key: string]: string}): {[key: string]: number} =>
+    inputs.map(i => ({id: i.id, value: this.converter.convert(i.value)(i.unit)(targetUnits[i.id])}))
+    .reduce((acc, cur) => ({...acc, [cur.id]: cur.value}), {})
 
-  bodyMassIndex = (weight_kg: number) => (height_m: number) =>
+  public getEquation = (id: string) => this.equationFromData[id];
+
+  public bodyMassIndex = (weight_kg: number) => (height_m: number) =>
     weight_kg / (height_m * height_m)
 
-  idealBodyWeight = (gender: string) => (height_in: number) => {
+  public idealBodyWeight = (gender: string) => (height_in: number) => {
     const deltaFiveFeet = height_in - 60;
     switch (gender.toLowerCase()) {
       case 'male':
@@ -66,12 +73,12 @@ export class EquationService {
     }
   }
 
-  adjustedBodyWeight = (gender: string) => (weight_kg: number) => (height_in: number) => {
+  public adjustedBodyWeight = (gender: string) => (weight_kg: number) => (height_in: number) => {
     const ibw = this.idealBodyWeight(gender)(height_in);
     return ibw ? 0.25 * (weight_kg - ibw) + ibw : null;
   }
 
-  mifflinStJeor = (gender: string) => (weight_kg: number) => (height_cm: number) => (age_y: number) => {
+  public mifflinStJeor = (gender: string) => (weight_kg: number) => (height_cm: number) => (age_y: number) => {
     switch (gender.toLowerCase()) {
       case 'male':
         return 10 * weight_kg + 6.25 * height_cm - 5 * age_y + 5;
