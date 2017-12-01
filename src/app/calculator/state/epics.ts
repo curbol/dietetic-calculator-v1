@@ -125,15 +125,13 @@ export class CalcEpics {
             selects: calc.selects
               .map<ISelect>(id => state.calculator.selects.find(select => select.id === id))
               .map(input => ({ id: input.id, value: input.value })),
-          }));
+          }))
+          .map<{id: string, value: number}>(data => ({
+            id: data.id,
+            value: this.equations.getEquation(data.id)(data.inputs, data.selects)
+          }))
+          .filter(output => output.value || output.value === 0);
       })
-      .map(equationData => equationData
-        .map<{id: string, value: number}>(data => ({
-          id: data.id,
-          value: this.equations.getEquation(data.id)(data.inputs, data.selects)
-        }))
-        .filter(output => output.value || output.value === 0)
-      )
       .map(data => this.actions.setOutputsValue(data));
   }
 }
