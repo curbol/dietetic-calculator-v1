@@ -54,9 +54,9 @@ export module Calc {
     type: serverCalc.type,
     title: serverCalc.title,
     subtitle: serverCalc.subtitle,
-    inputs: serverCalc.inputs,
-    selects: serverCalc.selections,
-    output: {
+    inputs: <string[]>serverCalc.inputs,
+    selects: <string[]>serverCalc.selections,
+    output: <IOutput>{
       unit: serverCalc.outputUnit,
       value: null,
       convertToUnit: serverCalc.outputUnit,

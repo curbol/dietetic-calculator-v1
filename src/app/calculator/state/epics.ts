@@ -6,7 +6,7 @@ import { CalcActions } from '@app/calculator/state/actions';
 import { IAppState, IAction } from '@app/store/models';
 import { IInput, ISelect, ICalc } from '@app/calculator/models';
 import { difference } from 'ramda';
-import { EquationService } from '@app/calculator/equation/service';
+import { Equations } from '@app/calculator/equation/service';
 
 const calcsNotAlreadyFetched = (state: IAppState): boolean =>
   !(state.calculator && state.calculator.calcs && state.calculator.calcs.length);
@@ -22,7 +22,7 @@ export class CalcEpics {
   constructor(
     private service: CalcAPIService,
     private actions: CalcActions,
-    private equations: EquationService
+    private equations: Equations
   ) {}
 
   public createCalcEpicsMiddleware() {
@@ -126,12 +126,15 @@ export class CalcEpics {
               .map<ISelect>(id => state.calculator.selects.find(select => select.id === id))
               .map(input => ({ id: input.id, value: input.value })),
           }))
+          .filter(data => data.inputs.every(i => !!i.unit && !!(i.value || i.value === 0)))
+          .filter(data => data.selects.every(s => !!s.value))
           .map<{id: string, value: number}>(data => ({
             id: data.id,
             value: this.equations.getEquation(data.id)(data.inputs, data.selects)
           }))
           .filter(output => output.value || output.value === 0);
       })
+      .do(data => console.log(data))
       .map(data => this.actions.setOutputsValue(data));
   }
 }

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { CalculatorComponent } from '@app/calculator/component';
-import { ConverterComponent } from '@app/converter/component';
+import { ConverterComponent } from '@app/conversion/component';
 import { AboutComponent } from '@app/about/component';
 
 interface RouteData {
