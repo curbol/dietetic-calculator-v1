@@ -1,10 +1,10 @@
-import { ICalcState } from '@app/calculator/models';
-import { Unit, IUnit } from '@app/unit/models';
+import { IUnit } from '@app/unit/models';
+import { ICalcState } from '@app/calculator/state/models';
 
 export interface IAppState {
   readonly routes?: any;
   readonly unit?: IUnit[];
-  calculator?: ICalcState;
+  readonly calculator?: ICalcState;
   readonly converter?: { };
 }
 

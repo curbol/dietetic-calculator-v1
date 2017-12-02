@@ -9,7 +9,7 @@
     </div>
 
     <div fxFlex="none">
-      <div *ngIf="activeDataCount" [@appearOnActive]>
+      <div *ngIf="activeDataCount()" [@appearOnActive]>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{titles.input.long}}</h3>
         <dc-input-list
           [inputs]="inputs$ | async"
@@ -20,9 +20,9 @@
     </div>
 
     <div fxFlex="none">
-      <div *ngIf="activeCalcsCount" [@appearOnActive]>
+      <div *ngIf="activeCalcsCount()" [@appearOnActive]>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{titles.output.long}}</h3>
-        <div *ngIf="activeFilledDataCount !== activeDataCount" [@appearOnActive]
+        <div *ngIf="activeFilledDataCount() !== activeDataCount()" [@appearOnActive]
               fxLayout="column" fxLayoutAlign="start center">
           <dc-chip color="warn">{{messages.missingInputs}}</dc-chip>
           <div class="dc-spacer"></div>
@@ -50,7 +50,7 @@
         </dc-calc-list>
         <div>
           <div class="dc-spacer"></div>
-          <button mat-raised-button [color]="activeCalcsCount ? 'primary' : ''" matStepperNext>
+          <button mat-raised-button [color]="activeCalcsCount() ? 'primary' : ''" matStepperNext>
             <span>{{titles.input.long}}</span>
             <mat-icon>arrow_forward</mat-icon>
           </button>
@@ -66,7 +66,7 @@
       <div fxLayout="column" fxLayoutAlign="start center">
         <div class="dc-spacer"></div>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{titles.input.long}}</h3>
-        <div *ngIf="!activeCalcsCount">
+        <div *ngIf="!activeCalcsCount()">
           <dc-chip color="warn">{{messages.noCalcsSelected}}</dc-chip>
           <div class="dc-spacer"></div>
         </div>
@@ -81,7 +81,7 @@
             <mat-icon>arrow_back</mat-icon>
             <span>{{titles.calc.short}}</span>
           </button>
-          <button mat-raised-button [color]="activeFilledResults ? 'primary' : ''" matStepperNext>
+          <button mat-raised-button [color]="activeFilledResultsCount() ? 'primary' : ''" matStepperNext>
             <span>{{titles.output.short}}</span>
             <mat-icon>arrow_forward</mat-icon>
           </button>
@@ -97,11 +97,11 @@
       <div fxLayout="column" fxLayoutAlign="start center">
         <div class="dc-spacer"></div>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{titles.output.long}}</h3>
-        <div *ngIf="!activeCalcsCount" fxLayout="column" fxLayoutAlign="start center">
+        <div *ngIf="!activeCalcsCount()" fxLayout="column" fxLayoutAlign="start center">
           <dc-chip color="warn">{{messages.noCalcsSelected}}</dc-chip>
           <div class="dc-spacer"></div>
         </div>
-        <div *ngIf="activeFilledDataCount !== activeDataCount" fxLayout="column" fxLayoutAlign="start center">
+        <div *ngIf="activeFilledDataCount() !== activeDataCount()" fxLayout="column" fxLayoutAlign="start center">
           <dc-chip color="warn">{{messages.missingInputs}}</dc-chip>
           <div class="dc-spacer"></div>
         </div>

@@ -30,14 +30,6 @@ export class CalculatorComponent implements OnInit {
   activeInputs: IInput[];
   activeSelects: ISelect[];
 
-  get activeCalcsCount(): number { return this.activeCalcs.length; }
-  get activeDataCount(): number { return this.activeInputs.length + this.activeSelects.length; }
-  get activeFilledDataCount(): number {
-    return this.activeInputs.filter(i => i.value).length + this.activeSelects.filter(s => s.value).length;
-  }
-
-  get activeFilledResults(): number { return 1; }
-
   readonly messages = {
     missingInputs: 'Some inputs are missing values.',
     noCalcsSelected: 'No calculators are selected.',
@@ -62,4 +54,9 @@ export class CalculatorComponent implements OnInit {
     this.inputs$.subscribe(inputs => this.activeInputs = (inputs || []).filter(i => i.active));
     this.selects$.subscribe(selects => this.activeSelects = (selects || []).filter(i => i.active));
   }
+
+  activeCalcsCount = (): number => this.activeCalcs.length;
+  activeDataCount = (): number => this.activeInputs.length + this.activeSelects.length;
+  activeFilledDataCount = (): number => this.activeInputs.filter(i => i.value).length + this.activeSelects.filter(s => s.value).length;
+  activeFilledResultsCount = (): number => this.activeCalcs.filter(calc => calc.output.convertedValue).length;
 }

@@ -1,9 +1,11 @@
 
 import { indexBy, prop } from 'ramda';
 import { Action } from 'redux';
-import { ICalcState, ICalc, IInput, ISelect } from '@app/calculator/models';
+
+import { ICalc, IInput, ISelect } from '@app/calculator/models';
 import { CalcActions } from '@app/calculator/state/actions';
 import { IAction } from '@app/store/models';
+import { ICalcState } from '@app/calculator/state/models';
 
 const INITIAL_STATE: ICalcState = {
   calcs: null,
@@ -122,7 +124,7 @@ export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalc
           } : calc;
         })
       };
-    case CalcActions.SET_OUTPUTS_UNIT:
+    case CalcActions.SET_OUTPUTS_VALUE:
       return {
         ...state,
         calcs: state.calcs.map(calc => {
@@ -130,6 +132,17 @@ export const calcReducer = (state: ICalcState = INITIAL_STATE, a: Action): ICalc
           return data ? {
             ...calc,
             output: { ...calc.output, value: data.value }
+          } : calc;
+        })
+      };
+    case CalcActions.SET_OUTPUTS_CONVERTED_VALUE:
+      return {
+        ...state,
+        calcs: state.calcs.map(calc => {
+          const data = action.payload.find(i => i.id === calc.id);
+          return data ? {
+            ...calc,
+            output: { ...calc.output, convertedValue: data.convertedValue }
           } : calc;
         })
       };

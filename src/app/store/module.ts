@@ -7,7 +7,6 @@ import { environment } from '@env/environment';
 import { IAppState } from '@app/store/models';
 import { RootEpics } from '@app/store/epics';
 import { rootReducer } from '@app/store/reducers';
-import { ICalcState } from '@app/calculator/models';
 import { freezeStateMiddleware } from '@app/store/freezeState';
 
 

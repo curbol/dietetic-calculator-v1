@@ -6,7 +6,7 @@ import { IUnit } from '@app/unit/models';
 
 @Injectable()
 export class ConversionService {
-  @select(['unit', 'units']) readonly units$: Observable<IUnit[]>;
+  @select(['unit', 'units']) private readonly units$: Observable<IUnit[]>;
 
   private units: IUnit[];
 
@@ -15,6 +15,8 @@ export class ConversionService {
   }
 
   public convert = (value: number) => (symbol: string) => (targetSymbol: string): number => {
+    if (symbol === targetSymbol) { return value; }
+
     const unit = this.getUnit(symbol);
     const targetUnit = this.getUnit(targetSymbol);
     if (!(value || value === 0) || !unit || !targetUnit) { return null; }

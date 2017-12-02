@@ -8,7 +8,7 @@
           <dc-input fxFlex
             [readonly]="true"
             [name]="calc.title"
-            [value]="0"
+            [value]="getOutputConvertedValue(calc)"
             [units]="getOutputUnits(calc)"
             [unitSymbol]="getOutputConvertToUnit(calc)"
             (unitSymbolChange)="onOutputUnitChange(calc.id, $event)">

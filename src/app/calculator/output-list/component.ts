@@ -5,6 +5,7 @@ import { ICalc } from '@app/calculator/models';
 import { IUnit } from '@app/unit/models';
 import { CalcActions } from '@app/calculator/state/actions';
 import { compose } from 'ramda';
+import { Num } from '@app/shared/num';
 
 @Component({
   selector: 'dc-output-list',
@@ -32,6 +33,7 @@ export class OutputListComponent implements OnInit {
   getOutputDefaultUnit = (calc: ICalc): string => calc && calc.output ? calc.output.unit : null;
   getOutputConvertToUnit = (calc: ICalc): string => calc && calc.output ? calc.output.convertToUnit : this.getOutputDefaultUnit(calc);
   getOutputUnits = (calc: ICalc): IUnit[] => compose(this.getUnitsOfType, this.getUnitTypeFromSymbol, this.getOutputDefaultUnit)(calc);
+  getOutputConvertedValue = (calc: ICalc): number => Num.round(calc && calc.output ? calc.output.convertedValue : null, 2);
 
   onOutputUnitChange = (id: string, symbol: string) => this.calcActions.setOutputsUnit([{id, symbol}]);
 }

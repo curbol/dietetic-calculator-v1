@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Epic, createEpicMiddleware } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
+import { difference } from 'ramda';
+
 import { CalcAPIService } from '@app/calculator/api/service';
 import { CalcActions } from '@app/calculator/state/actions';
 import { IAppState, IAction } from '@app/store/models';
 import { IInput, ISelect, ICalc } from '@app/calculator/models';
-import { difference } from 'ramda';
 import { Equations } from '@app/calculator/equation/service';
+import { ICalcState } from '@app/calculator/state/models';
+import { ConversionService } from '@app/conversion/service';
 
 const calcsNotAlreadyFetched = (state: IAppState): boolean =>
   !(state.calculator && state.calculator.calcs && state.calculator.calcs.length);
@@ -17,12 +20,23 @@ const inputsNotAlreadyFetched = (state: IAppState): boolean =>
 const selectsNotAlreadyFetched = (state: IAppState): boolean =>
   !(state.calculator && state.calculator.selects && state.calculator.selects.length);
 
+const getEquationData = (calc: ICalc, state: ICalcState) => ({
+  id: calc.id,
+  inputs: calc.inputs
+    .map<IInput>(id => state.inputs.find(input => input.id === id))
+    .map(input => ({ id: input.id, value: input.value, unit: input.unit })),
+  selects: calc.selects
+    .map<ISelect>(id => state.selects.find(select => select.id === id))
+    .map(input => ({ id: input.id, value: input.value })),
+});
+
 @Injectable()
 export class CalcEpics {
   constructor(
     private service: CalcAPIService,
     private actions: CalcActions,
-    private equations: Equations
+    private equations: Equations,
+    private converter: ConversionService,
   ) {}
 
   public createCalcEpicsMiddleware() {
@@ -33,6 +47,7 @@ export class CalcEpics {
       createEpicMiddleware(this.createSetActiveInputsEpic()),
       createEpicMiddleware(this.createSetActiveSelectsEpic()),
       createEpicMiddleware(this.createCalculateOutputsEpic()),
+      createEpicMiddleware(this.createOutputsConversionEpic()),
     ];
   }
 
@@ -76,16 +91,17 @@ export class CalcEpics {
     return (action$, store) => action$
       .ofType(CalcActions.SET_CALCS_ACTIVE)
       .map(action => {
-        const state = store.getState();
-        const activeInputIds: string[] = state.calculator.calcs
-          .filter(c => c.active)
-          .map(c => c.inputs)
+        const state = store.getState().calculator;
+        const activeInputIds: string[] = state.calcs
+          .filter(calc => calc.active)
+          .map(calc => calc.inputs)
           .reduce((acc, cur) => [...acc, ...difference(cur, acc)], []);
 
-        return state.calculator.inputs
-          .filter(i => i.active !== activeInputIds.includes(i.id))
-          .map(i => ({ id: i.id, active: !i.active }));
+        return state.inputs
+          .filter(input => input.active !== activeInputIds.includes(input.id))
+          .map(input => ({ id: input.id, active: !input.active }));
       })
+      .filter(data => !!data && !!data.length)
       .map(data => this.actions.setInputsActive(data));
   }
 
@@ -93,16 +109,17 @@ export class CalcEpics {
     return (action$, store) => action$
       .ofType(CalcActions.SET_CALCS_ACTIVE)
       .map(action => {
-        const state = store.getState();
-        const activeSelectIds: string[] = state.calculator.calcs
-          .filter(c => c.active)
-          .map(c => c.selects)
+        const state = store.getState().calculator;
+        const activeSelectIds: string[] = state.calcs
+          .filter(calc => calc.active)
+          .map(calc => calc.selects)
           .reduce((acc, cur) => [...acc, ...difference(cur, acc)], []);
 
-        return state.calculator.selects
-          .filter(s => s.active !== activeSelectIds.includes(s.id))
-          .map(s => ({ id: s.id, active: !s.active }));
+        return state.selects
+          .filter(select => select.active !== activeSelectIds.includes(select.id))
+          .map(select => ({ id: select.id, active: !select.active }));
       })
+      .filter(data => !!data && !!data.length)
       .map(data => this.actions.setSelectsActive(data));
   }
 
@@ -112,29 +129,39 @@ export class CalcEpics {
         CalcActions.SET_INPUTS_UNIT,
         CalcActions.SET_INPUTS_VALUE,
         CalcActions.SET_SELECTS_VALUE,
-        CalcActions.SET_OUTPUTS_UNIT,
       )
       .map(action => {
-        const state = store.getState();
-        return state.calculator.calcs
-          .map(calc => ({
-            id: calc.id,
-            inputs: calc.inputs
-              .map<IInput>(id => state.calculator.inputs.find(input => input.id === id))
-              .map(input => ({ id: input.id, value: input.value, unit: input.unit })),
-            selects: calc.selects
-              .map<ISelect>(id => state.calculator.selects.find(select => select.id === id))
-              .map(input => ({ id: input.id, value: input.value })),
-          }))
-          .filter(data => data.inputs.every(i => !!i.unit && !!(i.value || i.value === 0)))
-          .filter(data => data.selects.every(s => !!s.value))
-          .map<{id: string, value: number}>(data => ({
+        const state = store.getState().calculator;
+        return state.calcs
+          .map(calc => getEquationData(calc, state))
+          .map(data => ({
             id: data.id,
             value: this.equations.getEquation(data.id)(data.inputs, data.selects)
           }))
-          .filter(output => output.value || output.value === 0);
+          .filter(result => state.calcs.find(c => c.id === result.id).output.value !== result.value);
       })
-      .do(data => console.log(data))
+      .filter(data => !!data && !!data.length)
       .map(data => this.actions.setOutputsValue(data));
+  }
+
+  private createOutputsConversionEpic(): Epic<IAction, IAppState> {
+    return (action$, store) => action$
+      .ofType(
+        CalcActions.SET_OUTPUTS_UNIT,
+        CalcActions.SET_OUTPUTS_VALUE,
+      )
+      .map(action => {
+        const state = store.getState().calculator;
+        return state.calcs
+          .map(calc => ({
+            id: calc.id,
+            convertedValue: calc.output.value && calc.output.unit && calc.output.convertToUnit
+              ? this.converter.convert(calc.output.value)(calc.output.unit)(calc.output.convertToUnit)
+              : null
+          }))
+          .filter(result => state.calcs.find(c => c.id === result.id).output.convertedValue !== result.convertedValue);
+      })
+      .filter(data => !!data && !!data.length)
+      .map(data => this.actions.setOutputsConvertedValue(data));
   }
 }
