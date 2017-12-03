@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { appearOnActive } from '@app/animation/animations';
 import { IInput, ISelect } from '@app/calculator/models';
-import { IUnit } from '@app/unit/models';
+import { IUnit, Unit } from '@app/unit/models';
 import { CalcActions } from '@app/calculator/state/actions';
 
 
@@ -36,7 +36,7 @@ export class InputListComponent implements OnInit {
   getSelectKey = (index: number, selection: ISelect) => selection.id;
   getInputKey = (index: number, input: IInput) => input.id;
 
-  getInputUnits = (type: string): IUnit[] => (this.units || []).filter(u => u.type === type);
+  getInputUnits = (input: IInput): IUnit[] => input ? Unit.ofType(this.units)(input.type) : [];
 
   onSelectValueChange = (id: string, value: string) => this.calcActions.setSelectsValue([{id, value}]);
   onInputValueChange = (id: string, value: number) => this.calcActions.setInputsValue([{id, value}]);

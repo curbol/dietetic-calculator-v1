@@ -15,7 +15,7 @@ import { ToolbarComponent } from '@app/toolbar/component';
 import { AboutComponent } from '@app/about/component';
 import { CalculatorModule } from '@app/calculator/module';
 import { SharedModule } from '@app/shared/module';
-import { ConverterModule } from '@app/conversion/module';
+import { ConverterModule } from '@app/converter/module';
 import { StoreModule } from '@app/store/module';
 
 @NgModule({

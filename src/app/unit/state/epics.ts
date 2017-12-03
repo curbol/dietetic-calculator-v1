@@ -7,7 +7,7 @@ import { UnitActions } from '@app/unit/state/actions';
 import { IAction, IAppState } from '@app/store/models';
 
 const unitsNotAlreadyFetched = (state: IAppState): boolean =>
-  !(state.unit && state.unit.length);
+  !(state.unit && state.unit.units && state.unit.units.length);
 
 @Injectable()
 export class UnitEpics {

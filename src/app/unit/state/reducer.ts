@@ -1,8 +1,9 @@
 import { Action } from 'redux';
 
-import { IUnit, IUnitState } from '@app/unit/models';
+import { IUnit } from '@app/unit/models';
 import { IAction } from '@app/store/models';
 import { UnitActions } from '@app/unit/state/actions';
+import { IUnitState } from '@app/unit/state/models';
 
 const INITIAL_STATE: IUnitState = {
   units: null,

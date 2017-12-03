@@ -1,14 +1,10 @@
+import { compose, difference } from 'ramda';
+
 export interface IUnit {
   readonly symbol: string;
   readonly type: string;
   readonly name: string;
   readonly factor: number;
-}
-
-export interface IUnitState {
-  readonly units: IUnit[];
-  readonly loadingUnits: boolean;
-  readonly unitsLoadError: Error;
 }
 
 export module Unit {
@@ -20,21 +16,30 @@ export module Unit {
   });
 
   export const find = (units: IUnit[]) => (symbol: string): IUnit =>
-    units.find(unit => unit.symbol === symbol);
+    (units || []).find(unit => unit.symbol === symbol);
 
-  export const filterByType = (units: IUnit[]) => (type: string): IUnit[] =>
-    units.filter(unit => unit.type.toLowerCase() === type.toLowerCase());
+  export const ofType = (units: IUnit[]) => (type: string): IUnit[] =>
+    (units || []).filter(unit => unit && unit.type && type && unit.type.toLowerCase() === type.toLowerCase());
+
+  export const types = (units: IUnit[]): string[] =>
+    (units || []).map(unit => unit.type).reduce((acc, cur) => [...acc, ...difference([cur], acc)], []);
 
   export const getDefault = (units: IUnit[]): IUnit =>
-    units.find(unit => unit.factor === 1);
+    (units || []).find(unit => unit.factor === 1);
 
   export const defaultOfType = (units: IUnit[]) => (type: string): IUnit =>
-    getDefault(filterByType(units)(type));
+    compose(getDefault, ofType(units))(type);
 
-  export const convert = (sourceValue: number) => (sourceFactor: number) => (targetFactor: number): number => {
-    if ([sourceFactor, targetFactor, sourceValue].some(v => v === null || v === undefined)) { return null; }
+  export const convertSymbols = (units: IUnit[]) => (value: number) => (symbol: string) => (targetSymbol: string) =>
+    convertUnits(value)(find(units)(symbol))(find(units)(symbol));
+
+  export const convertUnits = (value: number) => (unit: IUnit) => (targetUnit: IUnit) =>
+    convert(value)(unit.factor)(targetUnit.factor);
+
+  export const convert = (value: number) => (factor: number) => (targetFactor: number): number => {
+    if ([value, factor, targetFactor].some(x => x === null || x === undefined)) { return null; }
     if (targetFactor === 0) { return undefined; }
 
-    return sourceValue * sourceFactor / targetFactor;
+    return value * (factor / targetFactor);
   };
 }

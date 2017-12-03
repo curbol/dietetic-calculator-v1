@@ -1,0 +1,33 @@
+<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1rem">
+
+  <mat-form-field color="accent">
+    <mat-select #unitTypeSelect placeholder="Type" [ngModel]="type$ | async" (ngModelChange)="onTypeChange($event)">
+      <mat-option *ngFor="let type of getUnitTypes()" [value]="type">
+        {{type | capitalize}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1rem" fxLayout.lt-sm="column" fxLayoutGap.lt-sm="0">
+    <dc-input fxFlex
+      [name]="getInputName(unit$ | async)"
+      [value]="value$ | async"
+      (valueChange)="onValueChange($event)"
+      [units]="getUnitsOfType(unitTypeSelect.value)"
+      [unitSymbol]="unit$ | async"
+      (unitSymbolChange)="onUnitChange($event)">
+    </dc-input>
+    <div id="dc-converter-equal">
+      <span class="dc-secondary-text">=</span>
+    </div>
+    <dc-input fxFlex
+      [name]="getInputName(convertToUnit$ | async)"
+      [value]="convertedValue$ | async"
+      (valueChange)="onConvertedValueChange($event)"
+      [units]="getUnitsOfType(unitTypeSelect.value)"
+      [unitSymbol]="convertToUnit$ | async"
+      (unitSymbolChange)="onConvertToUnitChange($event)">
+    </dc-input>
+  </div>
+
+</div>

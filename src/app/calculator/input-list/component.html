@@ -38,7 +38,7 @@
             [name]="input.name"
             [value]="input.value"
             (valueChange)="onInputValueChange(input.id, $event)"
-            [units]="getInputUnits(input.type)"
+            [units]="getInputUnits(input)"
             [unitSymbol]="input.unit"
             (unitSymbolChange)="onInputUnitChange(input.id, $event)">
           </dc-input>

@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { appearOnActive } from '@app/animation/animations';
 import { ICalc } from '@app/calculator/models';
-import { IUnit } from '@app/unit/models';
+import { IUnit, Unit } from '@app/unit/models';
 import { CalcActions } from '@app/calculator/state/actions';
-import { compose } from 'ramda';
+import { pipe } from 'ramda';
 import { Num } from '@app/shared/num';
 
 @Component({
@@ -27,13 +27,10 @@ export class OutputListComponent implements OnInit {
 
   getCalcKey = (index: number, calc: ICalc) => calc.id;
 
-  getUnitFromSymbol = (symbol: string): IUnit => this.units && symbol ? this.units.find(u => u.symbol === symbol) : null;
-  getUnitTypeFromSymbol = (symbol: string): string => (this.getUnitFromSymbol(symbol) || {type: null}).type;
-  getUnitsOfType = (type: string): IUnit[] => this.units && type ? this.units.filter(u => u.type === type) : null;
-  getOutputDefaultUnit = (calc: ICalc): string => calc && calc.output ? calc.output.unit : null;
-  getOutputConvertToUnit = (calc: ICalc): string => calc && calc.output ? calc.output.convertToUnit : this.getOutputDefaultUnit(calc);
-  getOutputUnits = (calc: ICalc): IUnit[] => compose(this.getUnitsOfType, this.getUnitTypeFromSymbol, this.getOutputDefaultUnit)(calc);
   getOutputConvertedValue = (calc: ICalc): number => Num.round(calc && calc.output ? calc.output.convertedValue : null, 2);
+  getOutputConvertToUnit = (calc: ICalc): string => calc && calc.output ? calc.output.convertToUnit || calc.output.unit : null;
+  getOutputUnits = (calc: ICalc): IUnit[] =>
+    calc && calc.output ? pipe(c => calc.output.unit, Unit.find(this.units), unit => unit.type, Unit.ofType(this.units))(calc) : null
 
   onOutputUnitChange = (id: string, symbol: string) => this.calcActions.setOutputsUnit([{id, symbol}]);
 }

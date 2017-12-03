@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-
-import { ConversionService } from '@app/conversion/service';
+import { Unit, IUnit } from '@app/unit/models';
 
 @Injectable()
 export class Equations {
@@ -15,33 +14,30 @@ export class Equations {
   static readonly HEIGHT = 'height';
   static readonly AGE = 'age';
 
-  constructor(
-    private converter: ConversionService
-  ) { }
+  constructor() { }
 
-  private equationFromData: {
-    [key: string]: (inputs: {id: string, unit: string, value: number}[], selects: {id: string, value: string}[]) => number
-  } = {
-    [Equations.BODY_MASS_INDEX]: (inputs, selects) => {
+  private equationFromData: { [key: string]: (units: IUnit[]) =>
+  (inputs: {id: string, unit: string, value: number}[]) => (selects: {id: string, value: string}[]) => number } = {
+    [Equations.BODY_MASS_INDEX]: (units) => (inputs) => (selects) => {
       const targetUnits: {[key: string]: string} = {[Equations.WEIGHT]: 'kg', [Equations.HEIGHT]: 'm'};
-      const converted = this.getConvertedInputs(inputs)(targetUnits);
+      const converted = this.getConvertedInputs(units)(inputs)(targetUnits);
       return this.bodyMassIndex(converted[Equations.WEIGHT])(converted[Equations.HEIGHT]);
     },
-    [Equations.IDEAL_BODY_WEIGHT]: (inputs, selects) => {
+    [Equations.IDEAL_BODY_WEIGHT]: (units) => (inputs) => (selects) => {
       const targetUnits: {[key: string]: string} = {[Equations.HEIGHT]: 'in'};
-      const converted = this.getConvertedInputs(inputs)(targetUnits);
+      const converted = this.getConvertedInputs(units)(inputs)(targetUnits);
       const indexedSelects = this.getIndexedSelects(selects);
       return this.idealBodyWeight(indexedSelects[Equations.GENDER])(converted[Equations.HEIGHT]);
     },
-    [Equations.ADJUSTED_BODY_WEIGHT]: (inputs, selects) => {
+    [Equations.ADJUSTED_BODY_WEIGHT]: (units) => (inputs) => (selects) => {
       const targetUnits: {[key: string]: string} = {[Equations.WEIGHT]: 'kg', [Equations.HEIGHT]: 'in'};
-      const converted = this.getConvertedInputs(inputs)(targetUnits);
+      const converted = this.getConvertedInputs(units)(inputs)(targetUnits);
       const indexedSelects = this.getIndexedSelects(selects);
       return this.adjustedBodyWeight(indexedSelects[Equations.GENDER])(converted[Equations.WEIGHT])(converted[Equations.HEIGHT]);
     },
-    [Equations.MIFFLIN_ST_JEOR]: (inputs, selects) => {
+    [Equations.MIFFLIN_ST_JEOR]: (units) => (inputs) => (selects) => {
       const targetUnits: {[key: string]: string} = {[Equations.WEIGHT]: 'kg', [Equations.HEIGHT]: 'cm', [Equations.AGE]: 'y'};
-      const converted = this.getConvertedInputs(inputs)(targetUnits);
+      const converted = this.getConvertedInputs(units)(inputs)(targetUnits);
       const indexedSelects = this.getIndexedSelects(selects);
       return this.mifflinStJeor
         (indexedSelects[Equations.GENDER])(converted[Equations.WEIGHT])(converted[Equations.HEIGHT])(converted[Equations.AGE]);
@@ -51,9 +47,9 @@ export class Equations {
   private getIndexedSelects = (selects: {id: string, value: string}[]): {[key: string]: string} =>
     (selects || []).reduce((acc, cur) => ({...acc, [cur.id]: cur.value}), {})
 
-  private getConvertedInputs = (inputs: {id: string, unit: string, value: number}[]) =>
-  (targetUnits: {[key: string]: string}): {[key: string]: number} =>
-    inputs.map(i => ({id: i.id, value: this.converter.convert(i.value)(i.unit)(targetUnits[i.id])}))
+  private getConvertedInputs = (units: IUnit[]) =>
+  (inputs: {id: string, unit: string, value: number}[]) => (targetUnits: {[key: string]: string}): {[key: string]: number} =>
+    inputs.map(i => ({id: i.id, value: Unit.convertSymbols(units)(i.value)(i.unit)(targetUnits[i.id])}))
     .reduce((acc, cur) => ({...acc, [cur.id]: cur.value}), {})
 
   public getEquation = (id: string) => this.equationFromData[id];

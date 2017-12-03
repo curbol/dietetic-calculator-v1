@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '@app/shared/module';
-import { ConverterComponent } from '@app/conversion/component';
-import { ConversionService } from '@app/conversion/service';
+import { ConverterComponent } from '@app/converter/component';
+import { ConverterEpics } from '@app/converter/state/epics';
+import { ConverterActions } from '@app/converter/state/actions';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { ConversionService } from '@app/conversion/service';
     ConverterComponent,
   ],
   providers: [
-    ConversionService,
+    ConverterEpics,
+    ConverterActions,
   ]
 })
 export class ConverterModule { }

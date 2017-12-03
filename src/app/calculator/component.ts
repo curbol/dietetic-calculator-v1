@@ -58,5 +58,5 @@ export class CalculatorComponent implements OnInit {
   activeCalcsCount = (): number => this.activeCalcs.length;
   activeDataCount = (): number => this.activeInputs.length + this.activeSelects.length;
   activeFilledDataCount = (): number => this.activeInputs.filter(i => i.value).length + this.activeSelects.filter(s => s.value).length;
-  activeFilledResultsCount = (): number => this.activeCalcs.filter(calc => calc.output.convertedValue).length;
+  activeFilledResultsCount = (): number => this.activeCalcs.filter(calc => calc.output.value).length;
 }

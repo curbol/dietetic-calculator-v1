@@ -9,7 +9,7 @@ import { IAppState, IAction } from '@app/store/models';
 import { IInput, ISelect, ICalc } from '@app/calculator/models';
 import { Equations } from '@app/calculator/equation/service';
 import { ICalcState } from '@app/calculator/state/models';
-import { ConversionService } from '@app/conversion/service';
+import { Unit } from '@app/unit/models';
 
 const calcsNotAlreadyFetched = (state: IAppState): boolean =>
   !(state.calculator && state.calculator.calcs && state.calculator.calcs.length);
@@ -36,7 +36,6 @@ export class CalcEpics {
     private service: CalcAPIService,
     private actions: CalcActions,
     private equations: Equations,
-    private converter: ConversionService,
   ) {}
 
   public createCalcEpicsMiddleware() {
@@ -131,14 +130,14 @@ export class CalcEpics {
         CalcActions.SET_SELECTS_VALUE,
       )
       .map(action => {
-        const state = store.getState().calculator;
-        return state.calcs
-          .map(calc => getEquationData(calc, state))
+        const state = store.getState();
+        return state.calculator.calcs
+          .map(calc => getEquationData(calc, state.calculator))
           .map(data => ({
             id: data.id,
-            value: this.equations.getEquation(data.id)(data.inputs, data.selects)
+            value: this.equations.getEquation(data.id)(state.unit.units)(data.inputs)(data.selects)
           }))
-          .filter(result => state.calcs.find(c => c.id === result.id).output.value !== result.value);
+          .filter(result => state.calculator.calcs.find(c => c.id === result.id).output.value !== result.value);
       })
       .filter(data => !!data && !!data.length)
       .map(data => this.actions.setOutputsValue(data));
@@ -151,15 +150,15 @@ export class CalcEpics {
         CalcActions.SET_OUTPUTS_VALUE,
       )
       .map(action => {
-        const state = store.getState().calculator;
-        return state.calcs
+        const state = store.getState();
+        return state.calculator.calcs
           .map(calc => ({
             id: calc.id,
             convertedValue: calc.output.value && calc.output.unit && calc.output.convertToUnit
-              ? this.converter.convert(calc.output.value)(calc.output.unit)(calc.output.convertToUnit)
+              ? Unit.convertSymbols(state.unit.units)(calc.output.value)(calc.output.unit)(calc.output.convertToUnit)
               : null
           }))
-          .filter(result => state.calcs.find(c => c.id === result.id).output.convertedValue !== result.convertedValue);
+          .filter(result => state.calculator.calcs.find(c => c.id === result.id).output.convertedValue !== result.convertedValue);
       })
       .filter(data => !!data && !!data.length)
       .map(data => this.actions.setOutputsConvertedValue(data));

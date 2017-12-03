@@ -6,9 +6,9 @@ import { IUnit } from '@app/unit/models';
 
 @Injectable()
 export class UnitActions {
-  static readonly LOAD_UNIT_DATA = 'LOAD_UNIT_DATA';
-  static readonly LOAD_UNITS_STARTED = 'LOAD_UNITS_STARTED';
-  static readonly LOAD_UNITS_FINISHED = 'LOAD_UNITS_FINISHED';
+  static readonly LOAD_UNIT_DATA = 'unit/LOAD_UNIT_DATA';
+  static readonly LOAD_UNITS_STARTED = 'unit/LOAD_UNITS_STARTED';
+  static readonly LOAD_UNITS_FINISHED = 'unit/LOAD_UNITS_FINISHED';
 
   @dispatch()
   loadUnitData = (): IAction => ({
