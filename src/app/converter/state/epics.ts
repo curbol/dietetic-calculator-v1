@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import { createEpicMiddleware, Epic } from 'redux-observable';
+
 import { ConverterActions } from '@app/converter/state/actions';
-import { createEpicMiddleware } from 'redux-observable';
+import { IAction, IAppState } from '@app/store/models';
+import { Unit } from '@app/unit/models';
 
 @Injectable()
 export class ConverterEpics {
@@ -11,19 +14,25 @@ export class ConverterEpics {
 
   public createConverterEpicsMiddleware() {
     return [
-      // createEpicMiddleware(this.createLoadCalcsEpic()),
+      createEpicMiddleware(this.createCalculateConvertToTargetEpic()),
     ];
   }
 
-  // private createLoadCalcsEpic(): Epic<IAction, IAppState> {
-  //   return (action$, store) => action$
-  //     .ofType(CalcActions.LOAD_CALC_DATA)
-  //     .filter(() => calcsNotAlreadyFetched(store.getState()))
-  //     .switchMap(() =>
-  //       this.service.getAllCalcs()
-  //       .map(data => this.actions.loadCalcsFinished(data))
-  //       .catch(response => Observable.of(this.actions.loadCalcsFinished(null, new Error(response.status))))
-  //       .startWith(this.actions.loadCalcsStarted())
-  //     );
-  // }
+  private createCalculateConvertToTargetEpic(): Epic<IAction, IAppState> {
+    return (action$, store) => action$
+      .ofType(
+        ConverterActions.SET_VALUE,
+        ConverterActions.SET_UNIT,
+        ConverterActions.SET_CONVERT_TO_UNIT,
+      )
+      .map(action => {
+        const state = store.getState();
+        const convert = state.converter;
+        const units = state.unit.units;
+        const convertedValue = Unit.convertSymbols(units)(convert.value)(convert.unit)(convert.convertToUnit);
+        return convertedValue;
+      })
+      .filter(convertedValue => convertedValue !== store.getState().converter.convertedValue)
+      .map(convertedValue => this.actions.setConvertedValue(convertedValue));
+  }
 }

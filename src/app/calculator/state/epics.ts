@@ -154,8 +154,8 @@ export class CalcEpics {
         return state.calculator.calcs
           .map(calc => ({
             id: calc.id,
-            convertedValue: calc.output.value && calc.output.unit && calc.output.convertToUnit
-              ? Unit.convertSymbols(state.unit.units)(calc.output.value)(calc.output.unit)(calc.output.convertToUnit)
+            convertedValue: calc.output
+              ? Unit.convertSymbols(state.unit.units)(calc.output.value)(calc.output.unit)(calc.output.convertToUnit) || calc.output.value
               : null
           }))
           .filter(result => state.calculator.calcs.find(c => c.id === result.id).output.convertedValue !== result.convertedValue);

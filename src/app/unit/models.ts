@@ -24,6 +24,9 @@ export module Unit {
   export const types = (units: IUnit[]): string[] =>
     (units || []).map(unit => unit.type).reduce((acc, cur) => [...acc, ...difference([cur], acc)], []);
 
+  export const symbolType = (units: IUnit[]) => (symbol: string): string =>
+    (find(units)(symbol) || {type: null}).type;
+
   export const getDefault = (units: IUnit[]): IUnit =>
     (units || []).find(unit => unit.factor === 1);
 
@@ -31,10 +34,10 @@ export module Unit {
     compose(getDefault, ofType(units))(type);
 
   export const convertSymbols = (units: IUnit[]) => (value: number) => (symbol: string) => (targetSymbol: string) =>
-    convertUnits(value)(find(units)(symbol))(find(units)(symbol));
+    convertUnits(value)(find(units)(symbol))(find(units)(targetSymbol));
 
   export const convertUnits = (value: number) => (unit: IUnit) => (targetUnit: IUnit) =>
-    convert(value)(unit.factor)(targetUnit.factor);
+    unit && targetUnit ? convert(value)(unit.factor)(targetUnit.factor) : null;
 
   export const convert = (value: number) => (factor: number) => (targetFactor: number): number => {
     if ([value, factor, targetFactor].some(x => x === null || x === undefined)) { return null; }

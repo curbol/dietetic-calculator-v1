@@ -31,39 +31,35 @@ export class ConverterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.units$.subscribe(units => this.units = units);
+    this.units$.subscribe(units => {
+      this.units = units;
+      if (!units) { return; }
+
+      this.type$.subscribe(type => {
+        if (!type) { this.onTypeChange((this.getUnitTypes() || [null])[0]); }
+      });
+    });
   }
 
-  getUnitTypes = (): string[] => Unit.types(this.units);
+  getUnitTypes = (): string[] => (Unit.types(this.units) || []).filter(type => (this.getUnitsOfType(type) || []).length > 1);
   getUnitsOfType = (type: string): IUnit[] => Unit.ofType(this.units)(type);
   getInputName = (symbol: string): string => {
     const unit = Unit.find(this.units)(symbol);
     return unit && unit.name ? `${unit.name} Value` : 'Value';
   }
 
-  onTypeChange = (type: string) => this.converterActions.setType(type);
+  onTypeChange = (type: string) => {
+    this.converterActions.setType(type);
+    const unitGroup = this.getUnitsOfType(type);
+
+    if (unitGroup.length > 1) {
+      this.onUnitChange(unitGroup[0].symbol);
+      this.onConvertToUnitChange(unitGroup[1].symbol);
+    }
+  }
+
   onValueChange = (value: number) => this.converterActions.setValue(value);
   onUnitChange = (symbol: string) => this.converterActions.setUnit(symbol);
   onConvertedValueChange = (value: number) => this.converterActions.setConvertedValue(value);
   onConvertToUnitChange = (symbol: string) => this.converterActions.setConvertToUnit(symbol);
-
-  // onUnitChange = () => {
-  //   this.updateTargetValue();
-  //   this.updateInputNames();
-  // }
-
-  // updateTargetValue = () => {
-  //   const conversion: number = this.getConversion(this.sourceInput.unit)(this.targetInput.unit)(this.sourceInput.value);
-  //   this.targetInput.value = Num.round(conversion, 5);
-  // }
-
-  // updateSourceValue = () => {
-  //   const conversion: number = this.getConversion(this.targetInput.unit)(this.sourceInput.unit)(this.targetInput.value);
-  //   this.sourceInput.value = Num.round(conversion, 5);
-  // }
-
-  // getConversion = (sourceUnit: IUnit) => (targetUnit: IUnit) => (sourceValue: number) => {
-  //   if (!sourceUnit || !targetUnit || !sourceValue) { return; }
-  //   return Unit.conversion(sourceUnit.factor)(targetUnit.factor)(sourceValue);
-  // }
 }

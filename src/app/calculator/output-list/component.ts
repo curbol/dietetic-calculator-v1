@@ -30,7 +30,7 @@ export class OutputListComponent implements OnInit {
   getOutputConvertedValue = (calc: ICalc): number => Num.round(calc && calc.output ? calc.output.convertedValue : null, 2);
   getOutputConvertToUnit = (calc: ICalc): string => calc && calc.output ? calc.output.convertToUnit || calc.output.unit : null;
   getOutputUnits = (calc: ICalc): IUnit[] =>
-    calc && calc.output ? pipe(c => calc.output.unit, Unit.find(this.units), unit => unit.type, Unit.ofType(this.units))(calc) : null
+    calc && calc.output ? pipe(Unit.symbolType(this.units), Unit.ofType(this.units))(calc.output.unit) : null
 
   onOutputUnitChange = (id: string, symbol: string) => this.calcActions.setOutputsUnit([{id, symbol}]);
 }
