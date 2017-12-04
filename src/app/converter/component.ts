@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { select } from '@angular-redux/store';
+import { select, dispatch } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { difference } from 'ramda';
 
@@ -22,6 +22,8 @@ export class ConverterComponent implements OnInit {
   @select(['converter', 'convertToUnit']) readonly convertToUnit$: Observable<string>;
 
   private units: IUnit[];
+  unitsOfType: IUnit[];
+  types: string[];
 
   constructor(
     private unitActions: UnitActions,
@@ -33,33 +35,28 @@ export class ConverterComponent implements OnInit {
   ngOnInit() {
     this.units$.subscribe(units => {
       this.units = units;
-      if (!units) { return; }
+      if (!this.units || !this.units.length) { return; }
+      this.types = (Unit.types(this.units) || [])
+        .filter(type => (Unit.ofType(this.units)(type) || []).length > 1);
+      if (!this.types || !this.types.length) { return; }
+      this.onTypeChange((this.types || [null])[0]);
+    });
 
-      this.type$.subscribe(type => {
-        if (!type) { this.onTypeChange((this.getUnitTypes() || [null])[0]); }
-      });
+    this.type$.subscribe(type => {
+      this.unitsOfType = Unit.ofType(this.units)(type);
     });
   }
 
-  getUnitTypes = (): string[] => (Unit.types(this.units) || []).filter(type => (this.getUnitsOfType(type) || []).length > 1);
-  getUnitsOfType = (type: string): IUnit[] => Unit.ofType(this.units)(type);
+  rounded = (value: number) => Num.round(value, 5);
+
   getInputName = (symbol: string): string => {
     const unit = Unit.find(this.units)(symbol);
     return unit && unit.name ? `${unit.name} Value` : 'Value';
   }
 
-  onTypeChange = (type: string) => {
-    this.converterActions.setType(type);
-    const unitGroup = this.getUnitsOfType(type);
-
-    if (unitGroup.length > 1) {
-      this.onUnitChange(unitGroup[0].symbol);
-      this.onConvertToUnitChange(unitGroup[1].symbol);
-    }
-  }
-
-  onValueChange = (value: number) => this.converterActions.setValue(value);
-  onUnitChange = (symbol: string) => this.converterActions.setUnit(symbol);
-  onConvertedValueChange = (value: number) => this.converterActions.setConvertedValue(value);
-  onConvertToUnitChange = (symbol: string) => this.converterActions.setConvertToUnit(symbol);
+  @dispatch() onTypeChange = (type: string) => this.converterActions.setType(type);
+  @dispatch() onValueChange = (value: number) => this.converterActions.setValue(value);
+  @dispatch() onUnitChange = (symbol: string) => this.converterActions.setUnit(symbol);
+  @dispatch() onConvertedValueChange = (value: number) => this.converterActions.setConvertedValue(value);
+  @dispatch() onConvertToUnitChange = (symbol: string) => this.converterActions.setConvertToUnit(symbol);
 }

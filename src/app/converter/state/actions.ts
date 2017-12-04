@@ -9,34 +9,35 @@ export class ConverterActions {
   static readonly SET_UNIT = 'convert/SET_UNIT';
   static readonly SET_CONVERTED_VALUE = 'convert/SET_CONVERTED_VALUE';
   static readonly SET_CONVERT_TO_UNIT = 'convert/SET_CONVERT_TO_UNIT';
+  static readonly SET_CONVERTING = 'convert/SET_CONVERTING';
 
-  @dispatch()
   setType = (payload: string): IAction => ({
     type: ConverterActions.SET_TYPE,
     payload: payload,
   })
 
-  @dispatch()
   setValue = (payload: number): IAction => ({
     type: ConverterActions.SET_VALUE,
     payload: payload,
   })
 
-  @dispatch()
   setUnit = (payload: string): IAction => ({
     type: ConverterActions.SET_UNIT,
     payload: payload,
   })
 
-  @dispatch()
   setConvertedValue = (payload: number): IAction => ({
     type: ConverterActions.SET_CONVERTED_VALUE,
     payload: payload,
   })
 
-  @dispatch()
   setConvertToUnit = (payload: string): IAction => ({
     type: ConverterActions.SET_CONVERT_TO_UNIT,
+    payload: payload,
+  })
+
+  setConverting = (payload: boolean): IAction => ({
+    type: ConverterActions.SET_CONVERTING,
     payload: payload,
   })
 }

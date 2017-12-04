@@ -12,6 +12,7 @@ const INITIAL_STATE: IConverterState = {
     unit: null,
     convertedValue: null,
     convertToUnit: null,
+    converting: false,
 };
 
 export const convertReducer = (state: IConverterState = INITIAL_STATE, a: Action): IConverterState => {
@@ -28,6 +29,8 @@ export const convertReducer = (state: IConverterState = INITIAL_STATE, a: Action
       return {...state, convertedValue: action.payload};
     case ConverterActions.SET_CONVERT_TO_UNIT:
       return {...state, convertToUnit: action.payload};
+    case ConverterActions.SET_CONVERTING:
+      return {...state, converting: action.payload};
     default:
       return state;
   }

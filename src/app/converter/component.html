@@ -2,7 +2,7 @@
 
   <mat-form-field color="accent">
     <mat-select #unitTypeSelect placeholder="Type" [ngModel]="type$ | async" (ngModelChange)="onTypeChange($event)">
-      <mat-option *ngFor="let type of getUnitTypes()" [value]="type">
+      <mat-option *ngFor="let type of types" [value]="type">
         {{type | capitalize}}
       </mat-option>
     </mat-select>
@@ -11,9 +11,9 @@
   <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1rem" fxLayout.lt-sm="column" fxLayoutGap.lt-sm="0">
     <dc-input fxFlex
       [name]="getInputName(unit$ | async)"
-      [value]="value$ | async"
+      [value]="rounded(value$ | async)"
       (valueChange)="onValueChange($event)"
-      [units]="getUnitsOfType(unitTypeSelect.value)"
+      [units]="unitsOfType"
       [unitSymbol]="unit$ | async"
       (unitSymbolChange)="onUnitChange($event)">
     </dc-input>
@@ -22,9 +22,9 @@
     </div>
     <dc-input fxFlex
       [name]="getInputName(convertToUnit$ | async)"
-      [value]="convertedValue$ | async"
+      [value]="rounded(convertedValue$ | async)"
       (valueChange)="onConvertedValueChange($event)"
-      [units]="getUnitsOfType(unitTypeSelect.value)"
+      [units]="unitsOfType"
       [unitSymbol]="convertToUnit$ | async"
       (unitSymbolChange)="onConvertToUnitChange($event)">
     </dc-input>

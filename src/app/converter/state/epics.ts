@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { createEpicMiddleware, Epic } from 'redux-observable';
+import { head, last } from 'ramda';
 
 import { ConverterActions } from '@app/converter/state/actions';
 import { IAction, IAppState } from '@app/store/models';
-import { Unit } from '@app/unit/models';
+import { Unit, IUnit } from '@app/unit/models';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ConverterEpics {
@@ -14,25 +16,79 @@ export class ConverterEpics {
 
   public createConverterEpicsMiddleware() {
     return [
-      createEpicMiddleware(this.createCalculateConvertToTargetEpic()),
+      createEpicMiddleware(this.createSetDefaultUnitEpic(head, s => this.actions.setUnit(s))),
+      createEpicMiddleware(this.createSetDefaultUnitEpic(last, s => this.actions.setConvertToUnit(s))),
+      createEpicMiddleware(this.createClearValueOnTypeChangeEpic()),
+      createEpicMiddleware(this.createClearConvertedValueOnTypeChangeEpic()),
+      createEpicMiddleware(this.createCalculateConvertedValueEpic()),
+      createEpicMiddleware(this.createCalculateValueEpic()),
     ];
   }
 
-  private createCalculateConvertToTargetEpic(): Epic<IAction, IAppState> {
+  private createSetDefaultUnitEpic(
+    selector: (units: IUnit[]) => IUnit,
+    createAction: (symbol: string) => IAction
+  ): Epic<IAction, IAppState> {
+    return (action$, store) => action$
+      .ofType(ConverterActions.SET_TYPE)
+      .map(action => Unit.ofType(store.getState().unit.units)(action.payload))
+      .filter(unitsOfType => unitsOfType && !!unitsOfType.length)
+      .map(unitsOfType => selector(unitsOfType))
+      .filter(unit => unit && !!unit.symbol)
+      .map(unit => createAction(unit.symbol));
+  }
+
+  private createClearValueOnTypeChangeEpic(): Epic<IAction, IAppState> {
+    return (action$, store) => action$
+      .ofType(ConverterActions.SET_TYPE)
+      .filter(action => store.getState().converter.value !== null)
+      .map(action => this.actions.setValue(null));
+  }
+
+  private createClearConvertedValueOnTypeChangeEpic(): Epic<IAction, IAppState> {
+    return (action$, store) => action$
+      .ofType(ConverterActions.SET_TYPE)
+      .filter(action => store.getState().converter.convertedValue !== null)
+      .map(action => this.actions.setConvertedValue(null));
+  }
+
+  private createCalculateConvertedValueEpic(): Epic<IAction, IAppState> {
     return (action$, store) => action$
       .ofType(
         ConverterActions.SET_VALUE,
         ConverterActions.SET_UNIT,
         ConverterActions.SET_CONVERT_TO_UNIT,
       )
+      .filter(() => !store.getState().converter.converting)
+      .switchMap(() =>
+        Observable.create(observer => {
+          observer.onNext(42);
+          observer.onCompleted();
+        })
+        .map(() => )
+        this.service.getAllInputs()
+        .map(data => this.actions.loadInputsFinished(data))
+        .catch(response => Observable.of(this.actions.loadInputsFinished(null, new Error(response.status))))
+        .startWith(this.actions.loadInputsStarted())
+      );
       .map(action => {
         const state = store.getState();
-        const convert = state.converter;
-        const units = state.unit.units;
-        const convertedValue = Unit.convertSymbols(units)(convert.value)(convert.unit)(convert.convertToUnit);
-        return convertedValue;
+        const converter = state.converter;
+        return Unit.convertSymbols(state.unit.units)(converter.value)(converter.unit)(converter.convertToUnit);
       })
       .filter(convertedValue => convertedValue !== store.getState().converter.convertedValue)
       .map(convertedValue => this.actions.setConvertedValue(convertedValue));
+  }
+
+  private createCalculateValueEpic(): Epic<IAction, IAppState> {
+    return (action$, store) => action$
+      .ofType(ConverterActions.SET_CONVERTED_VALUE)
+      .map(action => {
+        const state = store.getState();
+        const converter = state.converter;
+        return Unit.convertSymbols(state.unit.units)(converter.convertedValue)(converter.convertToUnit)(converter.unit);
+      })
+      .filter(value => value !== store.getState().converter.value)
+      .map(value => this.actions.setValue(value));
   }
 }
