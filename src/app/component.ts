@@ -5,7 +5,7 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'dc-root',
   templateUrl: './component.html',
-  styleUrls: ['./component.css'],
+  styleUrls: ['./component.scss'],
   animations: [
     slideInOnRouteChange()
   ]
