@@ -59,25 +59,13 @@ export class ConverterEpics {
         ConverterActions.SET_UNIT,
         ConverterActions.SET_CONVERT_TO_UNIT,
       )
-      .filter(() => !store.getState().converter.converting)
-      .switchMap(() =>
-        Observable.create(observer => {
-          observer.onNext(42);
-          observer.onCompleted();
-        })
-        .map(() => )
-        this.service.getAllInputs()
-        .map(data => this.actions.loadInputsFinished(data))
-        .catch(response => Observable.of(this.actions.loadInputsFinished(null, new Error(response.status))))
-        .startWith(this.actions.loadInputsStarted())
-      );
       .map(action => {
         const state = store.getState();
         const converter = state.converter;
         return Unit.convertSymbols(state.unit.units)(converter.value)(converter.unit)(converter.convertToUnit);
       })
       .filter(convertedValue => convertedValue !== store.getState().converter.convertedValue)
-      .map(convertedValue => this.actions.setConvertedValue(convertedValue));
+      .map(convertedValue => this.actions.setCalculatedConvertedValue(convertedValue));
   }
 
   private createCalculateValueEpic(): Epic<IAction, IAppState> {
@@ -89,6 +77,6 @@ export class ConverterEpics {
         return Unit.convertSymbols(state.unit.units)(converter.convertedValue)(converter.convertToUnit)(converter.unit);
       })
       .filter(value => value !== store.getState().converter.value)
-      .map(value => this.actions.setValue(value));
+      .map(value => this.actions.setCalculatedValue(value));
   }
 }

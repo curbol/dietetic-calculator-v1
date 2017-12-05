@@ -4,5 +4,4 @@ export interface IConverterState {
     unit: string;
     convertedValue: number;
     convertToUnit: string;
-    converting: boolean;
 }

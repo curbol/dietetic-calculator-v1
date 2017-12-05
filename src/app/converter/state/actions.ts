@@ -6,8 +6,10 @@ import { IAction } from '@app/store/models';
 export class ConverterActions {
   static readonly SET_TYPE = 'convert/SET_TYPE';
   static readonly SET_VALUE = 'convert/SET_VALUE';
+  static readonly SET_CALCULATED_VALUE = 'convert/SET_CALCULATED_VALUE';
   static readonly SET_UNIT = 'convert/SET_UNIT';
   static readonly SET_CONVERTED_VALUE = 'convert/SET_CONVERTED_VALUE';
+  static readonly SET_CALCULATED_CONVERTED_VALUE = 'convert/SET_CALCULATED_CONVERTED_VALUE';
   static readonly SET_CONVERT_TO_UNIT = 'convert/SET_CONVERT_TO_UNIT';
   static readonly SET_CONVERTING = 'convert/SET_CONVERTING';
 
@@ -21,6 +23,11 @@ export class ConverterActions {
     payload: payload,
   })
 
+  setCalculatedValue = (payload: number): IAction => ({
+    type: ConverterActions.SET_CALCULATED_VALUE,
+    payload: payload,
+  })
+
   setUnit = (payload: string): IAction => ({
     type: ConverterActions.SET_UNIT,
     payload: payload,
@@ -31,13 +38,13 @@ export class ConverterActions {
     payload: payload,
   })
 
-  setConvertToUnit = (payload: string): IAction => ({
-    type: ConverterActions.SET_CONVERT_TO_UNIT,
+  setCalculatedConvertedValue = (payload: number): IAction => ({
+    type: ConverterActions.SET_CALCULATED_CONVERTED_VALUE,
     payload: payload,
   })
 
-  setConverting = (payload: boolean): IAction => ({
-    type: ConverterActions.SET_CONVERTING,
+  setConvertToUnit = (payload: string): IAction => ({
+    type: ConverterActions.SET_CONVERT_TO_UNIT,
     payload: payload,
   })
 }
