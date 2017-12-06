@@ -4,16 +4,16 @@ import { Calc, ICalc, IInput, ISelect } from '@app/calculator/models';
 import { Observable } from 'rxjs/Observable';
 
 const URL = {
-  calcs: 'http://www.dieteticcalc.com/api/calcs.json',
-  inputs: 'http://www.dieteticcalc.com/api/inputs.json',
-  selects: 'http://www.dieteticcalc.com/api/selections.json',
+  calcs: `${location.origin}/api/calcs.json`,
+  inputs: `${location.origin}/api/inputs.json`,
+  selects: `${location.origin}/api/selections.json`,
 };
 
 @Injectable()
 export class CalcAPIService {
   constructor(
     private http: Http,
-  ) { }
+  ) {}
 
   getAllCalcs = (): Observable<ICalc[]> =>
     this.http.get(URL.calcs)

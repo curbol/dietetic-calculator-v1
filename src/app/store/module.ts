@@ -33,8 +33,7 @@ export class StoreModule {
       rootReducer,
       {},
       [
-        createLogger(),
-        ...(!environment.production ? [freezeStateMiddleware] : []),
+        ...(!environment.production ? [createLogger(), freezeStateMiddleware] : []),
         ...rootEpics.createEpics(),
       ],
       devTools.isEnabled() ? [ devTools.enhancer() ] : []);

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { IUnit, Unit } from '@app/unit/models';
 
 const URL = {
-  units: 'http://www.dieteticcalc.com/api/units.json',
+  units: `${location.origin}/api/units.json`,
 };
 
 @Injectable()
