@@ -1,20 +1,18 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
   <div class="dc-full-width">
-    <div fxLayout="column">
-      <div *ngFor="let calc of calcs; trackBy:getCalcKey; let isFirst = first; let isLast = last">
-        <div *ngIf="calc.active" [@appearOnActive] fxLayout="column">
-          <div *ngIf="!isFirst" class="dc-spacer"></div>
-          <dc-input fxFlex
-            [readonly]="true"
-            [name]="calc.title"
-            [value]="getOutputConvertedValue(calc)"
-            [units]="getOutputUnits(calc)"
-            [unitSymbol]="getOutputConvertToUnit(calc)"
-            (unitSymbolChange)="onOutputUnitChange(calc.id, $event)">
-          </dc-input>
-          <div *ngIf="!isLast" class="dc-spacer"></div>
-        </div>
+    <div *ngFor="let calc of calcs; trackBy:getCalcKey; let isFirst = first; let isLast = last">
+      <div *ngIf="calc.active" [@appearOnActive]>
+        <div *ngIf="!isFirst" class="dc-spacer"></div>
+        <dc-input
+          [readonly]="true"
+          [name]="calc.title"
+          [value]="getOutputConvertedValue(calc)"
+          [units]="getOutputUnits(calc)"
+          [unitSymbol]="getOutputConvertToUnit(calc)"
+          (unitSymbolChange)="onOutputUnitChange(calc.id, $event)">
+        </dc-input>
+        <div *ngIf="!isLast" class="dc-spacer"></div>
       </div>
     </div>
   </div>

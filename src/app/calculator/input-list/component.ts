@@ -23,8 +23,8 @@ export class InputListComponent implements OnInit {
   get activeSelects(): ISelect[] { return (this.selects || []).filter(s => s.active); }
   get activeDataCount(): number { return this.activeInputs.length + this.activeSelects.length; }
 
-  get activeFilledInputs(): IInput[] { return (this.activeInputs || []).filter(i => ![null, undefined].find(x => x === i.value)); }
-  get activeFilledSelects(): ISelect[] { return (this.activeSelects || []).filter(s => ![null, undefined].find(x => x === s.value)); }
+  get activeFilledInputs(): IInput[] { return (this.activeInputs || []).filter(i => i.value !== null && i.value !== undefined); }
+  get activeFilledSelects(): ISelect[] { return (this.activeSelects || []).filter(s => s.value !== null && s.value !== undefined); }
   get activeFilledDataCount(): number { return this.activeFilledInputs.length + this.activeFilledSelects.length; }
 
   constructor(
