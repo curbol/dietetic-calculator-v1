@@ -8,7 +8,7 @@
     </mat-select>
   </mat-form-field>
 
-  <div fxLayout fxLayoutGap.gt-xs="1rem" fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="start center">
+  <div fxLayout fxLayoutAlign="center center" fxLayoutGap.gt-xs="1rem" fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="start center">
     <dc-input
       [name]="getInputName(unit$ | async)"
       [value]="rounded(value$ | async)"
