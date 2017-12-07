@@ -8,8 +8,8 @@
     </mat-select>
   </mat-form-field>
 
-  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1rem" fxLayout.lt-sm="column" fxLayoutGap.lt-sm="0">
-    <dc-input fxFlex
+  <div fxLayout fxLayoutGap.gt-xs="1rem" fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="start center">
+    <dc-input
       [name]="getInputName(unit$ | async)"
       [value]="rounded(value$ | async)"
       (valueChange)="onValueChange($event)"
@@ -20,7 +20,7 @@
     <div id="dc-converter-equal">
       <span class="dc-secondary-text">=</span>
     </div>
-    <dc-input fxFlex
+    <dc-input
       [name]="getInputName(convertToUnit$ | async)"
       [value]="rounded(convertedValue$ | async)"
       (valueChange)="onConvertedValueChange($event)"
