@@ -97,7 +97,7 @@ export class CalcEpics {
           .reduce((acc, cur) => [...acc, ...difference(cur, acc)], []);
 
         return state.inputs
-          .filter(input => input.active !== activeInputIds.includes(input.id))
+          .filter(input => input.active !== !!activeInputIds.find(id => id === input.id))
           .map(input => ({ id: input.id, active: !input.active }));
       })
       .filter(data => !!data && !!data.length)
@@ -115,7 +115,7 @@ export class CalcEpics {
           .reduce((acc, cur) => [...acc, ...difference(cur, acc)], []);
 
         return state.selects
-          .filter(select => select.active !== activeSelectIds.includes(select.id))
+          .filter(select => select.active !== !!activeSelectIds.find(id => id === select.id))
           .map(select => ({ id: select.id, active: !select.active }));
       })
       .filter(data => !!data && !!data.length)
