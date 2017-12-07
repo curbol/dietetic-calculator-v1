@@ -4,20 +4,18 @@
     <p>Dietetic Calculator is a tool created for dietitians to make common dietetics calculations quick and easy.
        This tool is developed by Curtis Bollinger and dietetics knowledge is provided by Chelsey Bollinger, RD, LD.</p>
 
-    <div fxLayout="column">
-      <img id="img-curtsey" class="dc-full-shadow" src="../../assets/images/Curtis-Chelsey.jpg" alt="Curtis and Chelsey Bollinger" />
-      <div id="curtsey-names" fxLayout="row" fxLayoutGap=".5rem">
-        <div *ngFor='let profile of profiles' fxFlex fxLayout="row" fxLayoutAlign="center center" fxLayoutGap=".3rem">
-          <div fxFlex="none">
-            <a href="{{profile?.linkedInUrl}}" target="_blank">
-              <img src="../../assets/images/svg/linkedin.svg" alt="LinkedIn profile of {{profile?.name}}" />
-            </a>
-          </div>
-          <div>
-            <span>{{profile?.name}}</span>
-            <span> - </span>
-            <span>{{profile?.title}}</span>
-          </div>
+    <img id="img-curtsey" class="dc-full-shadow" src="../../assets/images/Curtis-Chelsey.jpg" alt="Curtis and Chelsey Bollinger" />
+    <div id="curtsey-names" fxLayout fxLayoutGap=".5rem">
+      <div *ngFor='let profile of profiles' fxLayout fxLayoutAlign="center center" fxLayoutGap=".3rem">
+        <div>
+          <a href="{{profile?.linkedInUrl}}" target="_blank">
+            <img src="../../assets/images/svg/linkedin.svg" alt="LinkedIn profile of {{profile?.name}}" />
+          </a>
+        </div>
+        <div>
+          <span>{{profile?.name}}</span>
+          <span> - </span>
+          <span>{{profile?.title}}</span>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-<div>
+<div fxLayout="column">
   <mat-form-field [ngClass]="{'dc-input-value': showUnitOptions()}" color="accent">
     <input [readonly]="readonly" matInput [required]="!readonly" type="number" [placeholder]="name" (click)="$event.target.select()"
            [ngModel]="value" (ngModelChange)="onValueChange($event)"/>

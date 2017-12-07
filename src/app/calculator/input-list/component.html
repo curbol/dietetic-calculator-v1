@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
   <div class="dc-full-width">
-    <div *ngIf="activeFilledDataCount" [@appearOnActive] fxLayout="column" fxLayoutAlign="start center">
+    <div *ngIf="activeFilledDataCount" [@appearOnActive] fxLayout="column">
       <button mat-button (click)="clearDataValues()">
         <mat-icon>clear</mat-icon>
         <span>Clear Values</span>
@@ -15,7 +15,7 @@
       <div *ngFor="let select of selects; trackBy:getSelectKey; let isFirst = first;">
         <div *ngIf="select.active" [@appearOnActive] fxLayout="column">
           <div *ngIf="!isFirst" class="dc-spacer"></div>
-          <mat-form-field fxFlex color="accent">
+          <mat-form-field color="accent">
             <mat-select required [placeholder]="select.name" [ngModel]="select.value"
                         (ngModelChange)="onSelectValueChange(select.id, $event)">
               <mat-option *ngFor="let option of select.options" [value]="option">
@@ -31,10 +31,10 @@
 
   <div class="dc-full-width">
     <div fxLayout="column">
-      <div fxFlex *ngFor="let input of inputs; trackBy:getInputKey; let isFirst = first; let isLast = last">
+      <div *ngFor="let input of inputs; trackBy:getInputKey; let isFirst = first; let isLast = last">
         <div *ngIf="input.active" [@appearOnActive] fxLayout="column">
           <div *ngIf="!isFirst" class="dc-spacer"></div>
-          <dc-input fxFlex
+          <dc-input
             [name]="input.name"
             [value]="input.value"
             (valueChange)="onInputValueChange(input.id, $event)"
