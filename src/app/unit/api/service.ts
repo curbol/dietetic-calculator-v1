@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { HttpErrorResponse } from '@angular/common/http';
+import { environment } from '@env/environment';
 
 import { Observable } from 'rxjs/Observable';
 import { IUnit, Unit } from '@app/unit/models';
 
+const base = environment.production ? location.origin : 'http://dieteticcalc.com';
 const URL = {
-  units: `${location.origin}/api/units.json`,
+  units: `${base}/api/units.json`,
 };
 
 @Injectable()

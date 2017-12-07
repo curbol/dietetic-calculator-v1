@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Calc, ICalc, IInput, ISelect } from '@app/calculator/models';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '@env/environment';
 
+import { Calc, ICalc, IInput, ISelect } from '@app/calculator/models';
+
+const base = environment.production ? location.origin : 'http://dieteticcalc.com';
 const URL = {
-  calcs: `${location.origin}/api/calcs.json`,
-  inputs: `${location.origin}/api/inputs.json`,
-  selects: `${location.origin}/api/selections.json`,
+  calcs: `${base}/api/calcs.json`,
+  inputs: `${base}/api/inputs.json`,
+  selects: `${base}/api/selections.json`,
 };
 
 @Injectable()

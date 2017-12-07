@@ -1,35 +1,5 @@
-.dietetic-theme .mat-stepper-horizontal, .dietetic-theme .mat-stepper-vertical {
+.mat-stepper-horizontal {
   background-color: transparent !important;
-}
-
-.mat-horizontal-content-container {
-  padding: 0 !important;
-}
-
-.dc-input-value, .dc-input-unit {
-  .mat-form-field-wrapper {
-    padding-bottom: 0 !important;
-  }
-
-  .mat-form-field-underline {
-    bottom: 0 !important;
-  }
-}
-
-.dc-input-unit {
-  .mat-form-field-infix {
-    border-top: 0 !important;
-  }
-
-  .mat-input-placeholder {
-    visibility: collapse !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  .mat-select-value-text {
-    font-size: 0.75rem !important;
-  }
 }
 
 .mat-list-item-content {
@@ -38,4 +8,18 @@
 
 .mat-list-text {
   padding-right: 0 !important;
+}
+
+.dc-input-value .mat-form-field-wrapper, 
+.dc-input-unit .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+.dc-input-value .mat-form-field-underline, 
+.dc-input-unit .mat-form-field-underline {
+  bottom: 0 !important;
+}
+
+.dc-input-unit .mat-form-field-infix {
+  border-top: 0 !important;
 }
