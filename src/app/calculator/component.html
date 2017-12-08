@@ -20,7 +20,7 @@
     </div>
 
     <div fxFlex="none">
-      <div *ngIf="activeCalcsCount()" [@appearOnActive]>
+      <div *ngIf="activeFilledResultsCount()" [@appearOnActive]>
         <h3 class="dc-secondary-text dc-calc-tool-header dc-center-text">{{titles.output.long}}</h3>
         <div *ngIf="activeFilledDataCount() !== activeDataCount()" [@appearOnActive]
               fxLayout="column" fxLayoutAlign="start center">
