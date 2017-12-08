@@ -76,7 +76,6 @@
           [units]="units$ | async">
         </dc-input-list>
         <div>
-          <div *ngIf="activeDataCount()" class="dc-spacer"></div>
           <button mat-raised-button color="primary" matStepperPrevious>
             <mat-icon>arrow_back</mat-icon>
             <span>{{titles.calc.short}}</span>
@@ -110,7 +109,6 @@
           [units]="units$ | async">
         </dc-output-list>
         <div>
-          <div *ngIf="activeFilledResultsCount()" class="dc-spacer"></div>
           <button mat-raised-button color="primary" matStepperPrevious>
             <mat-icon>arrow_back</mat-icon>
             <span>{{titles.input.long}}</span>
