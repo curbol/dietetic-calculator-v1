@@ -9,10 +9,8 @@
 @import './themes/dietetic.theme.scss';
 
 @import './app/component.theme.scss';
-@import './app/header/component.theme.scss';
 
 @mixin custom-components-theme($theme) {
-  @include dc-toolbar-component-theme($theme);
   @include dc-base-styles-theme($theme);
   @include dc-app-component-theme($theme);
 }

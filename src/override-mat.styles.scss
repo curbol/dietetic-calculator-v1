@@ -1,5 +1,13 @@
+.mat-horizontal-content-container {
+  padding: 0 !important; 
+}
+
 .mat-stepper-horizontal {
   background-color: transparent !important;
+}
+
+.mat-selection-list {
+  padding-top: 0 !important
 }
 
 .mat-list-item-content {
@@ -23,3 +31,5 @@
 .dc-input-unit .mat-form-field-infix {
   border-top: 0 !important;
 }
+
+

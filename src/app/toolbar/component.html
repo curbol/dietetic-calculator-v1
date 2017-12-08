@@ -1,11 +1,12 @@
-<mat-toolbar fxFlexLayout id="dc-header" class="dc-bottom-shadow" color="primary">
+<header id="dc-header" class="dc-primary-background dc-bottom-shadow"
+        fxLayout fxLayoutAlign="center center">
   <div>
     <button mat-button [routerLink]="['']">
       <mat-icon>home</mat-icon>
       <span>Dietetic Calculator</span>
     </button>
   </div>
-  <span fxFlex></span>
+  <div class="dc-flex-fill"></div>
   <div fxLayout fxLayoutAlign="end center">
 
     <div fxHide fxShow.gt-xs>
@@ -37,4 +38,4 @@
     </div>
 
   </div>
-</mat-toolbar>
+</header>

@@ -1,9 +1,0 @@
-@import '~@angular/material/theming';
-
-@mixin dc-toolbar-component-theme($theme) {
-  $primary: map-get($theme, primary);
-
-  #main-subtitle, #header-subtitle {
-    color: mat-contrast($primary, 900);
-  }
-}

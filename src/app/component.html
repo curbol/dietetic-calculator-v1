@@ -6,13 +6,11 @@
          [@slideInOnRouteChange]="getState(o)">
       <router-outlet #o="outlet"></router-outlet>
     </section>
-    <div fxFlex></div>
-    <footer fxFlex="none">
-      <mat-toolbar  color="primary">
-        <div id="footer-copywrite">
-          <span>&copy; 2017 - Curtis Bollinger</span>
-        </div>
-      </mat-toolbar>
+    <div class="dc-flex-fill"></div>
+    <footer id="dc-footer" class="dc-primary-background" fxLayout fxLayoutAlign="center center">
+      <div id="footer-copywrite">
+        <span>&copy; 2017 - Curtis Bollinger</span>
+      </div>
     </footer>
   </div>
 </div>

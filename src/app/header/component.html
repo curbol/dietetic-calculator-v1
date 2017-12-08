@@ -2,14 +2,14 @@
   <div *ngIf='isHome' id="dc-header" fxLayout="column" fxLayoutAlign="center center">
     <div id="main-text" [@slideInOnRouteChange]="title">
       <h1 id="main-title">Dietetic Calculator</h1>
-      <h4 id="main-subtitle">Tool For Common Dietetic Calculations</h4>
+      <h4 id="main-subtitle" class="dc-secondary-text">Tool For Common Dietetic Calculations</h4>
     </div>
   </div>
 
   <div *ngIf='title && !isHome'>
     <div id="header-text" [@slideInOnRouteChange]="title" >
       <h2 id="header-title">{{title}}</h2>
-      <h5 id="header-subtitle" *ngIf='subtitle'>{{subtitle}}</h5>
+      <h5 id="header-subtitle" class="dc-secondary-text" *ngIf='subtitle'>{{subtitle}}</h5>
     </div>
   </div>
 </header>
