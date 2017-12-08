@@ -1,26 +1,27 @@
-<div fxLayout fxLayoutAlign="center start">
+<div fxLayout="column" fxLayoutAlign="start center">
   <div id="dc-about-content" class="dc-text-content">
-
     <div>
       <p>Dietetic Calculator is a tool created for dietitians to make common dietetics calculations quick and easy.
          This tool is developed by Curtis Bollinger and dietetics knowledge is provided by Chelsey Bollinger, RD, LD.</p>
     </div>
     <div class="dc-spacer"></div>
-    <div>
-        <img id="img-curtsey" class="dc-full-shadow" src="../../assets/images/Curtis-Chelsey.jpg" alt="Curtis and Chelsey Bollinger" />
-    </div>
-    <div id="curtsey-names" class="dc-full-width" fxLayout="row" fxLayoutAlign="center start" fxLayoutGap=".5rem">
-      <div *ngFor='let profile of profiles' fxLayout="row" fxLayoutAlign="center center" fxLayoutGap=".3rem">
-        <div fxFlex="none">
-          <a href="{{profile?.linkedInUrl}}" target="_blank">
-            <img src="../../assets/images/svg/linkedin.svg" alt="LinkedIn profile of {{profile?.name}}" />
-          </a>
+    <mat-card>
+      <img mat-card-image src="../../assets/images/Curtis-Chelsey.jpg" alt="Curtis Bollinger and Chelsey Bollinger">
+      <mat-card-content>
+        <div id="curtsey-names" class="dc-full-width" fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="1rem">
+          <div *ngFor='let profile of profiles' fxLayout="row" fxLayoutAlign="center center" fxLayoutGap=".3rem">
+            <div fxFlex="none">
+              <a href="{{profile?.linkedInUrl}}" target="_blank">
+                <img src="../../assets/images/svg/linkedin.svg" alt="LinkedIn profile of {{profile?.name}}" />
+              </a>
+            </div>
+            <div>
+              <span>{{profile?.name}}</span><span> - </span><span>{{profile?.title}}</span>
+            </div>
+          </div>
         </div>
-        <div>
-          <span>{{profile?.name}}</span><span> - </span><span>{{profile?.title}}</span>
-        </div>
-      </div>
-    </div>
+      </mat-card-content>
+    </mat-card>
     <div class="dc-spacer"></div>
     <div>
       <p>Dietetic Calculator is a passion project that we work on in our spare time.
@@ -31,6 +32,5 @@
       <p>Please contact us if you have any suggestions for improvements.
          Thank you for visiting!</p>
     </div>
-
   </div>
 </div>

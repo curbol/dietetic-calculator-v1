@@ -8,7 +8,7 @@
   }
 }
 
-html, body, header, footer, div, p, span, h1, h2, h3, h4, h5, h6 {
+html, body, section, header, footer, div, p, span, h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   font-size: 1em;
   margin: 0;
@@ -18,11 +18,6 @@ html, body, header, footer, div, p, span, h1, h2, h3, h4, h5, h6 {
 html, body {
   height: 100%;
   font-family: "Roboto", "Helvetica Neue Light", "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", "sans-serif";
-}
-
-img {
-  display:block;
-  max-width: 100%;
 }
 
 p {
