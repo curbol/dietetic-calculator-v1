@@ -1,27 +1,34 @@
-<div class="dc-about-content">
-  <p class="dc-row1">Dietetic Calculator is a tool created for dietitians to make common dietetics calculations quick and easy.
-     This tool is developed by Curtis Bollinger and dietetics knowledge is provided by Chelsey Bollinger, RD, LD.</p>
-  <mat-card class="dc-row2">
-    <mat-card-content>
-      <img mat-card-image src="../../assets/images/Curtis-Chelsey.jpg" alt="Curtis Bollinger and Chelsey Bollinger">
-      <div class="about-profiles">
-        <div *ngFor='let profile of profiles; let i = index' [class]="'about-profile dc-col'+(i+1)">
-          <div class="dc-vertical-center dc-col1">
-            <a href="{{profile?.linkedInUrl}}" target="_blank">
-              <img src="../../assets/images/svg/linkedin.svg" alt="LinkedIn profile of {{profile?.name}}" />
-            </a>
-          </div>
-          <div class="dc-vertical-center dc-col2">
-            <div>
-              <span>{{profile?.name}}</span><span> - </span><span>{{profile?.title}}</span>
+<div class="dc-horizontal-center">
+  <div class="dc-about-content">
+    <p>Dietetic Calculator is a tool created for dietitians to make common dietetics calculations quick and easy.
+      This tool is developed by Curtis Bollinger and dietetics knowledge is provided by Chelsey Bollinger, RD, LD.</p>
+    <div class="dc-spacer"></div>
+    <mat-card>
+      <mat-card-content>
+        <img mat-card-image src="../../assets/images/Curtis-Chelsey.jpg" alt="Curtis Bollinger and Chelsey Bollinger">
+        <div class="about-profiles">
+          <div *ngFor='let profile of profiles; let i = index' [class]="'about-profile dc-col'+(i+1)">
+            <div class="dc-vertical-center dc-col1">
+              <div>
+                <a href="{{profile?.linkedInUrl}}" target="_blank">
+                  <img src="../../assets/images/svg/linkedin.svg" alt="LinkedIn profile of {{profile?.name}}" />
+                </a>
+              </div>
+            </div>
+            <div class="dc-vertical-center dc-col2">
+              <div>
+                <span>{{profile?.name}} - {{profile?.title}}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-  <p class="dc-row3">Dietetic Calculator is a passion project that we work on in our spare time.
-     More calculators and other functionality will be added over time.</p>
-  <p class="dc-row4">Please contact us if you have any suggestions for improvements.
-     Thank you for visiting!</p>
+      </mat-card-content>
+    </mat-card>
+    <div class="dc-spacer"></div>
+    <p>Dietetic Calculator is a passion project that we work on in our spare time.
+      More calculators and other functionality will be added over time.</p>
+    <div class="dc-spacer"></div>
+    <p>Please contact us if you have any suggestions for improvements.
+      Thank you for visiting!</p>
+  </div>
 </div>

@@ -25,6 +25,11 @@
     background-color: mat-color($foreground, secondary-text, 0.3);
   }
 
+  .dc-main-background {
+    color: mat-color($foreground, text);
+    background-color: mat-color($background, background);
+  }
+
   .dc-primary-background {
     color: mat-contrast($primary, 500);
     background-color: mat-color($primary);

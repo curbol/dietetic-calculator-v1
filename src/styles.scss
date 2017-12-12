@@ -8,11 +8,8 @@
 @import './base.theme.scss';
 @import './themes/dietetic.theme.scss';
 
-@import './app/component.theme.scss';
-
 @mixin custom-components-theme($theme) {
   @include dc-base-styles-theme($theme);
-  @include dc-app-component-theme($theme);
 }
 
 .dietetic-theme {

@@ -1,17 +1,6 @@
-.dc-vertical-center {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr auto 1fr;
-}
-
-.dc-vertical-center > * {
-  grid-row: 2;
-  grid-column: 1;
-}
-
 .about-profiles {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr;
 }
 
@@ -23,20 +12,6 @@
 }
 
 .dc-about-content {
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: 1fr minmax(1rem, 40rem) 1fr;
-  grid-template-rows: repeat(auto-fit, auto);
+  max-width: 40rem;
+  margin: 0 1rem;
 }
-
-.dc-about-content > * {
-  grid-column: 2;
-}
-
-.dc-row1 { grid-row: 1; }
-.dc-row2 { grid-row: 2; }
-.dc-row3 { grid-row: 3; }
-.dc-row4 { grid-row: 4; }
-
-.dc-col1 { grid-column: 1; }
-.dc-col2 { grid-column: 2; }
